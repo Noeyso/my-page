@@ -1,38 +1,69 @@
 interface Sticker {
   id: string;
+  emoji: string;
   text: string;
   top?: string;
   right?: string;
   bottom?: string;
   left?: string;
-  transform: string;
-  background: string;
+  rotate: string;
+  color: string;
+}
+
+interface WarningPopup {
+  id: string;
+  title: string;
+  message: string;
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
 }
 
 const stickers: Sticker[] = [
   {
-    id: 'sticker-cool',
-    text: 'ultra cool',
-    top: '86px',
+    id: 'sticker-cd',
+    emoji: '💿',
+    text: 'LISTENING NOW',
+    top: '88px',
     right: '58px',
-    transform: 'rotate(12deg)',
-    background: 'linear-gradient(180deg, #ff00cf 0%, #9000ff 100%)',
+    rotate: 'rotate(11deg)',
+    color: 'linear-gradient(180deg, #ffd5f6 0%, #ff8cd8 100%)',
+  },
+  {
+    id: 'sticker-cutie',
+    emoji: '🫧',
+    text: 'CUTE DESKTOP',
+    bottom: '132px',
+    left: '120px',
+    rotate: 'rotate(-10deg)',
+    color: 'linear-gradient(180deg, #dff7ff 0%, #9de8ff 100%)',
   },
   {
     id: 'sticker-online',
-    text: 'online 24/7',
-    bottom: '132px',
-    left: '120px',
-    transform: 'rotate(-9deg)',
-    background: 'linear-gradient(180deg, #00ffa0 0%, #00a3ff 100%)',
+    emoji: '🌼',
+    text: 'ALWAYS ONLINE',
+    top: '46%',
+    right: '17%',
+    rotate: 'rotate(-13deg)',
+    color: 'linear-gradient(180deg, #fff7be 0%, #ffd275 100%)',
+  },
+];
+
+const warningPopups: WarningPopup[] = [
+  {
+    id: 'warning-1',
+    title: 'System Message',
+    message: 'Your vibes are too good today!',
+    top: '150px',
+    right: '130px',
   },
   {
-    id: 'sticker-y2k',
-    text: 'y2k mode',
-    top: '44%',
-    right: '19%',
-    transform: 'rotate(-14deg)',
-    background: 'linear-gradient(180deg, #f8ff00 0%, #ff9300 100%)',
+    id: 'warning-2',
+    title: 'Alert',
+    message: 'Minesweeper challenge ready.',
+    bottom: '220px',
+    right: '220px',
   },
 ];
 
@@ -48,11 +79,28 @@ export default function StickerLayer() {
             right: sticker.right,
             bottom: sticker.bottom,
             left: sticker.left,
-            transform: sticker.transform,
-            background: sticker.background,
+            transform: sticker.rotate,
+            background: sticker.color,
           }}
         >
-          {sticker.text}
+          <span>{sticker.emoji}</span>
+          <span>{sticker.text}</span>
+        </div>
+      ))}
+
+      {warningPopups.map((popup) => (
+        <div
+          key={popup.id}
+          className="warning-popup"
+          style={{
+            top: popup.top,
+            right: popup.right,
+            bottom: popup.bottom,
+            left: popup.left,
+          }}
+        >
+          <div className="warning-popup-title">⚠ {popup.title}</div>
+          <div className="warning-popup-message">{popup.message}</div>
         </div>
       ))}
     </div>

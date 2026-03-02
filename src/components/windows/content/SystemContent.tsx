@@ -1,17 +1,33 @@
+const mineCells = [
+  '1', ' ', '1', '💣', '2', '1', ' ', ' ',
+  '1', '1', '2', '2', '💣', '1', ' ', ' ',
+  ' ', '1', '💣', '2', '1', '1', ' ', ' ',
+  ' ', '1', '1', '1', ' ', '1', '1', '1',
+  ' ', ' ', ' ', ' ', ' ', '1', '💣', '1',
+  '1', '1', ' ', ' ', ' ', '1', '1', '1',
+  '💣', '1', ' ', '1', '1', '1', ' ', ' ',
+  '1', '1', ' ', '1', '💣', '1', ' ', ' ',
+];
+
 export default function SystemContent() {
   return (
-    <div className="text-center">
-      <div className="window-heading">System Alert</div>
-      <div className="mb-4 text-[64px]">💻</div>
-      <div className="stretch-font mb-4 text-[26px] text-[#156dd9]">SYSTEM MESSAGE</div>
-      <div className="inset-box mb-4">
-        <p className="mb-3">⚠️ Welcome to my page!</p>
-        <p className="text-sm leading-[1.6]">
-          This website is best viewed in 1024x768 resolution. Made with ❤️ and lots of nostalgia for the early 2000s
-          internet.
-        </p>
+    <div>
+      <div className="window-heading">Minesweeper</div>
+      <div className="mine-panel">
+        <div className="mine-topbar">
+          <span>🚩 03</span>
+          <button className="mine-face">🙂</button>
+          <span>021</span>
+        </div>
+
+        <div className="mine-grid">
+          {mineCells.map((cell, index) => (
+            <div key={index} className="mine-cell">
+              {cell}
+            </div>
+          ))}
+        </div>
       </div>
-      <button className="glossy-btn">OK</button>
     </div>
   );
 }

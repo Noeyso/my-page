@@ -20,14 +20,13 @@ export default function Dock({ onOpen }: DockProps) {
         <div
           key={app.id}
           className="dock-icon"
+          style={{ background: app.color }}
           onClick={() => onOpen(app.id)}
           role="button"
           tabIndex={0}
           onKeyDown={(event) => handleKeyDown(event, app.id)}
         >
-          {app.img
-            ? <img src={app.img} alt={app.label} style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
-            : <span>{app.icon}</span>}
+          <span>{app.icon}</span>
           <div className="dock-tooltip">{app.label}</div>
         </div>
       ))}

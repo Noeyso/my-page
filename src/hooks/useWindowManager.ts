@@ -23,22 +23,36 @@ const INITIAL_WINDOWS: ManagedWindow[] = [
     id: 'default-profile',
     type: 'profile',
     zIndex: 100,
-    tilt: -3,
-    position: { x: 130, y: 125 },
+    tilt: -2,
+    position: { x: 150, y: 132 },
   },
   {
     id: 'default-chat',
     type: 'chat',
     zIndex: 101,
-    tilt: 2,
-    position: { x: 410, y: 205 },
+    tilt: 1,
+    position: { x: 500, y: 140 },
   },
   {
     id: 'default-music',
     type: 'music',
     zIndex: 102,
     tilt: -1,
-    position: { x: 760, y: 132 },
+    position: { x: 840, y: 148 },
+  },
+  {
+    id: 'default-files',
+    type: 'files',
+    zIndex: 103,
+    tilt: 2,
+    position: { x: 360, y: 360 },
+  },
+  {
+    id: 'default-system',
+    type: 'system',
+    zIndex: 104,
+    tilt: -2,
+    position: { x: 760, y: 360 },
   },
 ];
 
@@ -53,7 +67,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 103,
+  nextZIndex: 105,
 };
 
 function getWindowId(): string {
@@ -86,8 +100,8 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
         zIndex: state.nextZIndex,
         tilt: WINDOW_TILT_BY_TYPE[windowType],
         position: {
-          x: 95 + state.windows.length * 48,
-          y: 70 + state.windows.length * 34,
+          x: 110 + state.windows.length * 40,
+          y: 90 + state.windows.length * 24,
         },
       };
 

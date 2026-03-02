@@ -1,30 +1,30 @@
 const guestbookMessages = [
   {
-    name: 'Anonymous 💙',
-    nameColor: '#0055FF',
-    message: 'wow this page is so cool!!! 😍',
-    timestamp: '2026-03-01 12:34 PM',
+    name: 'pixel_fairy',
+    nameColor: '#ff4fb0',
+    message: 'this desktop is sooo cute omg ♡',
+    timestamp: '2026-03-02 03:12 PM',
   },
   {
-    name: 'StarGirl ⭐',
-    nameColor: '#FF1493',
-    message: 'love the vibes here!! ^_^',
-    timestamp: '2026-03-01 11:20 AM',
+    name: 'cd_ripper_99',
+    nameColor: '#2d89ff',
+    message: 'xp sky + stickers = peak internet bedroom',
+    timestamp: '2026-03-02 01:41 PM',
   },
   {
-    name: 'RetroFan 🌟',
-    nameColor: '#00CC00',
-    message: 'takes me back to MSN messenger days 💚',
-    timestamp: '2026-02-28 8:15 PM',
+    name: 'tinyminesweeper',
+    nameColor: '#2fcf67',
+    message: 'dropping by to lose at minesweeper again',
+    timestamp: '2026-03-01 11:27 PM',
   },
 ];
 
 export default function ChatContent() {
   return (
     <div>
-      <div className="window-heading">Guestbook Zone</div>
-      <div className="mb-3 rounded border-2 border-[#ccc] bg-[#f0f0f0] p-3 [border-style:inset]">
-        <div className="stretch-font mb-3 text-[24px] text-[#FF00C8]">💬 MY GUESTBOOK</div>
+      <div className="window-heading">Guestbook</div>
+      <div className="inset-box mb-3">
+        <div className="pixel-font mb-3 text-[20px] text-[#ff4fb0]">Leave a message!</div>
 
         {guestbookMessages.map((entry) => (
           <div key={entry.name} className="chat-bubble">
@@ -39,8 +39,8 @@ export default function ChatContent() {
 
       <input
         type="text"
-        placeholder="leave a message... 💌"
-        className="w-full rounded-[10px] border-2 border-[#1f67d3] bg-[#f3fbff] p-2 text-lg"
+        placeholder="write something cute..."
+        className="terminal-input w-full rounded-[8px] p-2 text-[15px]"
       />
     </div>
   );

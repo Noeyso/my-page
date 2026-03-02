@@ -4,7 +4,7 @@ export default function SystemTray() {
       <span>📶</span>
       <span>🔋</span>
       <span>🔊</span>
-      <span className="stretch-font">12:34 PM</span>
+      <span className="pixel-font">03:33 PM</span>
     </div>
   );
 }
