@@ -10,8 +10,8 @@
   --navy-850: #132247;
   --navy-800: #1a2f5b;
   --navy-700: #27457d;
-  --cyan-soft: #88d6e8;
-  --cyan-bright: #67c7e2;
+  --cyan-soft: #5d8160;
+  --cyan-bright: #244e27;
   --green-muted: #79ba98;
   --green-core: #5ca87f;
   --purple-under: #7b72b1;
@@ -732,6 +732,382 @@
   }
 }
 
+@layer components {
+  .desktop-bg {
+    background:
+      linear-gradient(rgba(8, 12, 20, 0.22), rgba(8, 12, 20, 0.22)),
+      url('../../assets/mood/bg.png') center / cover no-repeat !important;
+    filter: none !important;
+  }
+
+  .desktop-bg::before,
+  .desktop-bg::after {
+    content: none !important;
+  }
+}
+
+@layer components {
+  /* Windows 95 / early 2000s visual override */
+  body {
+    background: #bfc7d1 !important;
+    color: #1e2733;
+  }
+
+  .desktop-bg {
+    background:
+      radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.55) 0%, transparent 38%),
+      radial-gradient(circle at 82% 14%, rgba(170, 198, 227, 0.45) 0%, transparent 42%),
+      linear-gradient(180deg, #dbe6f2 0%, #c8d7e7 52%, #bccdde 100%) !important;
+    filter: none !important;
+  }
+
+  .desktop-bg::before,
+  .desktop-bg::after,
+  .minimal-base-layer,
+  .minimal-m12-focus,
+  .minimal-noise-layer,
+  .minimal-vignette-layer,
+  .broadcast-noise-field,
+  .broadcast-wire-globe,
+  .broadcast-suit-figure,
+  .broadcast-glitch-accent,
+  .broadcast-shadow-falloff {
+    display: none !important;
+  }
+
+  .pixel-star {
+    animation: none !important;
+    opacity: 0.18;
+    filter: none;
+  }
+
+  .noise-overlay,
+  .scanlines,
+  .crt-vignette {
+    display: none !important;
+  }
+
+  .marquee-bg {
+    background: #c0c0c0 !important;
+    border-top: 1px solid #ffffff !important;
+    border-bottom: 1px solid #808080 !important;
+    box-shadow:
+      inset -1px -1px 0 #000000,
+      inset 1px 1px 0 #dfdfdf,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #f2f2f2 !important;
+  }
+
+  .marquee-text {
+    color: #103f87 !important;
+    text-shadow: none !important;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 13px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .window {
+    background: #c0c0c0 !important;
+    border: 1px solid #000000 !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    box-shadow:
+      inset -1px -1px 0 #000000,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #dfdfdf !important;
+  }
+
+  .window-titlebar {
+    background: linear-gradient(90deg, #0b46a7 0%, #2f73c6 100%) !important;
+    border-bottom: 1px solid #000000 !important;
+    box-shadow: none !important;
+    padding: 4px 8px !important;
+  }
+
+  .window-title {
+    color: #ffffff !important;
+    text-shadow: none !important;
+    font-size: 12px !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .window-toolbar {
+    background: #c0c0c0 !important;
+    border-top: 1px solid #dfdfdf !important;
+    border-bottom: 1px solid #808080 !important;
+    padding: 4px 6px !important;
+  }
+
+  .toolbar-pill,
+  .glossy-btn,
+  .window-button {
+    border: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    background: #c0c0c0 !important;
+    color: #000000 !important;
+    text-shadow: none !important;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #000000,
+      inset 2px 2px 0 #dfdfdf !important;
+  }
+
+  .window-button {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .window-content {
+    background: #d4d0c8 !important;
+    color: #202020 !important;
+  }
+
+  .window-heading {
+    color: #1f4d8d !important;
+    text-shadow: none !important;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 18px !important;
+  }
+
+  .desktop-icon {
+    color: #111 !important;
+    text-shadow: 1px 1px 0 #efefef !important;
+    width: 86px;
+  }
+
+  .desktop-icon-img {
+    width: 52px !important;
+    height: 52px !important;
+    border: 1px solid #8d8d8d !important;
+    border-radius: 0 !important;
+    background: linear-gradient(180deg, #f4f4f4 0%, #d7d7d7 100%) !important;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff !important;
+  }
+
+  .desktop-icon-img img {
+    image-rendering: pixelated;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .desktop-icon-label {
+    font-size: 10px !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: none !important;
+    color: #222 !important;
+  }
+
+  .dock {
+    background: #c0c0c0 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    box-shadow:
+      inset -1px -1px 0 #000000,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #dfdfdf !important;
+    padding: 6px 10px !important;
+    gap: 8px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .dock-icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 0 !important;
+    border: 1px solid #8a8a8a !important;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff !important;
+    font-size: 22px !important;
+    background: #d8d8d8 !important;
+    image-rendering: pixelated;
+  }
+
+  .dock-icon:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    filter: none !important;
+  }
+
+  .dock-tooltip {
+    background: #ffffe1 !important;
+    color: #111 !important;
+    border: 1px solid #808080 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: 10px !important;
+  }
+
+  .system-tray {
+    background: #c0c0c0 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    color: #111 !important;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff !important;
+  }
+
+  .progress-fill,
+  .glitch {
+    text-shadow: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
+}
+
+@keyframes minimal-noise-flicker {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateX(0);
+  }
+  32% {
+    opacity: 0.2;
+    transform: translateX(0.6px);
+  }
+  63% {
+    opacity: 0.12;
+    transform: translateX(-0.8px);
+  }
+}
+
+@keyframes minimal-image-jitter {
+  0%,
+  100% {
+    opacity: 0.58;
+    transform: translate(-50%, -50%);
+  }
+  49% {
+    opacity: 0.58;
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    opacity: 0.44;
+    transform: translate(calc(-50% - 1px), calc(-50% + 1px));
+  }
+  52% {
+    opacity: 0.62;
+    transform: translate(calc(-50% + 1px), calc(-50% - 1px));
+  }
+}
+
+@keyframes minimal-rgb-split {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(0, 0);
+  }
+  22% {
+    opacity: 0.34;
+    transform: translate(-1px, 0);
+  }
+  24% {
+    opacity: 0.12;
+    transform: translate(1px, 0);
+  }
+  67% {
+    opacity: 0.3;
+    transform: translate(0, -1px);
+  }
+  70% {
+    opacity: 0.14;
+    transform: translate(0, 1px);
+  }
+}
+
+@layer components {
+  .minimal-base-layer,
+  .minimal-m12-focus,
+  .minimal-noise-layer,
+  .minimal-vignette-layer {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .minimal-base-layer {
+    inset: 0;
+    z-index: 1;
+    background: #000000;
+  }
+
+  .minimal-m12-focus {
+    z-index: 2;
+    left: 59%;
+    top: 52%;
+    width: min(58vw, 820px);
+    aspect-ratio: 1024 / 768;
+    background: url('../../assets/mood/m12.png') center / contain no-repeat;
+    transform: translate(-50%, -50%);
+    opacity: 0.58;
+    mix-blend-mode: screen;
+    animation: minimal-image-jitter 6.8s steps(2, end) infinite;
+    isolation: isolate;
+  }
+
+  .minimal-m12-focus::before,
+  .minimal-m12-focus::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('../../assets/mood/m12.png') center / contain no-repeat;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .minimal-m12-focus::before {
+    filter: hue-rotate(-15deg) saturate(1.45);
+    opacity: 0.22;
+    transform: translateX(-1px);
+    animation: minimal-rgb-split 1.8s steps(2, end) infinite;
+  }
+
+  .minimal-m12-focus::after {
+    filter: hue-rotate(28deg) saturate(1.55);
+    opacity: 0.18;
+    transform: translateX(1px);
+    animation: minimal-rgb-split 2.3s steps(3, end) infinite reverse;
+  }
+
+  .minimal-noise-layer {
+    inset: 0;
+    z-index: 3;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(151, 218, 255, 0.02),
+        rgba(151, 218, 255, 0.02) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      radial-gradient(circle, rgba(132, 206, 255, 0.05) 0.7px, transparent 0.7px);
+    background-size:
+      auto,
+      4px 4px;
+    mix-blend-mode: screen;
+    animation: minimal-noise-flicker 4.5s steps(2, end) infinite;
+  }
+
+  .minimal-vignette-layer {
+    inset: 0;
+    z-index: 4;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, 0.82) 100%);
+  }
+
+  @media (max-width: 1100px) {
+    .minimal-m12-focus {
+      left: 60%;
+      width: min(72vw, 620px);
+      opacity: 0.5;
+    }
+  }
+}
+
 @keyframes float {
   0%,
   100% {
@@ -880,16 +1256,16 @@
 
   .marquee-bg {
     background: #000000;
-    border-top: 1px solid #2bb7ff;
-    border-bottom: 1px solid #2bb7ff;
-    box-shadow: 0 0 10px rgba(43, 183, 255, 0.45);
+    border-top: 1px solid #244e27;
+    border-bottom: 1px solid #244e27;
+    box-shadow: 0 0 10px rgba(36, 78, 39, 0.42);
   }
 
   .marquee-text {
-    color: #84dcff;
+    color: #7ea782;
     text-shadow:
-      0 0 7px rgba(43, 183, 255, 0.8),
-      0 0 13px rgba(109, 255, 155, 0.26);
+      0 0 7px rgba(36, 78, 39, 0.75),
+      0 0 13px rgba(93, 129, 96, 0.36);
   }
 
   .sticker {
@@ -1102,15 +1478,15 @@
   }
 
   .progress-fill {
-    background: linear-gradient(90deg, #2bb7ff 0%, #77deff 68%, #88ffb1 100%);
-    box-shadow: 0 0 7px rgba(43, 183, 255, 0.72);
+    background: linear-gradient(90deg, #244e27 0%, #3b6a3f 68%, #5d8160 100%);
+    box-shadow: 0 0 7px rgba(36, 78, 39, 0.58);
   }
 
   .window-heading {
-    color: #138fff;
+    color: #5d8160;
     text-shadow:
-      0 0 8px rgba(43, 183, 255, 0.74),
-      0 0 12px rgba(109, 255, 155, 0.24);
+      0 0 8px rgba(36, 78, 39, 0.72),
+      0 0 12px rgba(93, 129, 96, 0.26);
   }
 
   .glossy-btn {
@@ -1146,13 +1522,13 @@
   }
 
   .desktop-icon {
-    color: #9fe5ff;
-    text-shadow: 0 0 7px rgba(43, 183, 255, 0.85);
+    color: #87aa8a;
+    text-shadow: 0 0 7px rgba(36, 78, 39, 0.7);
   }
 
   .desktop-icon-label {
     text-shadow:
-      0 0 8px rgba(43, 183, 255, 0.9),
+      0 0 8px rgba(36, 78, 39, 0.74),
       1px 1px 0 #000000;
   }
 
@@ -1166,8 +1542,8 @@
   }
 
   .glitch {
-    color: rgba(47, 192, 255, 0.26) !important;
-    text-shadow: 0 0 10px rgba(43, 183, 255, 0.55);
+    color: rgba(36, 78, 39, 0.32) !important;
+    text-shadow: 0 0 10px rgba(36, 78, 39, 0.5);
   }
 
   .window,
