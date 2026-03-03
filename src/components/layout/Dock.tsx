@@ -26,8 +26,7 @@ export default function Dock({ onOpen }: DockProps) {
           tabIndex={0}
           onKeyDown={(event) => handleKeyDown(event, app.id)}
         >
-          <span className="dock-app-glyph">{app.icon}</span>
-          <span className="dock-app-label">{app.label}</span>
+          <span>{app.icon}</span>
           <div className="dock-tooltip">{app.label}</div>
         </div>
       ))}
