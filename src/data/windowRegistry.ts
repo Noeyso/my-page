@@ -7,10 +7,10 @@ import SystemContent from '../components/windows/content/SystemContent';
 import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
-  profile: { title: 'about_me.txt', icon: '👧', component: ProfileContent },
-  chat: { title: 'guestbook.exe', icon: '💬', component: ChatContent },
-  music: { title: 'music_player.exe', icon: '🎵', component: MusicContent },
-  gallery: { title: 'cd_shelf.jpg', icon: '💿', component: GalleryContent },
-  files: { title: 'mspaint.exe', icon: '🎨', component: FilesContent },
-  system: { title: 'minesweeper.exe', icon: '🧨', component: SystemContent },
+  profile: { title: 'about_me.txt', icon: '🛰️', component: ProfileContent },
+  chat: { title: 'guestbook.exe', icon: '📟', component: ChatContent },
+  music: { title: 'music_player.exe', icon: '🎛️', component: MusicContent },
+  gallery: { title: 'cd_shelf.jpg', icon: '🪐', component: GalleryContent },
+  files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent },
+  system: { title: 'minesweeper.exe', icon: '🧩', component: SystemContent },
 };

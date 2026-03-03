@@ -1,4 +1,4 @@
-const paintColors = ['#000000', '#ff2e2e', '#ff8f1f', '#ffe34a', '#47cf58', '#2ca5ff', '#9f67ff', '#ff76cc'];
+const paintColors = ['#182a4d', '#365f8a', '#5f83af', '#77bdd4', '#79ba98', '#9a93c8', '#c1d7e7', '#e8f2f9'];
 
 export default function FilesContent() {
   return (
