@@ -636,6 +636,401 @@
     overflow: hidden;
   }
 
+  .paint-save-msg {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #5e8fc9;
+    align-self: center;
+    margin-left: 4px;
+  }
+
+  /* === Win98 Explorer === */
+
+  .window-wide {
+    min-width: 520px;
+    width: 540px;
+  }
+
+  .explorer {
+    margin: -14px;
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+  }
+
+  /* Toolbar row */
+  .explorer-toolbar-row {
+    display: flex;
+    align-items: center;
+    padding: 3px 6px;
+    background: linear-gradient(180deg, #dce8f4 0%, #c4d5e8 100%);
+    border-bottom: 1px solid #a0b6cf;
+  }
+
+  .explorer-toolbar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .explorer-tool-btn {
+    width: 26px;
+    height: 22px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 11px;
+    color: #2b4c7e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .explorer-tool-btn:hover:not(:disabled) {
+    border-color: #8daac6;
+    background: linear-gradient(180deg, #eef4fa 0%, #d0dfe9 100%);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.6),
+      inset -1px -1px 0 rgba(100, 130, 170, 0.3);
+  }
+
+  .explorer-tool-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .explorer-toolbar-sep {
+    width: 1px;
+    height: 18px;
+    background: #a0b6cf;
+    margin: 0 4px;
+  }
+
+  /* Address row */
+  .explorer-address-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 6px;
+    background: linear-gradient(180deg, #d4e2f0 0%, #c0d1e4 100%);
+    border-bottom: 1px solid #9db3cc;
+  }
+
+  .explorer-address-label {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #3a5a82;
+    flex-shrink: 0;
+  }
+
+  .explorer-address-bar {
+    flex: 1;
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #1a3355;
+    background: #fff;
+    border: 2px inset #8fadc8;
+    padding: 2px 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .explorer-address-icon {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+  }
+
+  /* Body: sidebar + main */
+  .explorer-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  /* Sidebar / tree view */
+  .explorer-sidebar {
+    width: 140px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 2px inset #8fadc8;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .explorer-tree-header {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #3a5a82;
+    padding: 4px 8px;
+    background: linear-gradient(180deg, #dce8f4 0%, #c4d5e8 100%);
+    border-bottom: 1px solid #a0b6cf;
+    font-weight: bold;
+  }
+
+  .explorer-tree {
+    padding: 4px 0;
+  }
+
+  .explorer-tree-item {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #1a3355;
+    padding: 3px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .explorer-tree-item:hover {
+    background: #e8f0f8;
+  }
+
+  .explorer-tree-item.active {
+    background: #2b4c7e;
+    color: #fff;
+  }
+
+  .explorer-tree-child {
+    padding-left: 22px;
+  }
+
+  .explorer-tree-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .explorer-tree-folder-icon {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+  }
+
+  /* Main content pane */
+  .explorer-main {
+    flex: 1;
+    background: #fff;
+    overflow-y: auto;
+    min-width: 0;
+  }
+
+  /* Folder grid (root view) */
+  .explorer-folder-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 12px;
+  }
+
+  .explorer-folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 90px;
+  }
+
+  .explorer-folder-item:hover .explorer-folder-label {
+    background: #2b4c7e;
+    color: #fff;
+  }
+
+  .explorer-folder-icon {
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+  }
+
+  .explorer-folder-label {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #1a3355;
+    text-align: center;
+    padding: 1px 4px;
+  }
+
+  /* Preview panel */
+  .explorer-preview {
+    position: relative;
+    border-bottom: 1px solid #a0b6cf;
+    background: #e8f0f8;
+    overflow: hidden;
+    aspect-ratio: 500 / 170;
+  }
+
+  .explorer-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .explorer-preview-close {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(180deg, #e8f2f9 0%, #c1d7e7 100%);
+    border: 1px outset #8fadc8;
+    font-size: 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2b4c7e;
+  }
+
+  .explorer-preview-close:hover {
+    background: linear-gradient(180deg, #f0f6fb 0%, #d5e2ee 100%);
+  }
+
+  /* Text preview (memo) */
+  .explorer-text-preview {
+    border-bottom: 1px solid #a0b6cf;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .explorer-text-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 8px;
+    background: linear-gradient(180deg, #dce8f4 0%, #c4d5e8 100%);
+    border-bottom: 1px solid #a0b6cf;
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #2b4c7e;
+  }
+
+  .explorer-text-preview-body {
+    padding: 6px 8px;
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #1a3355;
+    max-height: 100px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* File list */
+  .explorer-file-list {
+    padding: 2px;
+  }
+
+  .explorer-empty {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #6f8eaf;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .explorer-file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 6px;
+    cursor: pointer;
+  }
+
+  .explorer-file-item:hover {
+    background: #e8f0f8;
+  }
+
+  .explorer-file-item.selected {
+    background: #2b4c7e;
+    color: #fff;
+  }
+
+  .explorer-file-item.selected .explorer-file-date {
+    color: #b0c8e0;
+  }
+
+  .explorer-file-thumb {
+    width: 48px;
+    height: 16px;
+    border: 1px solid #a0b6cf;
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  .explorer-file-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .explorer-file-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .explorer-file-name {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .explorer-file-date {
+    font-family: 'VT323', monospace;
+    font-size: 12px;
+    color: #6f8eaf;
+  }
+
+  .explorer-delete-btn {
+    width: 20px;
+    height: 20px;
+    border: 1px outset #8fadc8;
+    background: linear-gradient(180deg, #e8f2f9 0%, #c1d7e7 100%);
+    cursor: pointer;
+    font-size: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2b4c7e;
+  }
+
+  .explorer-delete-btn:hover {
+    background: linear-gradient(180deg, #f0f6fb 0%, #d5e2ee 100%);
+  }
+
+  /* Memo icon in file list */
+  .explorer-memo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: #f8fafc;
+    border-color: #c0d1e4;
+  }
+
+  /* Status bar */
+  .explorer-statusbar {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #3a5a82;
+    padding: 3px 8px;
+    background: linear-gradient(180deg, #d4e2f0 0%, #c0d1e4 100%);
+    border-top: 1px solid #a0b6cf;
+    flex-shrink: 0;
+  }
+
   .paint-stroke {
     position: absolute;
     border-radius: 999px;

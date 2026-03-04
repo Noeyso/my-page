@@ -19,6 +19,7 @@ interface DesktopIconBase {
   label: string;
   top: string;
   left: string;
+  windowType?: WindowType;
 }
 
 export interface DesktopEmojiIcon extends DesktopIconBase {

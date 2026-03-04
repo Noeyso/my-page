@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-export type WindowType = 'profile' | 'chat' | 'music' | 'memo' | 'files' | 'gallery';
+export type WindowType = 'profile' | 'chat' | 'music' | 'memo' | 'files' | 'gallery' | 'mycomputer';
 
 export interface WindowPosition {
   x: number;
@@ -19,6 +19,7 @@ export interface WindowRegistryItem {
   title: string;
   icon: string;
   component: ComponentType;
+  className?: string;
 }
 
 export type WindowRegistry = Record<WindowType, WindowRegistryItem>;

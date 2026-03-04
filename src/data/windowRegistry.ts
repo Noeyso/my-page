@@ -2,6 +2,7 @@ import ChatContent from '../components/windows/content/ChatContent';
 import FilesContent from '../components/windows/content/FilesContent';
 import MemoContent from '../components/windows/content/MemoContent';
 import MusicContent from '../components/windows/content/MusicContent';
+import MyComputerContent from '../components/windows/content/MyComputerContent';
 import ProfileContent from '../components/windows/content/ProfileContent';
 import SystemContent from '../components/windows/content/SystemContent';
 import type { WindowRegistry } from '../types/window';
@@ -13,4 +14,5 @@ export const windowRegistry: WindowRegistry = {
   memo: { title: 'memo.txt', icon: '📝', component: MemoContent },
   files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent },
   gallery: { title: 'gallery.exe', icon: '🧩', component: SystemContent },
+  mycomputer: { title: 'my_computer.exe', icon: '🖥️', component: MyComputerContent, className: 'window-wide' },
 };

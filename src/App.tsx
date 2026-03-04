@@ -24,7 +24,7 @@ export default function App() {
 
       <DesktopEffects />
       <MarqueeBanner />
-      <DesktopIcons />
+      <DesktopIcons onOpen={openWindow} />
 
       {windows.map((window) => {
         const registryItem = windowRegistry[window.type];
@@ -36,6 +36,7 @@ export default function App() {
             id={window.id}
             title={registryItem.title}
             icon={registryItem.icon}
+            className={registryItem.className}
             zIndex={window.zIndex}
             initialPosition={window.position}
             tilt={window.tilt}

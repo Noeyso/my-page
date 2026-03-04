@@ -3,7 +3,7 @@ export default function MarqueeBanner() {
     <div className="marquee-container">
       <div className="marquee-bg">
         <div className="marquee-text text-2xl text-white">
-          TRANSMITTING FROM A 1999 DREAM TERMINAL // SOFT CYAN STATIC // LEAVE A SIGNAL IN THE GUESTBOOK
+          TRANSMITTING FROM A 1998 DREAM TERMINAL // SOFT CYAN STATIC // LEAVE A SIGNAL IN THE GUESTBOOK
         </div>
       </div>
     </div>

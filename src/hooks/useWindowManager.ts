@@ -49,6 +49,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   memo: 3,
   files: -3,
   gallery: 1,
+  mycomputer: -1,
 };
 
 const INITIAL_STATE: WindowState = {

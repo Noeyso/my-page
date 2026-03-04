@@ -1,4 +1,5 @@
 import { PointerEvent, useEffect, useRef, useState } from 'react';
+import { savePainting } from '../../../services/paintingService';
 
 const paintColors = ['#182a4d', '#365f8a', '#5f83af', '#77bdd4', '#79ba98', '#9a93c8', '#c1d7e7', '#e8f2f9', '#ffffff', '#000000'];
 
@@ -11,6 +12,8 @@ export default function FilesContent() {
   const [activeColor, setActiveColor] = useState('#365f8a');
   const [tool, setTool] = useState<Tool>('brush');
   const [brushSize, setBrushSize] = useState(4);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -96,6 +99,22 @@ export default function FilesContent() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
 
+  const handleSave = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas || saving) return;
+    setSaving(true);
+    setSaveMessage('');
+    try {
+      await savePainting(canvas);
+      setSaveMessage('Saved!');
+    } catch {
+      setSaveMessage('Save failed');
+    } finally {
+      setSaving(false);
+      setTimeout(() => setSaveMessage(''), 2000);
+    }
+  };
+
   return (
     <div>
       <div className="window-heading">MS Paint</div>
@@ -110,6 +129,10 @@ export default function FilesContent() {
         <button className="paint-tool" type="button" onClick={clearCanvas} title="Clear">
           🗑
         </button>
+        <button className="paint-tool" type="button" onClick={handleSave} disabled={saving} title="Save">
+          💾
+        </button>
+        {saveMessage && <span className="paint-save-msg">{saveMessage}</span>}
         <input
           type="range"
           min={1}

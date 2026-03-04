@@ -14,7 +14,7 @@ export default function ProfileContent() {
       <div className="inset-box">
         <div className="pixel-font text-[18px] text-[#355f8a]">About Me</div>
         <div className="mt-2 leading-[1.6]">
-          ✦ building dreamlike terminals like it is 1999
+          ✦ building dreamlike terminals like it is
           <br />
           ✦ collecting old interfaces, soft scanlines, and memory artifacts
           <br />

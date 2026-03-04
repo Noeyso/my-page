@@ -9,6 +9,7 @@ interface WindowFrameProps {
   zIndex: number;
   initialPosition: WindowPosition;
   tilt?: number;
+  className?: string;
   onClose: () => void;
   onFocus: (windowId: string) => void;
   children: ReactNode;
@@ -21,6 +22,7 @@ export default function WindowFrame({
   zIndex,
   initialPosition,
   tilt = 0,
+  className,
   onClose,
   onFocus,
   children,
@@ -78,7 +80,7 @@ export default function WindowFrame({
 
   return (
     <div
-      className="window"
+      className={`window${className ? ` ${className}` : ''}`}
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
