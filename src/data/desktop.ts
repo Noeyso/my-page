@@ -18,6 +18,6 @@ export const dockApps: DockApp[] = [
 
 export const desktopIcons: DesktopIcon[] = [
   { img: iconTerminal, label: 'My Computer', top: '106px', left: '26px', windowType: 'mycomputer' },
-  { img: iconTrash, label: 'Recycle Bin', top: '206px', left: '42px' },
-  // { img: iconInternet, label: 'Internet', top: '306px', left: '20px' },
+  { icon: '🎮', label: 'Tetris', top: '206px', left: '26px', windowType: 'tetris' },
+  { img: iconTrash, label: 'Recycle Bin', top: '306px', left: '42px' },
 ];

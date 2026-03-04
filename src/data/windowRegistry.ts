@@ -5,6 +5,7 @@ import MusicContent from '../components/windows/content/MusicContent';
 import MyComputerContent from '../components/windows/content/MyComputerContent';
 import ProfileContent from '../components/windows/content/ProfileContent';
 import SystemContent from '../components/windows/content/SystemContent';
+import TetrisContent from '../components/windows/content/TetrisContent';
 import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
@@ -15,4 +16,5 @@ export const windowRegistry: WindowRegistry = {
   files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent },
   gallery: { title: 'gallery.exe', icon: '🧩', component: SystemContent },
   mycomputer: { title: 'my_computer.exe', icon: '🖥️', component: MyComputerContent, className: 'window-wide' },
+  tetris: { title: 'tetris.exe', icon: '🎮', component: TetrisContent },
 };

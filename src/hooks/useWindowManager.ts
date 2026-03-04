@@ -50,6 +50,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   files: -3,
   gallery: 1,
   mycomputer: -1,
+  tetris: 0,
 };
 
 const INITIAL_STATE: WindowState = {
