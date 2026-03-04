@@ -6,6 +6,7 @@ import iconMusic from '../../assets/icon-music.png';
 import iconSketch from '../../assets/icon-sketch.png';
 import iconTransport from '../../assets/icon-transport.png';
 import iconTrash from '../../assets/icon-trash.png';
+import iconGame from '../../assets/icon-game.png';
 
 export const dockApps: DockApp[] = [
   { id: 'profile', img: iconTerminal, label: 'About Me', color: '#d4d4d4' },
@@ -18,6 +19,6 @@ export const dockApps: DockApp[] = [
 
 export const desktopIcons: DesktopIcon[] = [
   { img: iconTerminal, label: 'My Computer', top: '106px', left: '26px', windowType: 'mycomputer' },
-  { icon: '🎮', label: 'Tetris', top: '206px', left: '26px', windowType: 'tetris' },
+  { img: iconGame, label: 'Tetris', top: '206px', left: '26px', windowType: 'tetris' },
   { img: iconTrash, label: 'Recycle Bin', top: '306px', left: '42px' },
 ];

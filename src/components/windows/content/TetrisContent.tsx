@@ -4,6 +4,8 @@ const COLS = 10;
 const ROWS = 20;
 const CELL = 20;
 const TICK_MS = 500;
+const SCOREBOARD_KEY = 'tetris-highscores';
+const MAX_SCORES = 5;
 
 type Board = number[][];
 
@@ -33,6 +35,13 @@ interface Piece {
   color: number;
   x: number;
   y: number;
+}
+
+interface ScoreEntry {
+  score: number;
+  lines: number;
+  level: number;
+  date: string;
 }
 
 function createBoard(): Board {
@@ -99,55 +108,105 @@ function getGhostY(board: Board, piece: Piece): number {
   return gy;
 }
 
+function loadScores(): ScoreEntry[] {
+  try {
+    const raw = localStorage.getItem(SCOREBOARD_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveScore(entry: ScoreEntry): ScoreEntry[] {
+  const scores = loadScores();
+  scores.push(entry);
+  scores.sort((a, b) => b.score - a.score);
+  const top = scores.slice(0, MAX_SCORES);
+  localStorage.setItem(SCOREBOARD_KEY, JSON.stringify(top));
+  return top;
+}
+
 const SCORE_TABLE = [0, 100, 300, 500, 800];
 
 export default function TetrisContent() {
   const [board, setBoard] = useState<Board>(createBoard);
   const [piece, setPiece] = useState<Piece>(randomPiece);
   const [nextPiece, setNextPiece] = useState<Piece>(randomPiece);
+  const [holdPiece, setHoldPiece] = useState<{ shape: number[][]; color: number } | null>(null);
+  const [canHold, setCanHold] = useState(true);
   const [score, setScore] = useState(0);
   const [lines, setLines] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
+  const [highScores, setHighScores] = useState<ScoreEntry[]>(loadScores);
 
   const boardRef = useRef(board);
   const pieceRef = useRef(piece);
   const nextRef = useRef(nextPiece);
+  const holdRef = useRef(holdPiece);
+  const canHoldRef = useRef(canHold);
   const gameOverRef = useRef(gameOver);
   const pausedRef = useRef(paused);
+  const scoreRef = useRef(score);
+  const linesRef = useRef(lines);
   const containerRef = useRef<HTMLDivElement>(null);
 
   boardRef.current = board;
   pieceRef.current = piece;
   nextRef.current = nextPiece;
+  holdRef.current = holdPiece;
+  canHoldRef.current = canHold;
   gameOverRef.current = gameOver;
   pausedRef.current = paused;
+  scoreRef.current = score;
+  linesRef.current = lines;
+
+  const endGame = useCallback(() => {
+    setGameOver(true);
+    const entry: ScoreEntry = {
+      score: scoreRef.current,
+      lines: linesRef.current,
+      level: Math.floor(linesRef.current / 10),
+      date: new Date().toLocaleDateString(),
+    };
+    const updated = saveScore(entry);
+    setHighScores(updated);
+  }, []);
 
   const spawnNext = useCallback(() => {
     const next = nextRef.current;
+    const spawnX = Math.floor((COLS - next.shape[0].length) / 2);
+    // Check if piece can be placed at y=0 (visible area)
+    if (!isValid(boardRef.current, next.shape, spawnX, 0)) {
+      endGame();
+      return;
+    }
     const spawned: Piece = {
       shape: next.shape,
       color: next.color,
-      x: Math.floor((COLS - next.shape[0].length) / 2),
+      x: spawnX,
       y: -next.shape.length,
     };
-    if (!isValid(boardRef.current, spawned.shape, spawned.x, spawned.y)) {
-      setGameOver(true);
-      return;
-    }
     setPiece(spawned);
     setNextPiece(randomPiece());
-  }, []);
+    setCanHold(true);
+  }, [endGame]);
 
   const lockPiece = useCallback(() => {
-    const merged = mergePiece(boardRef.current, pieceRef.current);
+    const p = pieceRef.current;
+    // If any part of the piece is above the board, game over
+    if (p.y < 0) {
+      endGame();
+      return;
+    }
+    const merged = mergePiece(boardRef.current, p);
     const { board: cleared, cleared: n } = clearLines(merged);
     setBoard(cleared);
     setScore((s) => s + SCORE_TABLE[n]);
     setLines((l) => l + n);
     spawnNext();
-  }, [spawnNext]);
+  }, [spawnNext, endGame]);
 
   const moveDown = useCallback(() => {
     if (gameOverRef.current || pausedRef.current) return;
@@ -190,6 +249,30 @@ export default function TetrisContent() {
     }
   }, []);
 
+  const holdCurrentPiece = useCallback(() => {
+    if (gameOverRef.current || pausedRef.current || !canHoldRef.current) return;
+    const current = pieceRef.current;
+    const currentBase = { shape: current.shape, color: current.color };
+
+    if (holdRef.current) {
+      // Swap with held piece
+      const held = holdRef.current;
+      const spawnX = Math.floor((COLS - held.shape[0].length) / 2);
+      if (!isValid(boardRef.current, held.shape, spawnX, 0)) return;
+      setPiece({
+        shape: held.shape,
+        color: held.color,
+        x: spawnX,
+        y: -held.shape.length,
+      });
+    } else {
+      // No held piece, spawn next
+      spawnNext();
+    }
+    setHoldPiece(currentBase);
+    setCanHold(false);
+  }, [spawnNext]);
+
   // Keyboard
   useEffect(() => {
     if (!started) return;
@@ -217,6 +300,11 @@ export default function TetrisContent() {
           e.preventDefault();
           hardDrop();
           break;
+        case 'c':
+        case 'C':
+          e.preventDefault();
+          holdCurrentPiece();
+          break;
         case 'p':
         case 'P':
           e.preventDefault();
@@ -226,7 +314,7 @@ export default function TetrisContent() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [started, move, moveDown, rotatePiece, hardDrop]);
+  }, [started, move, moveDown, rotatePiece, hardDrop, holdCurrentPiece]);
 
   // Game tick
   useEffect(() => {
@@ -247,6 +335,8 @@ export default function TetrisContent() {
     const p = randomPiece();
     setPiece(p);
     setNextPiece(randomPiece());
+    setHoldPiece(null);
+    setCanHold(true);
     setScore(0);
     setLines(0);
     setGameOver(false);
@@ -257,11 +347,16 @@ export default function TetrisContent() {
   const level = Math.floor(lines / 10);
   const ghostY = getGhostY(board, piece);
 
-  // Render next piece preview
-  const renderNext = () => {
-    const np = nextPiece;
-    const h = np.shape.length;
-    const w = np.shape[0].length;
+  // Render piece preview (for next and hold)
+  const renderPiecePreview = (p: { shape: number[][]; color: number } | null) => {
+    if (!p) {
+      return (
+        <div style={{ width: 56, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#445566', fontSize: 11 }}>
+          EMPTY
+        </div>
+      );
+    }
+    const w = p.shape[0].length;
     return (
       <div
         style={{
@@ -270,13 +365,13 @@ export default function TetrisContent() {
           gap: 1,
         }}
       >
-        {np.shape.flat().map((cell, i) => (
+        {p.shape.flat().map((cell, i) => (
           <div
             key={i}
             style={{
               width: 14,
               height: 14,
-              background: cell ? COLORS[np.color] : 'transparent',
+              background: cell ? COLORS[p.color] : 'transparent',
               border: cell ? '1px solid rgba(255,255,255,0.3)' : 'none',
             }}
           />
@@ -305,8 +400,29 @@ export default function TetrisContent() {
         <div style={{ fontSize: 14, color: '#8899aa', textAlign: 'center', lineHeight: 1.6 }}>
           Arrow Keys: Move / Rotate<br />
           Space: Hard Drop<br />
+          C: Hold Piece<br />
           P: Pause
         </div>
+        {highScores.length > 0 && (
+          <div style={{ width: '100%', maxWidth: 200 }}>
+            <div style={{ fontSize: 14, color: '#ffdd00', marginBottom: 6, textAlign: 'center' }}>HIGH SCORES</div>
+            {highScores.map((s, i) => (
+              <div
+                key={i}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: 13,
+                  color: i === 0 ? '#ffdd00' : '#8899aa',
+                  padding: '2px 0',
+                }}
+              >
+                <span>{i + 1}. {s.score}</span>
+                <span>Lv.{s.level}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <button
           onClick={restart}
           style={{
@@ -425,14 +541,29 @@ export default function TetrisContent() {
               alignItems: 'center',
               justifyContent: 'center',
               background: 'rgba(0,0,0,0.75)',
-              gap: 12,
+              gap: 8,
             }}
           >
             <div style={{ fontSize: 22, color: '#ff4444' }}>GAME OVER</div>
             <div style={{ fontSize: 16, color: '#ffdd00' }}>Score: {score}</div>
+            <div style={{ fontSize: 12, color: '#8899aa', marginTop: 4 }}>HIGH SCORES</div>
+            {highScores.map((s, i) => (
+              <div
+                key={i}
+                style={{
+                  fontSize: 12,
+                  color: s.score === score && s.date === new Date().toLocaleDateString()
+                    ? '#00d4ff'
+                    : '#8899aa',
+                }}
+              >
+                {i + 1}. {s.score} (Lv.{s.level})
+              </div>
+            ))}
             <button
               onClick={restart}
               style={{
+                marginTop: 6,
                 padding: '6px 20px',
                 background: '#00d4ff',
                 color: '#1a1a2e',
@@ -469,8 +600,14 @@ export default function TetrisContent() {
       {/* Side panel */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, minWidth: 80 }}>
         <div>
+          <div style={{ fontSize: 12, color: '#8899aa', marginBottom: 4 }}>HOLD [C]</div>
+          <div style={{ opacity: canHold ? 1 : 0.4 }}>
+            {renderPiecePreview(holdPiece)}
+          </div>
+        </div>
+        <div>
           <div style={{ fontSize: 12, color: '#8899aa', marginBottom: 4 }}>NEXT</div>
-          {renderNext()}
+          {renderPiecePreview(nextPiece)}
         </div>
         <div>
           <div style={{ fontSize: 12, color: '#8899aa' }}>SCORE</div>

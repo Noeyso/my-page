@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('../../assets/DungGeunMo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1248,21 +1256,21 @@
     border: 1px solid #000000;
     background: #efefef;
     padding: 8px;
-    font-family: 'VT323', monospace;
-    font-size: 21px;
+    font-family: 'DungGeunMo', 'VT323', monospace;
+    font-size: 16px;
     color: #182b46;
   }
 
   .chat-window-line {
     white-space: pre-wrap;
     word-break: break-word;
-    line-height: 1.2;
+    line-height: 1.4;
   }
 
   .chat-window-empty {
     color: #516988;
-    font-family: 'VT323', monospace;
-    font-size: 21px;
+    font-family: 'DungGeunMo', 'VT323', monospace;
+    font-size: 16px;
   }
 
   .chat-window-form {

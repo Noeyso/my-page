@@ -22,21 +22,21 @@ const INITIAL_WINDOWS: ManagedWindow[] = [
   {
     id: 'default-profile',
     type: 'profile',
-    zIndex: 100,
+    zIndex: 200,
     tilt: -2,
     position: { x: 150, y: 132 },
   },
   {
     id: 'default-music',
     type: 'music',
-    zIndex: 101,
+    zIndex: 201,
     tilt: -1,
     position: { x: 840, y: 148 },
   },
   {
     id: 'default-system',
     type: 'gallery',
-    zIndex: 102,
+    zIndex: 202,
     tilt: -2,
     position: { x: 760, y: 360 },
   },
@@ -55,7 +55,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 103,
+  nextZIndex: 203,
 };
 
 function getWindowId(): string {
