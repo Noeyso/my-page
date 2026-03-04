@@ -12,6 +12,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Win98 pixel hourglass that follows mouse */
+.hourglass-follower {
+  position: fixed;
+  left: -100px;
+  top: -100px;
+  pointer-events: none;
+  z-index: 99999;
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+  transform: translate(12px, 4px);
+}
+
+@keyframes hourglass-spin {
+  0%, 33.32%   { background-position: 0 0; }
+  33.33%, 66.65% { background-position: -24px 0; }
+  66.66%, 100%  { background-position: -48px 0; }
+}
+
 :root {
   --navy-950: #0b1230;
   --navy-900: #101b3b;
