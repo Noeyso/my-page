@@ -1,7 +1,7 @@
 import { PointerEvent, useEffect, useRef, useState } from 'react';
 import { savePainting } from '../../../services/paintingService';
 
-const paintColors = ['#182a4d', '#365f8a', '#5f83af', '#77bdd4', '#79ba98', '#9a93c8', '#c1d7e7', '#e8f2f9', '#ffffff', '#000000'];
+const defaultPaintColors = ['#182a4d', '#365f8a', '#5f83af', '#77bdd4', '#79ba98', '#9a93c8', '#c1d7e7', '#e8f2f9', '#ffffff', '#000000'];
 
 type Tool = 'brush' | 'eraser';
 
@@ -9,6 +9,7 @@ export default function FilesContent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isDrawingRef = useRef(false);
+  const [paintColors, setPaintColors] = useState(defaultPaintColors);
   const [activeColor, setActiveColor] = useState('#365f8a');
   const [tool, setTool] = useState<Tool>('brush');
   const [brushSize, setBrushSize] = useState(4);
@@ -145,20 +146,42 @@ export default function FilesContent() {
       </div>
 
       <div className="paint-palette">
-        {paintColors.map((color) => (
+        {paintColors.map((color, idx) => (
           <button
-            key={color}
+            key={`${idx}-${color}`}
             type="button"
-            style={{ background: color }}
+            style={{ background: color, outline: activeColor === color ? '2px solid #00d4ff' : 'none', outlineOffset: 1 }}
             className="paint-color"
             onClick={() => {
               setActiveColor(color);
               setTool('brush');
             }}
-            title={color}
+            onDoubleClick={() => {
+              const input = document.createElement('input');
+              input.type = 'color';
+              input.value = color;
+              input.addEventListener('input', () => {
+                setPaintColors((prev) => prev.map((c, i) => (i === idx ? input.value : c)));
+                setActiveColor(input.value);
+                setTool('brush');
+              });
+              input.click();
+            }}
+            title={`${color} (double-click to customize)`}
             aria-label={`color ${color}`}
           />
         ))}
+        <input
+          type="color"
+          value={activeColor}
+          onChange={(e) => {
+            setActiveColor(e.target.value);
+            setTool('brush');
+          }}
+          title="Custom color"
+          aria-label="Custom color picker"
+          style={{ width: 22, height: 22, padding: 0, border: '1px solid #000', cursor: 'pointer' }}
+        />
       </div>
 
       <div className="paint-canvas" ref={containerRef}>

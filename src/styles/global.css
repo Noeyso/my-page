@@ -1207,10 +1207,12 @@
     width: 100%;
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .lockscreen-input-v2 {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     border: 1px solid #000000;
     background: #ffffff;
     padding: 6px 8px;
@@ -1222,7 +1224,9 @@
   }
 
   .lockscreen-button-v2 {
-    min-width: 96px;
+    min-width: 80px;
+    flex-shrink: 0;
+    padding: 6px 12px;
     border: 1px solid #000000;
     background: #c0c0c0;
     box-shadow:
@@ -1233,6 +1237,7 @@
     color: #000000;
     font-size: 12px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .lockscreen-button-v2:disabled,

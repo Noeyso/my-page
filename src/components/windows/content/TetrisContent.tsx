@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSessionStore } from '../../../store/useSessionStore';
 
 const COLS = 10;
 const ROWS = 20;
@@ -38,6 +39,7 @@ interface Piece {
 }
 
 interface ScoreEntry {
+  name: string;
   score: number;
   lines: number;
   level: number;
@@ -129,6 +131,7 @@ function saveScore(entry: ScoreEntry): ScoreEntry[] {
 const SCORE_TABLE = [0, 100, 300, 500, 800];
 
 export default function TetrisContent() {
+  const nickname = useSessionStore((state) => state.nickname);
   const [board, setBoard] = useState<Board>(createBoard);
   const [piece, setPiece] = useState<Piece>(randomPiece);
   const [nextPiece, setNextPiece] = useState<Piece>(randomPiece);
@@ -165,6 +168,7 @@ export default function TetrisContent() {
   const endGame = useCallback(() => {
     setGameOver(true);
     const entry: ScoreEntry = {
+      name: nickname || 'Anonymous',
       score: scoreRef.current,
       lines: linesRef.current,
       level: Math.floor(linesRef.current / 10),
@@ -172,7 +176,7 @@ export default function TetrisContent() {
     };
     const updated = saveScore(entry);
     setHighScores(updated);
-  }, []);
+  }, [nickname]);
 
   const spawnNext = useCallback(() => {
     const next = nextRef.current;
@@ -417,8 +421,8 @@ export default function TetrisContent() {
                   padding: '2px 0',
                 }}
               >
-                <span>{i + 1}. {s.score}</span>
-                <span>Lv.{s.level}</span>
+                <span>{i + 1}. {s.name || '???'}</span>
+                <span>{s.score}</span>
               </div>
             ))}
           </div>
@@ -463,8 +467,10 @@ export default function TetrisContent() {
           position: 'relative',
           width: COLS * CELL,
           height: ROWS * CELL,
-          border: '2px solid #3f5f88',
+          outline: '2px solid #3f5f88',
+          outlineOffset: 0,
           flexShrink: 0,
+          overflow: 'hidden',
         }}
       >
         {/* Grid cells */}
@@ -557,7 +563,7 @@ export default function TetrisContent() {
                     : '#8899aa',
                 }}
               >
-                {i + 1}. {s.score} (Lv.{s.level})
+                {i + 1}. {s.name || '???'} - {s.score}
               </div>
             ))}
             <button
