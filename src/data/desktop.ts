@@ -1,17 +1,23 @@
 import type { DesktopIcon, DockApp } from '../types/desktop';
+import iconInternet from '../../assets/icon-internet.png';
+import iconMemo from '../../assets/icon-memo.png';
+import iconTerminal from '../../assets/icon-terminal.png';
+import iconMusic from '../../assets/icon-music.png';
+import iconSketch from '../../assets/icon-sketch.png';
+import iconTransport from '../../assets/icon-transport.png';
+import iconTrash from '../../assets/icon-trash.png';
 
 export const dockApps: DockApp[] = [
-  { id: 'profile', icon: '🛰️', label: 'About Me', color: 'linear-gradient(135deg, #6f82b6 0%, #5a6ca0 100%)' },
-  { id: 'chat', icon: '📟', label: 'Guestbook', color: 'linear-gradient(135deg, #7fc6d8 0%, #5ea8be 100%)' },
-  { id: 'music', icon: '🎛️', label: 'Music', color: 'linear-gradient(135deg, #8ec3a6 0%, #659f81 100%)' },
-  { id: 'gallery', icon: '🪐', label: 'CD Shelf', color: 'linear-gradient(135deg, #9d94c3 0%, #7970a9 100%)' },
-  { id: 'files', icon: '🖌️', label: 'MS Paint', color: 'linear-gradient(135deg, #8ab4cb 0%, #678fa9 100%)' },
-  { id: 'system', icon: '🧩', label: 'Minesweeper', color: 'linear-gradient(135deg, #7d99bf 0%, #5b78a1 100%)' },
+  { id: 'profile', img: iconTerminal, label: 'About Me', color: '#d4d4d4' },
+  { id: 'chat', img: iconTransport, label: 'Guestbook', color: '#d4d4d4' },
+  { id: 'music', img: iconMusic, label: 'Music', color: '#d4d4d4' },
+  { id: 'memo', img: iconMemo, label: 'Memo', color: '#d4d4d4' },
+  { id: 'files', img: iconSketch, label: 'MS Paint', color: '#d4d4d4' },
+  { id: 'gallery', img: iconInternet, label: 'Gallery', color: '#d4d4d4' },
 ];
 
 export const desktopIcons: DesktopIcon[] = [
-  { icon: '🖥️', label: 'Dream Core', top: '106px', left: '26px' },
-  { icon: '🗑️', label: 'Archive Bin', top: '206px', left: '42px' },
-  { icon: '🌐', label: 'Orbit Net', top: '306px', left: '20px' },
-  { icon: '🧩', label: 'Minesweeper', top: '406px', left: '48px' },
+  { img: iconTerminal, label: 'My Computer', top: '106px', left: '26px' },
+  { img: iconTrash, label: 'Recycle Bin', top: '206px', left: '42px' },
+  { img: iconInternet, label: 'Internet', top: '306px', left: '20px' },
 ];

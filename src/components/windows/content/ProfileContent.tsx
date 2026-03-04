@@ -7,7 +7,6 @@ export default function ProfileContent() {
         <div className="pixel-font text-center text-[20px]">
           <div>name: YANG SO YEON</div>
           <div>status: online now</div>
-          <div>mood: retro-future reverie</div>
           <div className="blink mt-2">listening: midnight cassette loop 📼</div>
         </div>
       </div>
@@ -19,7 +18,7 @@ export default function ProfileContent() {
           <br />
           ✦ collecting old interfaces, soft scanlines, and memory artifacts
           <br />
-          ✦ coding at night with tape hiss and orbit radio on repeat
+          ✦ coding with tape hiss and orbit radio on repeat
           <br />
         </div>
       </div>

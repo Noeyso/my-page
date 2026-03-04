@@ -27,30 +27,16 @@ const INITIAL_WINDOWS: ManagedWindow[] = [
     position: { x: 150, y: 132 },
   },
   {
-    id: 'default-chat',
-    type: 'chat',
-    zIndex: 101,
-    tilt: 1,
-    position: { x: 500, y: 140 },
-  },
-  {
     id: 'default-music',
     type: 'music',
-    zIndex: 102,
+    zIndex: 101,
     tilt: -1,
     position: { x: 840, y: 148 },
   },
   {
-    id: 'default-files',
-    type: 'files',
-    zIndex: 103,
-    tilt: 2,
-    position: { x: 360, y: 360 },
-  },
-  {
     id: 'default-system',
-    type: 'system',
-    zIndex: 104,
+    type: 'gallery',
+    zIndex: 102,
     tilt: -2,
     position: { x: 760, y: 360 },
   },
@@ -60,14 +46,14 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   profile: -2,
   chat: 2,
   music: -1,
-  gallery: 3,
+  memo: 3,
   files: -3,
-  system: 1,
+  gallery: 1,
 };
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 105,
+  nextZIndex: 103,
 };
 
 function getWindowId(): string {

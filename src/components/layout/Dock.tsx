@@ -15,18 +15,26 @@ export default function Dock({ onOpen }: DockProps) {
   };
 
   return (
-    <div className="dock">
+    <div className="dock dock-glass">
       {dockApps.map((app) => (
         <div
           key={app.id}
-          className="dock-icon"
-          style={{ background: app.color }}
+          className="dock-icon dock-icon-glass"
           onClick={() => onOpen(app.id)}
           role="button"
           tabIndex={0}
           onKeyDown={(event) => handleKeyDown(event, app.id)}
         >
-          <span>{app.icon}</span>
+          {app.img ? (
+            <img
+              src={app.img}
+              alt={app.label}
+              className="h-7 w-7 object-contain dock-pixel-icon"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          ) : (
+            <span>{app.icon}</span>
+          )}
           <div className="dock-tooltip">{app.label}</div>
         </div>
       ))}

@@ -397,7 +397,7 @@
 
   .dock-tooltip {
     position: absolute;
-    bottom: 68px;
+    bottom: 50px;
     background: rgba(24, 43, 75, 0.95);
     color: var(--text-ice);
     border: 1px solid rgba(136, 214, 232, 0.52);
@@ -544,18 +544,10 @@
   .desktop-icon-img {
     width: 56px;
     height: 56px;
-    background: linear-gradient(160deg, rgba(72, 121, 182, 0.72) 0%, rgba(47, 89, 145, 0.75) 100%);
-    backdrop-filter: blur(4px);
-    border: 2px solid rgba(175, 218, 239, 0.74);
-    border-radius: 12px;
     margin: 0 auto 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 31px;
-    box-shadow:
-      inset 0 4px 0 rgba(206, 232, 247, 0.34),
-      0 5px 10px rgba(8, 28, 56, 0.42);
   }
 
   .desktop-icon-label {
@@ -733,6 +725,400 @@
 }
 
 @layer components {
+  .lockscreen-overlay-v2 {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(173, 189, 208, 0.92) 0%, rgba(151, 172, 196, 0.9) 100%);
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity 300ms ease,
+      transform 300ms ease;
+  }
+
+  .lockscreen-overlay-v2-exit {
+    opacity: 0;
+    transform: scale(0.97);
+    pointer-events: none;
+  }
+
+  .lockscreen-window-v2 {
+    width: min(420px, 92vw);
+    border: 1px solid #000000;
+    background: #c0c0c0;
+    box-shadow:
+      inset -1px -1px 0 #000000,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #dfdfdf;
+  }
+
+  .lockscreen-titlebar-v2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    background: linear-gradient(90deg, #0b46a7 0%, #2f73c6 100%);
+    border-bottom: 1px solid #000000;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+  }
+
+  .lockscreen-content-v2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 18px 14px 16px;
+  }
+
+  .lockscreen-avatar-v2 {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #000000;
+    background: #d4d0c8;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff;
+    font-family: 'VT323', monospace;
+    font-size: 34px;
+    color: #26456e;
+  }
+
+  .lockscreen-question-v2 {
+    width: 100%;
+    text-align: center;
+    color: #2f4563;
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 18px;
+  }
+
+  .lockscreen-form-v2 {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .lockscreen-input-v2 {
+    flex: 1;
+    border: 1px solid #000000;
+    background: #ffffff;
+    padding: 6px 8px;
+    box-shadow:
+      inset 1px 1px 0 #808080,
+      inset -1px -1px 0 #ffffff;
+    outline: none;
+    color: #21344e;
+  }
+
+  .lockscreen-button-v2 {
+    min-width: 96px;
+    border: 1px solid #000000;
+    background: #c0c0c0;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #000000,
+      inset 2px 2px 0 #dfdfdf;
+    color: #000000;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .lockscreen-button-v2:disabled,
+  .lockscreen-input-v2:disabled {
+    cursor: wait;
+    opacity: 0.78;
+  }
+
+  .chat-window-panel {
+    border: 1px solid #000000;
+    background: #c0c0c0;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff;
+    padding: 8px;
+  }
+
+  .chat-window-list {
+    height: 220px;
+    overflow-y: auto;
+    border: 1px solid #000000;
+    background: #efefef;
+    padding: 8px;
+    font-family: 'VT323', monospace;
+    font-size: 21px;
+    color: #182b46;
+  }
+
+  .chat-window-line {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.2;
+  }
+
+  .chat-window-empty {
+    color: #516988;
+    font-family: 'VT323', monospace;
+    font-size: 21px;
+  }
+
+  .chat-window-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+@layer components {
+  /* Glass refinement for dock and desktop icon containers */
+  .dock {
+    background: rgba(236, 242, 248, 0.22) !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 14px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+    backdrop-filter: blur(14px) saturate(1.08) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.08) !important;
+  }
+
+  .dock-icon {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+    backdrop-filter: blur(5px) saturate(1.04);
+    -webkit-backdrop-filter: blur(5px) saturate(1.04);
+    transition:
+      filter 180ms ease,
+      transform 180ms ease,
+      backdrop-filter 180ms ease;
+  }
+
+  .dock-icon:hover {
+    transform: none !important;
+    filter: brightness(1.04);
+  }
+}
+
+@layer components {
+  /* Explicit glass classes used by Dock/DesktopIcons components */
+  .dock-glass {
+    background: rgba(236, 242, 248, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 14px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(14px) saturate(1.08) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.08) !important;
+  }
+
+  .dock-icon-glass {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    backdrop-filter: blur(5px) saturate(1.04);
+    -webkit-backdrop-filter: blur(5px) saturate(1.04);
+  }
+
+  .desktop-icon-img-glass {
+    background: rgba(255, 255, 255, 0.13) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    backdrop-filter: blur(6px) saturate(1.04);
+    -webkit-backdrop-filter: blur(6px) saturate(1.04);
+    transition:
+      filter 180ms ease,
+      backdrop-filter 180ms ease,
+      transform 120ms ease;
+  }
+
+  .desktop-icon-glass:hover .desktop-icon-img-glass {
+    filter: brightness(1.06);
+    backdrop-filter: blur(8px) saturate(1.06);
+    -webkit-backdrop-filter: blur(8px) saturate(1.06);
+  }
+
+  .desktop-icon-glass:active .desktop-icon-img-glass {
+    transform: scale(0.97);
+  }
+
+  .dock-pixel-icon,
+  .desktop-pixel-icon {
+    image-rendering: pixelated;
+  }
+}
+
+@layer components {
+  .dashboard-shell {
+    transition: opacity 420ms ease;
+  }
+
+  .dashboard-locked {
+    opacity: 0.55;
+  }
+
+  .dashboard-unlocked {
+    opacity: 1;
+  }
+
+  .lockscreen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(180, 197, 218, 0.9) 0%, rgba(170, 189, 210, 0.86) 100%);
+    transition: opacity 360ms ease;
+  }
+
+  .lockscreen-exit {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .lockscreen-window {
+    width: min(420px, 92vw);
+    border: 1px solid #000000;
+    background: #c0c0c0;
+    border-radius: 0;
+    box-shadow:
+      inset -1px -1px 0 #000000,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #dfdfdf;
+    overflow: hidden;
+  }
+
+  .lockscreen-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+    background: linear-gradient(90deg, #0b46a7 0%, #2f73c6 100%);
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    border-bottom: 1px solid #000000;
+    letter-spacing: 0.03em;
+  }
+
+  .lockscreen-title-controls {
+    opacity: 0.9;
+    font-size: 9px;
+  }
+
+  .lockscreen-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 16px 20px;
+  }
+
+  .lockscreen-avatar-frame {
+    width: 78px;
+    height: 78px;
+    border: 1px solid #000000;
+    background: #d4d0c8;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff;
+    display: grid;
+    place-items: center;
+  }
+
+  .lockscreen-avatar-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+
+  .lockscreen-username {
+    font-size: 30px;
+    color: #17365f;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lockscreen-hint {
+    width: 100%;
+    text-align: center;
+    color: #2f4563;
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 0 8px;
+  }
+
+  .lockscreen-form {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .lockscreen-input {
+    flex: 1;
+    border: 1px solid #000000;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow:
+      inset 1px 1px 0 #808080,
+      inset -1px -1px 0 #ffffff;
+    padding: 6px 8px;
+    font-size: 13px;
+    color: #1b2f45;
+    outline: none;
+  }
+
+  .lockscreen-button {
+    min-width: 84px;
+    border: 1px solid #000000;
+    border-radius: 0;
+    background: #c0c0c0;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #ffffff,
+      inset -2px -2px 0 #000000,
+      inset 2px 2px 0 #dfdfdf;
+    cursor: pointer;
+  }
+
+  .lockscreen-button:disabled,
+  .lockscreen-input:disabled {
+    opacity: 0.75;
+    cursor: wait;
+  }
+}
+
+@layer components {
+  .desktop-bg {
+    background:
+      linear-gradient(rgba(8, 12, 20, 0.18), rgba(8, 12, 20, 0.18)),
+      url('../../assets/mood/bg.png') center / cover no-repeat !important;
+  }
+
+  .desktop-bg::before,
+  .desktop-bg::after,
+  .minimal-base-layer,
+  .minimal-m12-focus,
+  .minimal-noise-layer,
+  .minimal-vignette-layer {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+@layer components {
   .desktop-bg {
     background:
       linear-gradient(rgba(8, 12, 20, 0.22), rgba(8, 12, 20, 0.22)),
@@ -880,12 +1266,6 @@
   .desktop-icon-img {
     width: 52px !important;
     height: 52px !important;
-    border: 1px solid #8d8d8d !important;
-    border-radius: 0 !important;
-    background: linear-gradient(180deg, #f4f4f4 0%, #d7d7d7 100%) !important;
-    box-shadow:
-      inset -1px -1px 0 #808080,
-      inset 1px 1px 0 #ffffff !important;
   }
 
   .desktop-icon-img img {
@@ -1519,17 +1899,6 @@
 
   .terminal-input::placeholder {
     color: #555555;
-  }
-
-  .desktop-icon {
-    color: #87aa8a;
-    text-shadow: 0 0 7px rgba(36, 78, 39, 0.7);
-  }
-
-  .desktop-icon-label {
-    text-shadow:
-      0 0 8px rgba(36, 78, 39, 0.74),
-      1px 1px 0 #000000;
   }
 
   .paint-color {
