@@ -18,29 +18,41 @@ interface UseWindowManagerResult {
   focusWindow: (windowId: string) => void;
 }
 
-const INITIAL_WINDOWS: ManagedWindow[] = [
-  {
-    id: 'default-profile',
-    type: 'profile',
-    zIndex: 200,
-    tilt: -2,
-    position: { x: 150, y: 132 },
-  },
-  {
-    id: 'default-music',
-    type: 'music',
-    zIndex: 201,
-    tilt: -1,
-    position: { x: 840, y: 148 },
-  },
-  {
-    id: 'default-system',
-    type: 'gallery',
-    zIndex: 202,
-    tilt: -2,
-    position: { x: 760, y: 360 },
-  },
-];
+const isMobile = () => window.innerWidth <= 768;
+
+const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
+  ? [
+      {
+        id: 'default-profile',
+        type: 'profile',
+        zIndex: 200,
+        tilt: 0,
+        position: { x: 8, y: 50 },
+      },
+    ]
+  : [
+      {
+        id: 'default-profile',
+        type: 'profile',
+        zIndex: 200,
+        tilt: -2,
+        position: { x: 150, y: 132 },
+      },
+      {
+        id: 'default-music',
+        type: 'music',
+        zIndex: 201,
+        tilt: -1,
+        position: { x: 840, y: 148 },
+      },
+      {
+        id: 'default-system',
+        type: 'gallery',
+        zIndex: 202,
+        tilt: -2,
+        position: { x: 760, y: 360 },
+      },
+    ];
 
 const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   profile: -2,
@@ -88,15 +100,15 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
         };
       }
 
+      const mobile = isMobile();
       const newWindow: ManagedWindow = {
         id: getWindowId(),
         type: windowType,
         zIndex: state.nextZIndex,
-        tilt: WINDOW_TILT_BY_TYPE[windowType],
-        position: {
-          x: 110 + state.windows.length * 40,
-          y: 90 + state.windows.length * 24,
-        },
+        tilt: mobile ? 0 : WINDOW_TILT_BY_TYPE[windowType],
+        position: mobile
+          ? { x: 4 + (state.windows.length % 3) * 8, y: 44 + (state.windows.length % 3) * 12 }
+          : { x: 110 + state.windows.length * 40, y: 90 + state.windows.length * 24 },
       };
 
       return {

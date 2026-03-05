@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
+import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, ReactNode } from 'react';
 import type { WindowPosition } from '../../types/window';
 
 interface WindowFrameProps {
@@ -33,13 +33,22 @@ export default function WindowFrame({
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
-      if (!isDragging) {
-        return;
-      }
-
+      if (!isDragging) return;
       setPosition({
         x: event.clientX - dragStartRef.current.x,
         y: event.clientY - dragStartRef.current.y,
+      });
+    },
+    [isDragging],
+  );
+
+  const handleTouchMove = useCallback(
+    (event: globalThis.TouchEvent) => {
+      if (!isDragging) return;
+      const touch = event.touches[0];
+      setPosition({
+        x: touch.clientX - dragStartRef.current.x,
+        y: touch.clientY - dragStartRef.current.y,
       });
     },
     [isDragging],
@@ -50,30 +59,42 @@ export default function WindowFrame({
   }, []);
 
   useEffect(() => {
-    if (!isDragging) {
-      return;
-    }
+    if (!isDragging) return;
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', stopDragging);
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', stopDragging);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', stopDragging);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', stopDragging);
     };
-  }, [isDragging, handleMouseMove, stopDragging]);
+  }, [isDragging, handleMouseMove, handleTouchMove, stopDragging]);
 
   const handleTitleMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
     const targetElement = event.target as HTMLElement;
-
-    if (targetElement.closest('.window-button')) {
-      return;
-    }
+    if (targetElement.closest('.window-button')) return;
 
     setIsDragging(true);
     dragStartRef.current = {
       x: event.clientX - position.x,
       y: event.clientY - position.y,
+    };
+    onFocus(id);
+  };
+
+  const handleTitleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    const targetElement = event.target as HTMLElement;
+    if (targetElement.closest('.window-button')) return;
+
+    const touch = event.touches[0];
+    setIsDragging(true);
+    dragStartRef.current = {
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
     };
     onFocus(id);
   };
@@ -88,8 +109,9 @@ export default function WindowFrame({
         transform: `rotate(${tilt}deg)`,
       }}
       onMouseDown={() => onFocus(id)}
+      onTouchStart={() => onFocus(id)}
     >
-      <div className="window-titlebar" onMouseDown={handleTitleMouseDown}>
+      <div className="window-titlebar" onMouseDown={handleTitleMouseDown} onTouchStart={handleTitleTouchStart}>
         <div className="window-title">
           <span>{icon}</span>
           <span>{title}</span>

@@ -4009,3 +4009,320 @@
     }
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE (≤768px)
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* ── Marquee ──────────────────────────────────────────── */
+  .marquee-container {
+    top: 6px;
+  }
+
+  .marquee-bg {
+    padding: 5px 0;
+  }
+
+  .marquee-text {
+    font-size: 16px;
+  }
+
+  /* ── Desktop Icons ────────────────────────────────────── */
+  .desktop-icon {
+    width: 64px;
+    transform: scale(0.85);
+    transform-origin: top left;
+  }
+
+  .desktop-icon-img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .desktop-icon-label {
+    font-size: 9px;
+  }
+
+  /* ── Windows ──────────────────────────────────────────── */
+  .window {
+    min-width: unset !important;
+    width: calc(100vw - 12px) !important;
+    max-width: calc(100vw - 12px) !important;
+    max-height: calc(100vh - 110px);
+    transform: rotate(0deg) !important;
+  }
+
+  .window-wide,
+  .window-internet,
+  .window-video,
+  .window-terminal,
+  .window-games {
+    min-width: unset !important;
+    width: calc(100vw - 12px) !important;
+  }
+
+  .window-titlebar {
+    padding: 4px 7px;
+  }
+
+  .window-title {
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .window-title span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+  }
+
+  .window-toolbar {
+    padding: 3px 5px;
+    gap: 4px;
+  }
+
+  .toolbar-pill {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .window-content {
+    padding: 10px;
+    max-height: calc(100vh - 160px);
+    font-size: 13px;
+  }
+
+  /* ── Dock ─────────────────────────────────────────────── */
+  .dock {
+    padding: 6px 8px;
+    gap: 5px;
+    border-radius: 12px;
+    bottom: 6px;
+    max-width: calc(100vw - 16px);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+  }
+
+  .dock-icon:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  .dock-icon img {
+    height: 22px !important;
+    width: 22px !important;
+  }
+
+  .dock-tooltip {
+    display: none;
+  }
+
+  /* ── System Tray ──────────────────────────────────────── */
+  .system-tray {
+    padding: 5px 8px;
+    gap: 6px;
+    font-size: 12px;
+    border-radius: 8px;
+    bottom: 6px;
+    right: 6px;
+  }
+
+  /* ── Stickers & Decorations ───────────────────────────── */
+  .sticker-layer {
+    display: none;
+  }
+
+  .warning-popup {
+    display: none;
+  }
+
+  /* ── Lock Screen ──────────────────────────────────────── */
+  .lockscreen-window-v2 {
+    width: calc(100vw - 32px) !important;
+    max-width: 360px;
+  }
+
+  /* ── Explorer ─────────────────────────────────────────── */
+  .explorer {
+    height: auto !important;
+    max-height: calc(100vh - 180px);
+  }
+
+  .explorer-body {
+    flex-direction: column !important;
+  }
+
+  .explorer-sidebar {
+    width: 100% !important;
+    max-height: 100px;
+    overflow-y: auto;
+    border-right: none !important;
+    border-bottom: 1px solid var(--stroke-soft);
+  }
+
+  .explorer-main {
+    min-height: 150px;
+  }
+
+  .explorer-folder-grid {
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .explorer-folder-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .explorer-preview img {
+    max-height: 120px;
+  }
+
+  /* ── Internet Browser ─────────────────────────────────── */
+  .internet-browser {
+    height: auto !important;
+    min-height: 300px;
+  }
+
+  .internet-google-logo {
+    font-size: 32px !important;
+  }
+
+  .internet-search-box {
+    width: 90% !important;
+  }
+
+  .internet-btn {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .internet-footer-links {
+    font-size: 9px;
+    gap: 8px;
+  }
+
+  /* ── Video Player ─────────────────────────────────────── */
+  .video-player {
+    height: 320px !important;
+  }
+
+  /* ── Terminal ─────────────────────────────────────────── */
+  .terminal-window {
+    height: 280px !important;
+  }
+
+  /* ── Games Folder ─────────────────────────────────────── */
+  .games-folder-grid {
+    gap: 14px !important;
+    padding: 14px !important;
+  }
+
+  .games-folder-icon-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* ── Gallery / Mine Panel ─────────────────────────────── */
+  .mine-panel img {
+    height: 130px !important;
+  }
+
+  .mine-cell {
+    height: 36px !important;
+  }
+
+  /* ── Easter Eggs ──────────────────────────────────────── */
+  .easter-alert {
+    width: calc(100vw - 40px) !important;
+    max-width: 320px;
+  }
+
+  .clippy-container {
+    bottom: 56px;
+    right: 10px;
+  }
+
+  .clippy-bubble {
+    max-width: 200px;
+    font-size: 11px;
+  }
+
+  .bsod-content {
+    padding: 24px;
+    font-size: 13px;
+  }
+
+  /* ── Trash Bubble ─────────────────────────────────────── */
+  .trash-easter-bubble {
+    font-size: 9px;
+    top: -34px;
+  }
+
+  /* ── Hourglass ────────────────────────────────────────── */
+  .hourglass-follower {
+    display: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SMALL MOBILE (≤480px)
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .marquee-text {
+    font-size: 13px;
+  }
+
+  .window-title span:last-child {
+    max-width: 110px;
+  }
+
+  .dock-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 8px;
+  }
+
+  .dock {
+    gap: 4px;
+    padding: 5px 6px;
+  }
+
+  .system-tray {
+    font-size: 10px;
+    padding: 4px 6px;
+    gap: 4px;
+  }
+
+  .desktop-icon {
+    transform: scale(0.75);
+  }
+
+  .internet-google-logo {
+    font-size: 26px !important;
+  }
+
+  .bsod-content {
+    padding: 16px;
+    font-size: 11px;
+  }
+
+  .bsod-header {
+    font-size: 13px;
+  }
+}
