@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import DesktopEffects from './components/layout/DesktopEffects';
 import DesktopIcons from './components/layout/DesktopIcons';
 import Dock from './components/layout/Dock';
+import EasterEggs from './components/layout/EasterEggs';
 import LockScreen from './components/LockScreen';
 import MarqueeBanner from './components/layout/MarqueeBanner';
 import SystemTray from './components/layout/SystemTray';
@@ -99,6 +100,15 @@ export default function App() {
     return () => window.removeEventListener('mousemove', onMove);
   }, [loading]);
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { windowType } = (e as CustomEvent).detail;
+      handleOpen(windowType);
+    };
+    window.addEventListener('open-window', handler);
+    return () => window.removeEventListener('open-window', handler);
+  }, [handleOpen]);
+
   if (!isUnlocked) return <LockScreen />;
 
   return (
@@ -136,6 +146,7 @@ export default function App() {
 
       <Dock onOpen={handleOpen} />
       <SystemTray />
+      <EasterEggs />
 
       {loading && (
         <div

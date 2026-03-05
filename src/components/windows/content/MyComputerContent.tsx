@@ -5,7 +5,7 @@ import { monitorAssets } from '../../../data/galleryAssets';
 import { useSessionStore } from '../../../store/useSessionStore';
 import iconFolder from '../../../../assets/icon-folder.png';
 
-type FolderType = 'root' | 'paintings' | 'memo' | 'gallery';
+type FolderType = 'root' | 'paintings' | 'memo' | 'gallery' | 'videos';
 
 interface FolderInfo {
   label: string;
@@ -16,6 +16,7 @@ const folderMeta: Record<Exclude<FolderType, 'root'>, FolderInfo> = {
   paintings: { label: 'Paintings' },
   memo: { label: 'Memo' },
   gallery: { label: 'Gallery' },
+  videos: { label: 'Videos' },
 };
 
 export default function MyComputerContent() {
@@ -273,6 +274,26 @@ export default function MyComputerContent() {
             </>
           )}
 
+          {/* Videos folder */}
+          {currentFolder === 'videos' && (
+            <div className="explorer-file-list">
+              <div
+                className="explorer-file-item"
+                onDoubleClick={() => {
+                  window.dispatchEvent(
+                    new CustomEvent('open-window', { detail: { windowType: 'video' } }),
+                  );
+                }}
+              >
+                <div className="explorer-file-thumb explorer-memo-icon">🎬</div>
+                <div className="explorer-file-info">
+                  <div className="explorer-file-name">untitled_memory.avi</div>
+                  <div className="explorer-file-date">2.4 MB</div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Gallery folder */}
           {currentFolder === 'gallery' && (
             <>
@@ -313,10 +334,11 @@ export default function MyComputerContent() {
       {/* Status bar */}
       <div className="explorer-statusbar">
         <span>
-          {currentFolder === 'root' && '3 object(s)'}
+          {currentFolder === 'root' && '4 object(s)'}
           {currentFolder === 'paintings' && `${paintings.length} object(s)`}
           {currentFolder === 'memo' && `${memos.length} object(s)`}
           {currentFolder === 'gallery' && `${monitorAssets.length} object(s)`}
+          {currentFolder === 'videos' && '1 object(s)'}
         </span>
       </div>
     </div>
