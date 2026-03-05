@@ -13,7 +13,7 @@ export const windowRegistry: WindowRegistry = {
   chat: { title: 'guestbook.exe', icon: '📟', component: ChatContent },
   music: { title: 'music_player.exe', icon: '🎛️', component: MusicContent },
   memo: { title: 'memo.txt', icon: '📝', component: MemoContent },
-  files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent },
+  files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent, className: 'window-paint' },
   gallery: { title: 'gallery.exe', icon: '🧩', component: SystemContent },
   mycomputer: { title: 'my_computer.exe', icon: '🖥️', component: MyComputerContent, className: 'window-wide' },
   tetris: { title: 'tetris.exe', icon: '🎮', component: TetrisContent },

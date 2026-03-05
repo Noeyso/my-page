@@ -203,7 +203,11 @@ export default function MyComputerContent() {
                       <img src={painting.image_url} alt="painting thumbnail" />
                     </div>
                     <div className="explorer-file-info">
-                      <div className="explorer-file-name">{painting.nickname}'s painting</div>
+                      <div className="explorer-file-name">{(() => {
+                        const base = painting.image_url.split('/').pop()?.replace(/\.png$/i, '') ?? '';
+                        // auto-generated pattern: {nickname}_{13-digit timestamp}
+                        return /^.+_\d{13}$/.test(base) ? `${painting.nickname}'s painting` : (base || `${painting.nickname}'s painting`);
+                      })()}</div>
                       <div className="explorer-file-date">
                         {new Date(painting.created_at).toLocaleString()}
                       </div>

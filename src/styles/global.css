@@ -627,43 +627,481 @@
     color: #6f8eaf;
   }
 
-  .paint-toolbar {
+  /* === Win98 Paint: hide default toolbar for paint window === */
+  .window-paint .window-toolbar {
+    display: none;
+  }
+
+  /* === Win98 MS Paint === */
+
+  .paint98-wrap {
+    margin: -14px;
     display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .paint-tool {
-    width: 34px;
-    height: 34px;
-    border: 1px solid #6a8bb4;
-    border-radius: 6px;
-    background: linear-gradient(180deg, #e8f2f8 0%, #d2e2ef 100%);
-    cursor: pointer;
-  }
-
-  .paint-palette {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .paint-color {
-    width: 18px;
-    height: 18px;
-    border: 1px solid #6989ad;
-    border-radius: 4px;
-  }
-
-  .paint-canvas {
+    flex-direction: column;
+    background: #c0c0c0;
+    user-select: none;
+    font-family: 'MS Sans Serif', 'VT323', Tahoma, sans-serif;
+    font-size: 11px;
     position: relative;
-    height: 170px;
-    border: 2px inset #80a1c5;
-    background: #e4eef7;
-    border-radius: 6px;
+  }
+
+  /* Menu bar */
+  .paint98-menubar {
+    display: flex;
+    align-items: center;
+    padding: 1px 2px;
+    background: #c0c0c0;
+    border-bottom: 1px solid #808080;
+    flex-shrink: 0;
+  }
+
+  .paint98-menu-entry {
+    position: relative;
+  }
+
+  .paint98-menu-btn {
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', 'VT323', Tahoma, sans-serif;
+    color: #000;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  .paint98-menu-btn:hover,
+  .paint98-menu-btn.active {
+    background: #000080;
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  /* Dropdown */
+  .paint98-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 2px 2px 0 #000;
+    z-index: 9999;
+    min-width: 160px;
+    padding: 2px 0;
+  }
+
+  .paint98-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 16px 3px 8px;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', 'VT323', Tahoma, sans-serif;
+    color: #000;
+    cursor: default;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .paint98-dropdown-item:hover {
+    background: #000080;
+    color: #ffffff;
+  }
+
+  .paint98-dropdown-icon {
+    font-size: 12px;
+    width: 16px;
+    text-align: center;
+  }
+
+  .paint98-dropdown-sep {
+    height: 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 3px 4px;
+  }
+
+  /* Save dialog modal */
+  .paint98-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paint98-modal {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
+    box-shadow:
+      inset -1px -1px 0 #808080,
+      inset 1px 1px 0 #dfdfdf,
+      3px 3px 0 #000;
+    width: 300px;
+    min-width: 240px;
+  }
+
+  .paint98-modal-titlebar {
+    background: #000080;
+    color: #ffffff;
+    padding: 3px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .paint98-modal-close {
+    background: #c0c0c0;
+    color: #000;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    width: 16px;
+    height: 14px;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .paint98-modal-close:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+  }
+
+  .paint98-modal-body {
+    padding: 12px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .paint98-modal-label {
+    font-size: 11px;
+    color: #000;
+  }
+
+  .paint98-modal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .paint98-modal-input {
+    flex: 1;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000;
+    background: #ffffff;
+    padding: 2px 4px;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', 'VT323', Tahoma, sans-serif;
+    color: #000;
+    outline: none;
+  }
+
+  .paint98-modal-ext {
+    font-size: 11px;
+    color: #808080;
+    white-space: nowrap;
+  }
+
+  .paint98-modal-hint {
+    font-size: 10px;
+    color: #808080;
+  }
+
+  .paint98-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 6px 12px 10px;
+    border-top: 1px solid #808080;
+  }
+
+  .paint98-modal-btn {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #dfdfdf;
+    padding: 3px 0;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', 'VT323', Tahoma, sans-serif;
+    cursor: pointer;
+    color: #000;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  .paint98-modal-btn:hover {
+    background: #d0d0d0;
+  }
+
+  .paint98-modal-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #dfdfdf;
+  }
+
+  .paint98-modal-btn:disabled {
+    color: #808080;
+    cursor: default;
+  }
+
+  .paint98-modal-btn-primary {
+    border-color: #000 #808080 #808080 #000;
+  }
+
+  .paint98-body {
+    display: flex;
+    flex-direction: row;
+    height: 290px;
+    border-bottom: 1px solid #808080;
     overflow: hidden;
   }
 
+  /* Toolbox */
+  .paint98-toolbox {
+    width: 56px;
+    flex-shrink: 0;
+    background: #c0c0c0;
+    border-right: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 3px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .paint98-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .paint98-tool-btn {
+    width: 24px;
+    height: 24px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  .paint98-tool-btn:hover {
+    background: #d0d0d0;
+  }
+
+  .paint98-tool-btn.active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset -1px -1px 0 #dfdfdf, inset 1px 1px 0 #000000;
+    background: #c0c0c0;
+  }
+
+  .paint98-toolbox-sep {
+    width: 42px;
+    height: 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 2px 0;
+  }
+
+  .paint98-size-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    padding: 0 3px;
+  }
+
+  .paint98-size-btn {
+    width: 100%;
+    height: 14px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0 2px;
+    box-sizing: border-box;
+  }
+
+  .paint98-size-btn.active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000;
+  }
+
+  /* Canvas area */
+  .paint98-canvas-wrap {
+    flex: 1;
+    overflow: hidden;
+    background: #808080;
+    padding: 3px;
+  }
+
+  .paint98-canvas-inner {
+    width: 100%;
+    height: 100%;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .paint98-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+  }
+
+  /* Color palette row */
+  .paint98-palette-row {
+    height: 36px;
+    background: #c0c0c0;
+    border-top: 1px solid #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 3px 4px;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .paint98-fg-bg {
+    position: relative;
+    width: 36px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .paint98-bg-swatch {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000;
+  }
+
+  .paint98-fg-swatch {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset -1px -1px 0 #000;
+    z-index: 1;
+  }
+
+  .paint98-swatches {
+    display: grid;
+    grid-template-columns: repeat(14, 14px);
+    grid-template-rows: repeat(2, 14px);
+    gap: 1px;
+    flex-shrink: 0;
+  }
+
+  .paint98-swatch {
+    width: 14px;
+    height: 14px;
+    border: 1px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .paint98-swatch:hover {
+    border-color: #000;
+    transform: scale(1.15);
+  }
+
+  /* Status bar */
+  .paint98-statusbar {
+    height: 22px;
+    background: #c0c0c0;
+    border-top: 1px solid #808080;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .paint98-status-cell {
+    padding: 0 8px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    border: 1px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    font-size: 11px;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  .paint98-status-coords {
+    min-width: 70px;
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+  }
+
+  .paint98-status-div {
+    width: 4px;
+  }
+
+  .paint98-status-btn {
+    padding: 0 8px;
+    height: 18px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0 #dfdfdf;
+    font-size: 11px;
+    cursor: pointer;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  .paint98-status-btn:hover {
+    background: #d8d8d8;
+  }
+
+  .paint98-status-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px 0 #000;
+  }
+
+  .paint98-status-btn:disabled {
+    color: #808080;
+    cursor: default;
+  }
+
+  /* legacy paint classes kept for compatibility */
   .paint-save-msg {
     font-family: 'VT323', monospace;
     font-size: 14px;

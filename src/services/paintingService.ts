@@ -8,7 +8,12 @@ export interface PaintingRow {
   created_at: string;
 }
 
-export async function savePainting(canvas: HTMLCanvasElement): Promise<PaintingRow> {
+export function getDefaultPaintingName(): string {
+  const nickname = useSessionStore.getState().nickname ?? 'user';
+  return `${nickname}_${Date.now()}`;
+}
+
+export async function savePainting(canvas: HTMLCanvasElement, customFileName?: string): Promise<PaintingRow> {
   const nickname = useSessionStore.getState().nickname;
   if (!nickname) throw new Error('Nickname session not found');
 
@@ -16,7 +21,9 @@ export async function savePainting(canvas: HTMLCanvasElement): Promise<PaintingR
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Canvas export failed'))), 'image/png');
   });
 
-  const fileName = `${nickname}_${Date.now()}.png`;
+  const fileName = customFileName
+    ? `${customFileName.trim().replace(/[^a-zA-Z0-9가-힣_\-]/g, '_') || getDefaultPaintingName()}.png`
+    : `${nickname}_${Date.now()}.png`;
 
   const { error: uploadError } = await supabase.storage
     .from('paintings')

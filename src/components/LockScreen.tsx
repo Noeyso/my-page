@@ -36,7 +36,7 @@ export default function LockScreen() {
     <div className={`lockscreen-overlay-v2 ${isExiting ? 'lockscreen-overlay-v2-exit' : ''}`}>
       <div className="lockscreen-window-v2">
         <div className="lockscreen-titlebar-v2">
-          <span>My Desk Login</span>
+          <span>Login</span>
           <span aria-hidden="true">_ □ X</span>
         </div>
         <div className="lockscreen-content-v2">
