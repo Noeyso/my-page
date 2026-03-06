@@ -13,6 +13,7 @@ export interface ManagedWindow {
   zIndex: number;
   tilt: number;
   position: WindowPosition;
+  isMinimized: boolean;
 }
 
 export interface WindowRegistryItem {

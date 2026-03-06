@@ -9,13 +9,15 @@ interface WindowState {
 type WindowAction =
   | { type: 'OPEN'; windowType: WindowType }
   | { type: 'CLOSE'; windowId: string }
-  | { type: 'FOCUS'; windowId: string };
+  | { type: 'FOCUS'; windowId: string }
+  | { type: 'MINIMIZE'; windowId: string };
 
 interface UseWindowManagerResult {
   windows: ManagedWindow[];
   openWindow: (windowType: WindowType) => void;
   closeWindow: (windowId: string) => void;
   focusWindow: (windowId: string) => void;
+  minimizeWindow: (windowId: string) => void;
 }
 
 const isMobile = () => window.innerWidth <= 768;
@@ -28,6 +30,7 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         zIndex: 200,
         tilt: 0,
         position: { x: 8, y: 50 },
+        isMinimized: false,
       },
     ]
   : [
@@ -37,6 +40,7 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         zIndex: 200,
         tilt: -2,
         position: { x: 150, y: 132 },
+        isMinimized: false,
       },
       {
         id: 'default-music',
@@ -44,6 +48,7 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         zIndex: 201,
         tilt: -1,
         position: { x: 840, y: 148 },
+        isMinimized: false,
       },
       {
         id: 'default-system',
@@ -51,6 +56,7 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         zIndex: 202,
         tilt: -2,
         position: { x: 760, y: 360 },
+        isMinimized: false,
       },
     ];
 
@@ -94,7 +100,7 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
         return {
           ...state,
           windows: state.windows.map((item) =>
-            item.id === existing.id ? { ...item, zIndex: state.nextZIndex } : item,
+            item.id === existing.id ? { ...item, zIndex: state.nextZIndex, isMinimized: false } : item,
           ),
           nextZIndex: state.nextZIndex + 1,
         };
@@ -109,6 +115,7 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
         position: mobile
           ? { x: 4 + (state.windows.length % 3) * 8, y: 44 + (state.windows.length % 3) * 12 }
           : { x: 110 + state.windows.length * 40, y: 90 + state.windows.length * 24 },
+        isMinimized: false,
       };
 
       return {
@@ -134,6 +141,15 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
       };
     }
 
+    case 'MINIMIZE': {
+      return {
+        ...state,
+        windows: state.windows.map((item) =>
+          item.id === action.windowId ? { ...item, isMinimized: true } : item,
+        ),
+      };
+    }
+
     default:
       return state;
   }
@@ -154,10 +170,15 @@ export default function useWindowManager(): UseWindowManagerResult {
     dispatch({ type: 'FOCUS', windowId });
   }, []);
 
+  const minimizeWindow = useCallback((windowId: string) => {
+    dispatch({ type: 'MINIMIZE', windowId });
+  }, []);
+
   return {
     windows: state.windows,
     openWindow,
     closeWindow,
     focusWindow,
+    minimizeWindow,
   };
 }
