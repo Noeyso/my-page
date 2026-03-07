@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { fetchNews, NEWS_CATEGORIES, type NewsItem } from '../../../services/newsService';
 
 const DuckFarmGame = lazy(() => import('./DuckFarmGame'));
+const BubbleShooterGame = lazy(() => import('./BubbleShooterGame'));
 
 type Category = '홈' | '꾸러기' | (typeof NEWS_CATEGORIES)[number];
 
@@ -489,11 +490,10 @@ const GAMES: GameInfo[] = [
   { id: 'g8', name: '타자 히어로', category: '교육', icon: '⌨️', color: '#6688cc', desc: '타자 속도를 높여라! 재미있는 문장을 입력하며 타자 연습!', rating: 4.4, plays: '11,222' },
   { id: 'g9', name: '좀비 디펜스', category: '슈팅', icon: '🧟', color: '#558844', desc: '좀비 떼를 막아라! 타워를 세우고 무기를 업그레이드하자!', rating: 4.6, plays: '18,900' },
   { id: 'g10', name: '농구 프리스로', category: '스포츠', icon: '🏀', color: '#cc8844', desc: '정확한 타이밍에 슛을 날려 골을 넣어라! 프리스로 챔피언에 도전!', rating: 3.8, plays: '5,678' },
-  { id: 'g11', name: '버블 팡팡', category: '캐주얼', icon: '🫧', color: '#66aadd', desc: '같은 색 버블을 쏘아 터뜨리자! 모든 버블을 없애면 클리어!', rating: 4.7, plays: '20,345' },
+  { id: 'bubbleshooter', name: '버블슈터', category: '슈팅', icon: '🫧', color: '#2a2a3e', desc: '같은 색 버블을 쏘아 터뜨리자! 3개 이상 모이면 팡! 모든 버블을 없애면 클리어!', rating: 4.9, plays: '28,500', playable: true },
   { id: 'g12', name: '체스 마스터', category: '보드/퍼즐', icon: '♟️', color: '#887744', desc: 'AI 상대로 체스 대결! 초보부터 고수까지, 실력을 키워보자!', rating: 4.0, plays: '4,567' },
   { id: 'g13', name: '닌자 런', category: '모험/액션', icon: '🥷', color: '#334455', desc: '닌자가 되어 장애물을 피하고 적을 물리쳐라! 빠른 반사신경이 필요!', rating: 4.2, plays: '14,100' },
   { id: 'g14', name: '우주 탐험', category: '기타', icon: '🌌', color: '#223366', desc: '태양계를 탐험하며 행성의 비밀을 밝혀라! 우주 비행사가 되어보자!', rating: 4.5, plays: '8,900' },
-  { id: 'g15', name: '동물 농장', category: '캐주얼', icon: '🐄', color: '#88aa44', desc: '나만의 농장을 꾸미고 동물들을 키워보자! 작물도 수확!', rating: 4.3, plays: '16,700' },
   { id: 'g16', name: '영어 퀴즈왕', category: '교육', icon: '📝', color: '#5588bb', desc: '재미있는 영어 퀴즈! 단어부터 문장까지, 영어 실력을 테스트!', rating: 3.7, plays: '3,456' },
   { id: 'duckfarm', name: '오리농장', category: '캐주얼', icon: '🦆', color: '#87CEEB', desc: '귀여운 오리를 키우고 알을 모아 판매하자! 늑대를 막고 농장을 꾸며보세요!', rating: 4.8, plays: '32,100', playable: true },
 ];
@@ -519,11 +519,13 @@ function GgureogiPage({ onBack }: { onBack: () => void }) {
     }
   };
 
-  if (view === 'playing' && selectedGame?.id === 'duckfarm') {
+  if (view === 'playing' && selectedGame?.playable) {
+    const GameComponent = selectedGame.id === 'duckfarm' ? DuckFarmGame : BubbleShooterGame;
+    const bgColor = selectedGame.id === 'duckfarm' ? '#000' : '#1a1a2e';
     return (
       <div style={{ width: '100%', height: '100%', minHeight: 500 }}>
-        <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: '#000', color: '#FFD700' }}>로딩중...</div>}>
-          <DuckFarmGame onExit={() => setView('gamedetail')} />
+        <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: bgColor, color: '#FFD700' }}>로딩중...</div>}>
+          <GameComponent onExit={() => setView('gamedetail')} />
         </Suspense>
       </div>
     );
