@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 
 const ROWS = 9;
 const COLS = 9;
@@ -161,7 +162,7 @@ export default function MinesweeperContent() {
     [board, gameState],
   );
 
-  const reset = () => {
+  const handleReset = () => {
     setBoard(createEmptyBoard());
     setGameState('ready');
     setTime(0);
@@ -188,7 +189,7 @@ export default function MinesweeperContent() {
           <span style={{ color: '#ff0000', fontSize: 20, fontWeight: 700, minWidth: 40, textAlign: 'left' }}>
             {String(Math.max(MINES - flagCount, 0)).padStart(3, '0')}
           </span>
-          <button className="mine-face" type="button" onClick={reset} style={{ fontSize: 18 }}>
+          <button className="mine-face" type="button" onClick={handleReset} style={{ fontSize: 18 }}>
             {faceEmoji}
           </button>
           <span style={{ color: '#ff0000', fontSize: 20, fontWeight: 700, minWidth: 40, textAlign: 'right' }}>
@@ -234,7 +235,7 @@ export default function MinesweeperContent() {
               <button
                 key={`${r}-${c}`}
                 type="button"
-                className={`mine-cell${cell.state === 'hidden' || cell.state === 'flagged' ? '' : ' mine-cell-revealed'}`}
+                className={clsx('mine-cell', { 'mine-cell-revealed': cell.state === 'revealed' })}
                 style={{
                   width: CELL_SIZE,
                   height: CELL_SIZE,

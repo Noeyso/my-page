@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
+import clsx from 'clsx';
 import { fetchPaintings, deletePainting, type PaintingRow } from '../../../services/paintingService';
 import { fetchMessages, type MessageRow } from '../../../services/messageService';
 import { monitorAssets } from '../../../data/galleryAssets';
 import { useSessionStore } from '../../../store/useSessionStore';
 import iconFolder from '../../../../assets/icon-folder.png';
+import FileItem from './FileItem';
 
 type FolderType = 'root' | 'paintings' | 'memo' | 'gallery' | 'videos';
 
@@ -25,8 +27,8 @@ export default function MyComputerContent() {
 
   const [paintings, setPaintings] = useState<PaintingRow[]>([]);
   const [memos, setMemos] = useState<MessageRow[]>([]);
-  const [loadingPaintings, setLoadingPaintings] = useState(false);
-  const [loadingMemos, setLoadingMemos] = useState(false);
+  const [isPaintingsLoading, setLoadingPaintings] = useState(false);
+  const [isMemosLoading, setLoadingMemos] = useState(false);
 
   const nickname = useSessionStore((s) => s.nickname);
 
@@ -57,7 +59,7 @@ export default function MyComputerContent() {
     if (currentFolder === 'memo') loadMemos();
   }, [currentFolder, loadPaintings, loadMemos]);
 
-  const navigateTo = (folder: FolderType) => {
+  const handleNavigateTo = (folder: FolderType) => {
     setCurrentFolder(folder);
     setSelectedFile(null);
   };
@@ -85,7 +87,7 @@ export default function MyComputerContent() {
           <button
             type="button"
             className="explorer-tool-btn"
-            onClick={() => navigateTo('root')}
+            onClick={() => handleNavigateTo('root')}
             disabled={currentFolder === 'root'}
             title="Back"
           >
@@ -132,8 +134,8 @@ export default function MyComputerContent() {
           <div className="explorer-tree-header">All Folders</div>
           <div className="explorer-tree">
             <div
-              className={`explorer-tree-item ${currentFolder === 'root' ? 'active' : ''}`}
-              onClick={() => navigateTo('root')}
+              className={clsx('explorer-tree-item', { active: currentFolder === 'root' })}
+              onClick={() => handleNavigateTo('root')}
             >
               <span className="explorer-tree-icon">🖥️</span> My Computer
             </div>
@@ -141,8 +143,8 @@ export default function MyComputerContent() {
               ([key, info]) => (
                 <div
                   key={key}
-                  className={`explorer-tree-item explorer-tree-child ${currentFolder === key ? 'active' : ''}`}
-                  onClick={() => navigateTo(key)}
+                  className={clsx('explorer-tree-item explorer-tree-child', { active: currentFolder === key })}
+                  onClick={() => handleNavigateTo(key)}
                 >
                   <img src={iconFolder} alt="" className="explorer-tree-folder-icon" />
                   {info.label}
@@ -162,7 +164,7 @@ export default function MyComputerContent() {
                   <div
                     key={key}
                     className="explorer-folder-item"
-                    onClick={() => navigateTo(key)}
+                    onClick={() => handleNavigateTo(key)}
                   >
                     <img src={iconFolder} alt="" className="explorer-folder-icon" />
                     <div className="explorer-folder-label">{info.label}</div>
@@ -188,46 +190,30 @@ export default function MyComputerContent() {
                 </div>
               )}
               <div className="explorer-file-list">
-                {loadingPaintings && <div className="explorer-empty">Loading...</div>}
-                {!loadingPaintings && paintings.length === 0 && (
+                {isPaintingsLoading && <div className="explorer-empty">Loading...</div>}
+                {!isPaintingsLoading && paintings.length === 0 && (
                   <div className="explorer-empty">
                     No paintings yet. Open MS Paint and save your artwork!
                   </div>
                 )}
-                {paintings.map((painting) => (
-                  <div
-                    key={painting.id}
-                    className={`explorer-file-item ${selectedFile === painting.id ? 'selected' : ''}`}
-                    onClick={() => setSelectedFile(painting.id === selectedFile ? null : painting.id)}
-                  >
-                    <div className="explorer-file-thumb">
-                      <img src={painting.image_url} alt="painting thumbnail" />
-                    </div>
-                    <div className="explorer-file-info">
-                      <div className="explorer-file-name">{(() => {
-                        const base = painting.image_url.split('/').pop()?.replace(/\.png$/i, '') ?? '';
-                        // auto-generated pattern: {nickname}_{13-digit timestamp}
-                        return /^.+_\d{13}$/.test(base) ? `${painting.nickname}'s painting` : (base || `${painting.nickname}'s painting`);
-                      })()}</div>
-                      <div className="explorer-file-date">
-                        {new Date(painting.created_at).toLocaleString()}
-                      </div>
-                    </div>
-                    {painting.nickname === nickname && (
-                      <button
-                        type="button"
-                        className="explorer-delete-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeletePainting(painting);
-                        }}
-                        title="Delete"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
+                {paintings.map((painting) => {
+                  const base = painting.image_url.split('/').pop()?.replace(/\.png$/i, '') ?? '';
+                  const displayName = /^.+_\d{13}$/.test(base)
+                    ? `${painting.nickname}'s painting`
+                    : (base || `${painting.nickname}'s painting`);
+                  return (
+                    <FileItem
+                      key={painting.id}
+                      id={painting.id}
+                      isSelected={selectedFile === painting.id}
+                      onSelect={() => setSelectedFile(painting.id === selectedFile ? null : painting.id)}
+                      thumbnail={<img src={painting.image_url} alt="painting thumbnail" />}
+                      name={displayName}
+                      subtitle={new Date(painting.created_at).toLocaleString()}
+                      onDelete={painting.nickname === nickname ? () => handleDeletePainting(painting) : undefined}
+                    />
+                  );
+                })}
               </div>
             </>
           )}
@@ -251,24 +237,20 @@ export default function MyComputerContent() {
                 </div>
               )}
               <div className="explorer-file-list">
-                {loadingMemos && <div className="explorer-empty">Loading...</div>}
-                {!loadingMemos && memos.length === 0 && (
+                {isMemosLoading && <div className="explorer-empty">Loading...</div>}
+                {!isMemosLoading && memos.length === 0 && (
                   <div className="explorer-empty">No memos found.</div>
                 )}
                 {memos.map((memo) => (
-                  <div
+                  <FileItem
                     key={memo.id}
-                    className={`explorer-file-item ${selectedFile === memo.id ? 'selected' : ''}`}
-                    onClick={() => setSelectedFile(memo.id === selectedFile ? null : memo.id)}
-                  >
-                    <div className="explorer-file-thumb explorer-memo-icon">📄</div>
-                    <div className="explorer-file-info">
-                      <div className="explorer-file-name">{memo.nickname}'s memo</div>
-                      <div className="explorer-file-date">
-                        {new Date(memo.created_at).toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
+                    id={memo.id}
+                    isSelected={selectedFile === memo.id}
+                    onSelect={() => setSelectedFile(memo.id === selectedFile ? null : memo.id)}
+                    thumbnail={<span className="explorer-memo-icon">📄</span>}
+                    name={`${memo.nickname}'s memo`}
+                    subtitle={new Date(memo.created_at).toLocaleString()}
+                  />
                 ))}
               </div>
             </>
@@ -277,20 +259,19 @@ export default function MyComputerContent() {
           {/* Videos folder */}
           {currentFolder === 'videos' && (
             <div className="explorer-file-list">
-              <div
-                className="explorer-file-item"
+              <FileItem
+                id="video-1"
+                isSelected={false}
+                onSelect={() => {}}
                 onDoubleClick={() => {
                   window.dispatchEvent(
                     new CustomEvent('open-window', { detail: { windowType: 'video' } }),
                   );
                 }}
-              >
-                <div className="explorer-file-thumb explorer-memo-icon">🎬</div>
-                <div className="explorer-file-info">
-                  <div className="explorer-file-name">untitled_memory.avi</div>
-                  <div className="explorer-file-date">2.4 MB</div>
-                </div>
-              </div>
+                thumbnail={<span className="explorer-memo-icon">🎬</span>}
+                name="untitled_memory.avi"
+                subtitle="2.4 MB"
+              />
             </div>
           )}
 
@@ -311,19 +292,15 @@ export default function MyComputerContent() {
               )}
               <div className="explorer-file-list">
                 {monitorAssets.map((asset) => (
-                  <div
+                  <FileItem
                     key={asset.id}
-                    className={`explorer-file-item ${selectedFile === asset.id ? 'selected' : ''}`}
-                    onClick={() => setSelectedFile(asset.id === selectedFile ? null : asset.id)}
-                  >
-                    <div className="explorer-file-thumb">
-                      <img src={asset.src} alt={asset.name} />
-                    </div>
-                    <div className="explorer-file-info">
-                      <div className="explorer-file-name">{asset.name}</div>
-                      <div className="explorer-file-date">[{asset.tag}]</div>
-                    </div>
-                  </div>
+                    id={asset.id}
+                    isSelected={selectedFile === asset.id}
+                    onSelect={() => setSelectedFile(asset.id === selectedFile ? null : asset.id)}
+                    thumbnail={<img src={asset.src} alt={asset.name} />}
+                    name={asset.name}
+                    subtitle={`[${asset.tag}]`}
+                  />
                 ))}
               </div>
             </>

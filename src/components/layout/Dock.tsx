@@ -1,4 +1,5 @@
 import type { KeyboardEvent } from 'react';
+import clsx from 'clsx';
 import { dockApps } from '../../data/desktop';
 import type { ManagedWindow, WindowType } from '../../types/window';
 
@@ -8,9 +9,10 @@ interface DockProps {
   windows: ManagedWindow[];
   onMinimize: (windowId: string) => void;
   onFocus: (windowId: string) => void;
+  onLaunchpad: () => void;
 }
 
-export default function Dock({ onOpen, onRestore, windows, onMinimize, onFocus }: DockProps) {
+export default function Dock({ onOpen, onRestore, windows, onMinimize, onFocus, onLaunchpad }: DockProps) {
   const handleClick = (appId: WindowType) => {
     const existing = windows.find((w) => w.type === appId);
     if (!existing) {
@@ -37,13 +39,39 @@ export default function Dock({ onOpen, onRestore, windows, onMinimize, onFocus }
 
   return (
     <div className="dock dock-glass">
+      <div
+        className="dock-icon dock-icon-glass dock-launchpad"
+        onClick={onLaunchpad}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onLaunchpad();
+          }
+        }}
+      >
+        <svg width="22" height="22" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="6" y="1" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="11" y="1" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="1" y="6" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="6" y="6" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="11" y="6" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="1" y="11" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="6" y="11" width="4" height="4" rx="1" fill="currentColor" />
+          <rect x="11" y="11" width="4" height="4" rx="1" fill="currentColor" />
+        </svg>
+        <div className="dock-tooltip">Launchpad</div>
+      </div>
+      <div className="dock-divider" />
       {dockApps.map((app) => {
         const win = windows.find((w) => w.type === app.id);
         const isOpen = !!win;
         return (
           <div
             key={app.id}
-            className={`dock-icon dock-icon-glass${isOpen ? ' dock-icon-active' : ''}`}
+            className={clsx('dock-icon dock-icon-glass', { 'dock-icon-active': isOpen })}
             data-dock-type={app.id}
             onClick={() => handleClick(app.id)}
             role="button"

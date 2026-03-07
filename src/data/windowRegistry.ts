@@ -12,12 +12,13 @@ import SystemContent from '../components/windows/content/SystemContent';
 import TerminalContent from '../components/windows/content/TerminalContent';
 import TetrisContent from '../components/windows/content/TetrisContent';
 import VideoContent from '../components/windows/content/VideoContent';
+import YahooContent from '../components/windows/content/YahooContent';
 import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
   profile: { title: 'about_me.txt', icon: '🛰️', component: ProfileContent },
   chat: { title: 'guestbook.exe', icon: '📟', component: ChatContent },
-  music: { title: 'music_player.exe', icon: '🎛️', component: MusicContent },
+  music: { title: 'music_player.exe', icon: '🎛️', component: MusicContent, className: 'window-music' },
   memo: { title: 'memo.txt', icon: '📝', component: MemoContent },
   files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent, className: 'window-paint' },
   gallery: { title: 'gallery.exe', icon: '🧩', component: SystemContent },
@@ -29,4 +30,5 @@ export const windowRegistry: WindowRegistry = {
   minesweeper: { title: 'minesweeper.exe', icon: '💣', component: MinesweeperContent },
   snake: { title: 'snake.exe', icon: '🐍', component: SnakeContent },
   terminal: { title: 'C:\\WINDOWS\\system32\\cmd.exe', icon: '💻', component: TerminalContent, className: 'window-terminal' },
+  yahoo: { title: 'Yahoo! Korea - Internet Explorer', icon: '🌐', component: YahooContent, className: 'window-internet' },
 };

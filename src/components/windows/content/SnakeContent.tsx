@@ -1,4 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useGameLoop } from '../../../hooks/useGameLoop';
+import { useLocalStorageState } from '../../../hooks/useLocalStorageState';
+import GameOverlay from './GameOverlay';
 
 const COLS = 20;
 const ROWS = 20;
@@ -23,13 +26,12 @@ export default function SnakeContent() {
   const [started, setStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(() => {
-    try {
-      return Number(localStorage.getItem('snake-highscore')) || 0;
-    } catch {
-      return 0;
-    }
-  });
+  const [highScore, setHighScore] = useLocalStorageState(
+    'snake-highscore',
+    0,
+    (raw) => Number(raw) || 0,
+    String,
+  );
 
   const initialSnake: Point[] = [
     { x: 10, y: 10 },
@@ -45,7 +47,6 @@ export default function SnakeContent() {
   const gameOverRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const tickRef = useRef<ReturnType<typeof setInterval>>();
 
   const draw = useCallback(() => {
     const ctx = canvasRef.current?.getContext('2d');
@@ -110,10 +111,7 @@ export default function SnakeContent() {
     if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
       gameOverRef.current = true;
       setGameOver(true);
-      if (scoreRef.current > highScore) {
-        setHighScore(scoreRef.current);
-        try { localStorage.setItem('snake-highscore', String(scoreRef.current)); } catch { /* */ }
-      }
+      if (scoreRef.current > highScore) setHighScore(scoreRef.current);
       return;
     }
 
@@ -121,10 +119,7 @@ export default function SnakeContent() {
     if (snake.some((s) => s.x === head.x && s.y === head.y)) {
       gameOverRef.current = true;
       setGameOver(true);
-      if (scoreRef.current > highScore) {
-        setHighScore(scoreRef.current);
-        try { localStorage.setItem('snake-highscore', String(scoreRef.current)); } catch { /* */ }
-      }
+      if (scoreRef.current > highScore) setHighScore(scoreRef.current);
       return;
     }
 
@@ -143,7 +138,7 @@ export default function SnakeContent() {
     draw();
   }, [draw, highScore]);
 
-  const startGame = useCallback(() => {
+  const handleStartGame = useCallback(() => {
     snakeRef.current = [
       { x: 10, y: 10 },
       { x: 9, y: 10 },
@@ -161,12 +156,8 @@ export default function SnakeContent() {
   }, [draw]);
 
   // Game loop
-  useEffect(() => {
-    if (!started || gameOver) return;
-    const speed = Math.max(60, INITIAL_SPEED - Math.floor(scoreRef.current / 50) * 10);
-    tickRef.current = setInterval(tick, speed);
-    return () => clearInterval(tickRef.current);
-  }, [started, gameOver, score, tick]);
+  const speed = Math.max(60, INITIAL_SPEED - Math.floor(scoreRef.current / 50) * 10);
+  useGameLoop(tick, speed, started && !gameOver);
 
   // Keyboard
   useEffect(() => {
@@ -233,7 +224,7 @@ export default function SnakeContent() {
           </div>
         )}
         <button
-          onClick={startGame}
+          onClick={handleStartGame}
           style={{
             marginTop: 8,
             padding: '8px 24px',
@@ -282,22 +273,11 @@ export default function SnakeContent() {
           }}
         />
         {gameOver && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(0,0,0,0.75)',
-              gap: 8,
-            }}
-          >
+          <GameOverlay>
             <div style={{ fontSize: 22, color: '#ff4444' }}>GAME OVER</div>
             <div style={{ fontSize: 16, color: '#ffdd00' }}>Score: {score}</div>
             <button
-              onClick={startGame}
+              onClick={handleStartGame}
               style={{
                 marginTop: 6,
                 padding: '6px 20px',
@@ -311,7 +291,7 @@ export default function SnakeContent() {
             >
               RETRY
             </button>
-          </div>
+          </GameOverlay>
         )}
       </div>
     </div>

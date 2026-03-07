@@ -90,7 +90,7 @@ function Clippy() {
 /* ── Main Easter Eggs Component ──────────────────────────── */
 
 export default function EasterEggs() {
-  const [showBSOD, setShowBSOD] = useState(false);
+  const [isBSODVisible, setShowBSOD] = useState(false);
   const konamiRef = useRef<string[]>([]);
 
   // Konami Code: ↑↑↓↓←→←→BA
@@ -99,7 +99,7 @@ export default function EasterEggs() {
 
     const handler = (e: KeyboardEvent) => {
       // BSOD dismiss
-      if (showBSOD) {
+      if (isBSODVisible) {
         setShowBSOD(false);
         return;
       }
@@ -120,7 +120,7 @@ export default function EasterEggs() {
 
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [showBSOD]);
+  }, [isBSODVisible]);
 
   // Listen for BSOD event from terminal
   useEffect(() => {
@@ -132,7 +132,7 @@ export default function EasterEggs() {
   return (
     <>
       <Clippy />
-      {showBSOD && <BSOD onDismiss={() => setShowBSOD(false)} />}
+      {isBSODVisible && <BSOD onDismiss={() => setShowBSOD(false)} />}
     </>
   );
 }

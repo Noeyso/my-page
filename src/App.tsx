@@ -3,8 +3,8 @@ import DesktopEffects from './components/layout/DesktopEffects';
 import DesktopIcons from './components/layout/DesktopIcons';
 import Dock from './components/layout/Dock';
 import EasterEggs from './components/layout/EasterEggs';
+import Launchpad from './components/layout/Launchpad';
 import LockScreen from './components/LockScreen';
-import MarqueeBanner from './components/layout/MarqueeBanner';
 import SystemTray from './components/layout/SystemTray';
 import WindowFrame from './components/windows/WindowFrame';
 import { windowRegistry } from './data/windowRegistry';
@@ -13,12 +13,12 @@ import { useSessionStore } from './store/useSessionStore';
 import type { WindowType } from './types/window';
 import loaderGif from '../assets/loader.gif';
 import bg2Gif from '../assets/mood/bg2.gif';
-import metrixGif from '../assets/mood/metrix.gif';
 
 export default function App() {
   const { windows, openWindow, closeWindow, focusWindow, minimizeWindow } = useWindowManager();
   const isUnlocked = useSessionStore((state) => state.isUnlocked);
   const [loading, setLoading] = useState(false);
+  const [launchpadOpen, setLaunchpadOpen] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const hourglassRef = useRef<HTMLImageElement>(null);
 
@@ -45,12 +45,12 @@ export default function App() {
     if (!loading) return;
     const el = hourglassRef.current;
     if (!el) return;
-    const onMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
       el.style.left = `${e.clientX}px`;
       el.style.top = `${e.clientY}px`;
     };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [loading]);
 
   useEffect(() => {
@@ -71,10 +71,8 @@ export default function App() {
       <div className="minimal-noise-layer" />
       <div className="minimal-vignette-layer" />
       <img src={bg2Gif} alt="" className="desktop-bg-gif" />
-      {/* <img src={metrixGif} alt="" className="desktop-bg-metrix" /> */}
 
       <DesktopEffects />
-      {/* <MarqueeBanner /> */}
       <DesktopIcons onOpen={handleOpen} />
 
       {(() => {
@@ -108,12 +106,15 @@ export default function App() {
         });
       })()}
 
+      <Launchpad isOpen={launchpadOpen} onClose={() => setLaunchpadOpen(false)} onOpen={handleOpen} />
+
       <Dock
         onOpen={handleOpen}
         onRestore={openWindow}
         windows={windows}
         onMinimize={minimizeWindow}
         onFocus={focusWindow}
+        onLaunchpad={() => setLaunchpadOpen((prev) => !prev)}
       />
       <SystemTray />
       <EasterEggs />

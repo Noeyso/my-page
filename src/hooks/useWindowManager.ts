@@ -75,6 +75,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   minesweeper: 1,
   snake: -2,
   terminal: 0,
+  yahoo: 1,
 };
 
 const INITIAL_STATE: WindowState = {

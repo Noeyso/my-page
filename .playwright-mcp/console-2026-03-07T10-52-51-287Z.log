@@ -1,0 +1,207 @@
+[ 4043141ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/src/components/windows/content/TetrisContent.tsx?t=1772884814415:0
+[ 4043142ms] [ERROR] [vite] Failed to reload /src/components/windows/content/TetrisContent.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:5173/@vite/client:881
+[ 4336074ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885107297:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4336076ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885107297:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4336073ms] [ERROR] The above error occurred in the <Launchpad> component:
+
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885107297:51:37)
+    at div
+    at App (http://localhost:5173/src/App.tsx?t=1772885100215:34:77)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14079
+[ 4336076ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885107297:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19806:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19169:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18786:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18932:28)
+[ 4337411ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885108633:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4337413ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885108633:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4337413ms] [ERROR] The above error occurred in the <Launchpad> component:
+
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885108633:51:37)
+    at div
+    at App (http://localhost:5173/src/App.tsx?t=1772885100215:34:77)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14079
+[ 4337414ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885108633:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19806:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19169:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18786:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18932:28)
+[ 4339262ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885110490:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4339264ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885110490:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4339265ms] [ERROR] The above error occurred in the <Launchpad> component:
+
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885110490:51:37)
+    at div
+    at App (http://localhost:5173/src/App.tsx?t=1772885100215:34:77)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14079
+[ 4339265ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885110490:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19806:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19169:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18786:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18932:28)
+[ 4340152ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885111383:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4340155ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885111383:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4340155ms] [ERROR] The above error occurred in the <Launchpad> component:
+
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885111383:51:37)
+    at div
+    at App (http://localhost:5173/src/App.tsx?t=1772885100215:34:77)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14079
+[ 4340155ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885111383:78:7)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19806:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19169:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18786:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18932:28)
+[ 4341430ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885112658:79:3)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4341432ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885112658:79:3)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3680:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3705:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:3739:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19818:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+[ 4341433ms] [ERROR] The above error occurred in the <Launchpad> component:
+
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885112658:51:37)
+    at div
+    at App (http://localhost:5173/src/App.tsx?t=1772885100215:34:77)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14079
+[ 4341433ms] ReferenceError: visible is not defined
+    at Launchpad (http://localhost:5173/src/components/layout/Launchpad.tsx?t=1772885112658:79:3)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:11596:26)
+    at mountIndeterminateComponent (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:14974:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:15962:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19806:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19251:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19190:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:19169:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18786:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-R5YDL4RF.js?v=085f3f45:18932:28)

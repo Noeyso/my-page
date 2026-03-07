@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, ReactNode } from 'react';
+import clsx from 'clsx';
 import type { WindowPosition } from '../../types/window';
 
 type AnimState = 'visible' | 'minimizing' | 'minimized' | 'restoring';
+type ResizeDir = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw' | null;
 
 interface WindowFrameProps {
   id: string;
@@ -41,10 +43,17 @@ export default function WindowFrame({
   const [isDragging, setIsDragging] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [animState, setAnimState] = useState<AnimState>(isMinimized ? 'minimized' : 'visible');
+  const [size, setSize] = useState<{ width: number; height: number } | null>(null);
+  const [resizeDir, setResizeDir] = useState<ResizeDir>(null);
   const preMaxPosRef = useRef<WindowPosition>(initialPosition);
+  const preMaxSizeRef = useRef<{ width: number; height: number } | null>(null);
   const dragStartRef = useRef<WindowPosition>({ x: 0, y: 0 });
+  const resizeStartRef = useRef<{ x: number; y: number; w: number; h: number; px: number; py: number }>({ x: 0, y: 0, w: 0, h: 0, px: 0, py: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
   const prevMinimized = useRef(isMinimized);
+
+  const MIN_WIDTH = 200;
+  const MIN_HEIGHT = 120;
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -89,6 +98,63 @@ export default function WindowFrame({
     };
   }, [isDragging, handleMouseMove, handleTouchMove, stopDragging]);
 
+  const handleResizeStart = useCallback((dir: ResizeDir, clientX: number, clientY: number) => {
+    if (isMaximized || !windowRef.current) return;
+    const rect = windowRef.current.getBoundingClientRect();
+    setResizeDir(dir);
+    resizeStartRef.current = {
+      x: clientX,
+      y: clientY,
+      w: rect.width,
+      h: rect.height,
+      px: position.x,
+      py: position.y,
+    };
+    onFocus(id);
+  }, [isMaximized, position, onFocus, id]);
+
+  const handleResizeMove = useCallback((event: MouseEvent) => {
+    if (!resizeDir) return;
+    const { x: sx, y: sy, w: sw, h: sh, px, py } = resizeStartRef.current;
+    const dx = event.clientX - sx;
+    const dy = event.clientY - sy;
+
+    let newW = sw;
+    let newH = sh;
+    let newX = px;
+    let newY = py;
+
+    if (resizeDir.includes('e')) newW = Math.max(MIN_WIDTH, sw + dx);
+    if (resizeDir.includes('w')) {
+      newW = Math.max(MIN_WIDTH, sw - dx);
+      newX = px + sw - newW;
+    }
+    if (resizeDir.includes('s')) newH = Math.max(MIN_HEIGHT, sh + dy);
+    if (resizeDir.includes('n')) {
+      newH = Math.max(MIN_HEIGHT, sh - dy);
+      newY = py + sh - newH;
+    }
+
+    setSize({ width: newW, height: newH });
+    setPosition({ x: newX, y: newY });
+  }, [resizeDir]);
+
+  const stopResize = useCallback(() => {
+    setResizeDir(null);
+  }, []);
+
+  useEffect(() => {
+    if (!resizeDir) return;
+
+    document.addEventListener('mousemove', handleResizeMove);
+    document.addEventListener('mouseup', stopResize);
+
+    return () => {
+      document.removeEventListener('mousemove', handleResizeMove);
+      document.removeEventListener('mouseup', stopResize);
+    };
+  }, [resizeDir, handleResizeMove, stopResize]);
+
   const handleTitleMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
     const targetElement = event.target as HTMLElement;
     if (targetElement.closest('.window-button')) return;
@@ -117,12 +183,15 @@ export default function WindowFrame({
   const toggleMaximize = useCallback(() => {
     if (isMaximized) {
       setPosition(preMaxPosRef.current);
+      setSize(preMaxSizeRef.current);
     } else {
       preMaxPosRef.current = position;
+      preMaxSizeRef.current = size;
       setPosition({ x: 0, y: 0 });
+      setSize(null);
     }
     setIsMaximized((prev) => !prev);
-  }, [isMaximized, position]);
+  }, [isMaximized, position, size]);
 
   const handleTitleDoubleClick = (event: ReactMouseEvent<HTMLDivElement>) => {
     const targetElement = event.target as HTMLElement;
@@ -205,15 +274,29 @@ export default function WindowFrame({
     return () => window.removeEventListener('keydown', handler);
   }, [isFocused, onClose, onMinimize, toggleMaximize]);
 
-  const animClass =
-    animState === 'minimizing' ? ' window-minimizing' :
-    animState === 'restoring' ? ' window-restoring' :
-    animState === 'minimized' ? ' window-hidden' : '';
+  const resizeHandleStyles: Record<NonNullable<ResizeDir>, React.CSSProperties> = {
+    n:  { top: 0, left: 8, right: 8, height: 6, cursor: 'n-resize' },
+    s:  { bottom: 0, left: 8, right: 8, height: 6, cursor: 's-resize' },
+    e:  { top: 8, right: 0, bottom: 8, width: 6, cursor: 'e-resize' },
+    w:  { top: 8, left: 0, bottom: 8, width: 6, cursor: 'w-resize' },
+    ne: { top: 0, right: 0, width: 10, height: 10, cursor: 'ne-resize' },
+    nw: { top: 0, left: 0, width: 10, height: 10, cursor: 'nw-resize' },
+    se: { bottom: 0, right: 0, width: 10, height: 10, cursor: 'se-resize' },
+    sw: { bottom: 0, left: 0, width: 10, height: 10, cursor: 'sw-resize' },
+  };
+
+  const resizeHandles: NonNullable<ResizeDir>[] = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
 
   return (
     <div
       ref={windowRef}
-      className={`window${className ? ` ${className}` : ''}${isMaximized ? ' window-maximized' : ''}${animClass}`}
+      className={clsx('window', className, {
+        'window-maximized': isMaximized,
+        'window-resizing': resizeDir,
+        'window-minimizing': animState === 'minimizing',
+        'window-restoring': animState === 'restoring',
+        'window-hidden': animState === 'minimized',
+      })}
       style={isMaximized
         ? { left: 0, top: 0, zIndex, transform: 'none' }
         : {
@@ -221,11 +304,23 @@ export default function WindowFrame({
             top: `${position.y}px`,
             zIndex,
             transform: `rotate(${tilt}deg)`,
+            ...(size ? { width: `${size.width}px`, height: `${size.height}px` } : {}),
           }
       }
       onMouseDown={() => onFocus(id)}
       onTouchStart={() => onFocus(id)}
     >
+      {!isMaximized && resizeHandles.map((dir) => (
+        <div
+          key={dir}
+          style={{ position: 'absolute', zIndex: 10, ...resizeHandleStyles[dir] }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleResizeStart(dir, e.clientX, e.clientY);
+          }}
+        />
+      ))}
       <div
         className="window-titlebar"
         onMouseDown={handleTitleMouseDown}

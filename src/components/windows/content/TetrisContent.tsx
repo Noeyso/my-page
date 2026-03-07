@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from '../../../store/useSessionStore';
+import { useGameLoop } from '../../../hooks/useGameLoop';
+import GameOverlay from './GameOverlay';
 
 const COLS = 10;
 const ROWS = 20;
@@ -321,20 +323,16 @@ export default function TetrisContent() {
   }, [started, move, moveDown, rotatePiece, hardDrop, holdCurrentPiece]);
 
   // Game tick
-  useEffect(() => {
-    if (!started || gameOver || paused) return;
-    const level = Math.floor(lines / 10);
-    const speed = Math.max(100, TICK_MS - level * 40);
-    const id = setInterval(moveDown, speed);
-    return () => clearInterval(id);
-  }, [started, gameOver, paused, lines, moveDown]);
+  const level = Math.floor(lines / 10);
+  const tickSpeed = Math.max(100, TICK_MS - level * 40);
+  useGameLoop(moveDown, tickSpeed, started && !gameOver && !paused);
 
   // Focus container on start
   useEffect(() => {
     if (started) containerRef.current?.focus();
   }, [started]);
 
-  const restart = () => {
+  const handleRestart = () => {
     setBoard(createBoard());
     const p = randomPiece();
     setPiece(p);
@@ -348,7 +346,6 @@ export default function TetrisContent() {
     setStarted(true);
   };
 
-  const level = Math.floor(lines / 10);
   const ghostY = getGhostY(board, piece);
 
   // Render piece preview (for next and hold)
@@ -428,7 +425,7 @@ export default function TetrisContent() {
           </div>
         )}
         <button
-          onClick={restart}
+          onClick={handleRestart}
           style={{
             marginTop: 8,
             padding: '8px 24px',
@@ -538,18 +535,7 @@ export default function TetrisContent() {
 
         {/* Game over overlay */}
         {gameOver && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(0,0,0,0.75)',
-              gap: 8,
-            }}
-          >
+          <GameOverlay>
             <div style={{ fontSize: 22, color: '#ff4444' }}>GAME OVER</div>
             <div style={{ fontSize: 16, color: '#ffdd00' }}>Score: {score}</div>
             <div style={{ fontSize: 12, color: '#8899aa', marginTop: 4 }}>HIGH SCORES</div>
@@ -567,7 +553,7 @@ export default function TetrisContent() {
               </div>
             ))}
             <button
-              onClick={restart}
+              onClick={handleRestart}
               style={{
                 marginTop: 6,
                 padding: '6px 20px',
@@ -581,25 +567,14 @@ export default function TetrisContent() {
             >
               RETRY
             </button>
-          </div>
+          </GameOverlay>
         )}
 
         {/* Pause overlay */}
         {paused && !gameOver && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(0,0,0,0.6)',
-              fontSize: 22,
-              color: '#ffdd00',
-            }}
-          >
-            PAUSED
-          </div>
+          <GameOverlay>
+            <div style={{ fontSize: 22, color: '#ffdd00' }}>PAUSED</div>
+          </GameOverlay>
         )}
       </div>
 

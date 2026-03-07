@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState, type PointerEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import { getDefaultPaintingName, savePainting } from '../../../services/paintingService';
+import { useCanvasResize } from '../../../hooks/useCanvasResize';
+import { usePaintingLogic } from '../../../hooks/usePaintingLogic';
 
 type Tool =
   | 'freeselect' | 'select'
@@ -19,9 +22,25 @@ const WIN98_COLORS = [
 ];
 
 const LINE_WIDTHS = [1, 2, 4, 7];
-const ERASER_WIDTHS = [8, 16, 28, 40];
 
-const DRAW_TOOLS: Tool[] = ['pencil', 'brush', 'eraser', 'fill', 'eyedropper', 'line', 'rect', 'ellipse'];
+const TOOLBOX_TOOLS: { id: Tool; title: string }[] = [
+  { id: 'freeselect', title: 'Free-Form Select' },
+  { id: 'select', title: 'Select' },
+  { id: 'eraser', title: 'Eraser/Color Eraser' },
+  { id: 'fill', title: 'Fill With Color' },
+  { id: 'eyedropper', title: 'Pick Color' },
+  { id: 'magnifier', title: 'Magnifier' },
+  { id: 'pencil', title: 'Pencil' },
+  { id: 'brush', title: 'Brush' },
+  { id: 'airbrush', title: 'Airbrush' },
+  { id: 'text', title: 'Text' },
+  { id: 'line', title: 'Line' },
+  { id: 'curve', title: 'Curve' },
+  { id: 'rect', title: 'Rectangle' },
+  { id: 'polygon', title: 'Polygon' },
+  { id: 'ellipse', title: 'Ellipse' },
+  { id: 'roundrect', title: 'Rounded Rectangle' },
+];
 
 function ToolIcon({ id }: { id: Tool }) {
   const s = { fill: 'none' as const, stroke: '#000000', strokeWidth: '1.2' };
@@ -150,25 +169,6 @@ function ToolIcon({ id }: { id: Tool }) {
   }
 }
 
-const TOOLBOX_TOOLS: { id: Tool; title: string }[] = [
-  { id: 'freeselect', title: 'Free-Form Select' },
-  { id: 'select', title: 'Select' },
-  { id: 'eraser', title: 'Eraser/Color Eraser' },
-  { id: 'fill', title: 'Fill With Color' },
-  { id: 'eyedropper', title: 'Pick Color' },
-  { id: 'magnifier', title: 'Magnifier' },
-  { id: 'pencil', title: 'Pencil' },
-  { id: 'brush', title: 'Brush' },
-  { id: 'airbrush', title: 'Airbrush' },
-  { id: 'text', title: 'Text' },
-  { id: 'line', title: 'Line' },
-  { id: 'curve', title: 'Curve' },
-  { id: 'rect', title: 'Rectangle' },
-  { id: 'polygon', title: 'Polygon' },
-  { id: 'ellipse', title: 'Ellipse' },
-  { id: 'roundrect', title: 'Rounded Rectangle' },
-];
-
 function getCursorStyle(tool: Tool): string {
   if (tool === 'eyedropper') return 'crosshair';
   if (tool === 'fill') return 'cell';
@@ -180,27 +180,30 @@ function getCursorStyle(tool: Tool): string {
 export default function FilesContent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const isDrawingRef = useRef(false);
-  const startPosRef = useRef({ x: 0, y: 0 });
-  const lastPosRef = useRef({ x: 0, y: 0 });
-  const snapshotRef = useRef<ImageData | null>(null);
 
   const [tool, setTool] = useState<Tool>('pencil');
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
-  const [brushSize, setBrushSize] = useState(2); // default: 2번째 강도
-  const [saving, setSaving] = useState(false);
+  const [brushSize, setBrushSize] = useState(2);
+  const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
-  // File menu state
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Save dialog state
-  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
   const [saveName, setSaveName] = useState('');
   const saveInputRef = useRef<HTMLInputElement>(null);
+
+  // Canvas resize
+  useCanvasResize(canvasRef, containerRef);
+
+  // Painting logic
+  const { handlePointerDown, handlePointerMove, handlePointerUp, clearCanvas } = usePaintingLogic(
+    canvasRef,
+    { tool, fgColor, bgColor, brushSize, setFgColor, setBgColor, setCursorPos },
+  );
 
   // Close menu on outside click
   useEffect(() => {
@@ -216,254 +219,45 @@ export default function FilesContent() {
 
   // Focus save input when dialog opens
   useEffect(() => {
-    if (showSaveDialog) {
+    if (isSaveDialogOpen) {
       setTimeout(() => saveInputRef.current?.select(), 30);
     }
-  }, [showSaveDialog]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const resizeCanvas = () => {
-      const prev = document.createElement('canvas');
-      prev.width = canvas.width;
-      prev.height = canvas.height;
-      const prevCtx = prev.getContext('2d');
-      if (prevCtx) prevCtx.drawImage(canvas, 0, 0);
-
-      const rect = container.getBoundingClientRect();
-      canvas.width = Math.max(Math.floor(rect.width), 1);
-      canvas.height = Math.max(Math.floor(rect.height), 1);
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      if (prev.width > 0 && prev.height > 0) ctx.drawImage(prev, 0, 0);
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    return () => window.removeEventListener('resize', resizeCanvas);
-  }, []);
-
-  const getPos = (clientX: number, clientY: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-    const rect = canvas.getBoundingClientRect();
-    return { x: Math.floor(clientX - rect.left), y: Math.floor(clientY - rect.top) };
-  };
-
-  const getLineWidth = () => LINE_WIDTHS[brushSize - 1] ?? 1;
-  const getEraserWidth = () => ERASER_WIDTHS[brushSize - 1] ?? 8;
-
-  const floodFill = (sx: number, sy: number, fillColor: string) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    const W = canvas.width, H = canvas.height;
-
-    const ti = (sy * W + sx) * 4;
-    const [tR, tG, tB, tA] = [data[ti], data[ti + 1], data[ti + 2], data[ti + 3]];
-
-    const tmp = document.createElement('canvas');
-    tmp.width = 1; tmp.height = 1;
-    const tctx = tmp.getContext('2d')!;
-    tctx.fillStyle = fillColor;
-    tctx.fillRect(0, 0, 1, 1);
-    const fd = tctx.getImageData(0, 0, 1, 1).data;
-    const [fR, fG, fB] = [fd[0], fd[1], fd[2]];
-
-    if (fR === tR && fG === tG && fB === tB) return;
-
-    const stack: number[] = [sy * W + sx];
-    const visited = new Uint8Array(W * H);
-
-    while (stack.length > 0) {
-      const i = stack.pop()!;
-      if (visited[i]) continue;
-      const x = i % W, y = Math.floor(i / W);
-      if (x < 0 || x >= W || y < 0 || y >= H) continue;
-      const di = i * 4;
-      if (data[di] !== tR || data[di + 1] !== tG || data[di + 2] !== tB || data[di + 3] !== tA) continue;
-      visited[i] = 1;
-      data[di] = fR; data[di + 1] = fG; data[di + 2] = fB; data[di + 3] = 255;
-      if (x > 0) stack.push(i - 1);
-      if (x < W - 1) stack.push(i + 1);
-      if (y > 0) stack.push(i - W);
-      if (y < H - 1) stack.push(i + W);
-    }
-    ctx.putImageData(imageData, 0, 0);
-  };
-
-  const handlePointerDown = (e: PointerEvent<HTMLCanvasElement>) => {
-    const pos = getPos(e.clientX, e.clientY);
-    const isRight = e.button === 2;
-    const color = isRight ? bgColor : fgColor;
-
-    if (tool === 'eyedropper') {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      const p = ctx.getImageData(pos.x, pos.y, 1, 1).data;
-      const c = '#' + [p[0], p[1], p[2]].map((v) => v.toString(16).padStart(2, '0')).join('');
-      if (isRight) setBgColor(c); else setFgColor(c);
-      return;
-    }
-
-    if (tool === 'fill') {
-      floodFill(pos.x, pos.y, color);
-      return;
-    }
-
-    if (!DRAW_TOOLS.includes(tool)) return;
-
-    isDrawingRef.current = true;
-    startPosRef.current = pos;
-    lastPosRef.current = pos;
-    (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    if (tool === 'line' || tool === 'rect' || tool === 'ellipse') {
-      snapshotRef.current = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    } else {
-      const lw = tool === 'eraser' ? getEraserWidth() : getLineWidth();
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, lw / 2, 0, Math.PI * 2);
-      ctx.fillStyle = tool === 'eraser' ? bgColor : color;
-      ctx.fill();
-    }
-  };
-
-  const handlePointerMove = (e: PointerEvent<HTMLCanvasElement>) => {
-    const pos = getPos(e.clientX, e.clientY);
-    setCursorPos(pos);
-    if (!isDrawingRef.current) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const color = fgColor;
-    const lw = getLineWidth();
-
-    if (tool === 'line') {
-      ctx.putImageData(snapshotRef.current!, 0, 0);
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lw;
-      ctx.lineCap = 'round';
-      ctx.moveTo(startPosRef.current.x, startPosRef.current.y);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    } else if (tool === 'rect') {
-      ctx.putImageData(snapshotRef.current!, 0, 0);
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lw;
-      ctx.strokeRect(
-        startPosRef.current.x, startPosRef.current.y,
-        pos.x - startPosRef.current.x, pos.y - startPosRef.current.y,
-      );
-    } else if (tool === 'ellipse') {
-      ctx.putImageData(snapshotRef.current!, 0, 0);
-      const cx = (startPosRef.current.x + pos.x) / 2;
-      const cy = (startPosRef.current.y + pos.y) / 2;
-      const rx = Math.abs(pos.x - startPosRef.current.x) / 2;
-      const ry = Math.abs(pos.y - startPosRef.current.y) / 2;
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lw;
-      ctx.ellipse(cx, cy, Math.max(rx, 0.1), Math.max(ry, 0.1), 0, 0, Math.PI * 2);
-      ctx.stroke();
-    } else if (tool === 'pencil' || tool === 'brush') {
-      const last = lastPosRef.current;
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lw;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.moveTo(last.x, last.y);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    } else if (tool === 'eraser') {
-      const last = lastPosRef.current;
-      const ew = getEraserWidth();
-      ctx.beginPath();
-      ctx.strokeStyle = bgColor;
-      ctx.lineWidth = ew;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.moveTo(last.x, last.y);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    }
-
-    lastPosRef.current = pos;
-  };
-
-  const stopDrawing = (e: PointerEvent<HTMLCanvasElement>) => {
-    isDrawingRef.current = false;
-    snapshotRef.current = null;
-    const canvas = e.target as HTMLCanvasElement;
-    if (canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId);
-  };
-
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  };
+  }, [isSaveDialogOpen]);
 
   const openSaveDialog = () => {
     setOpenMenu(null);
     setSaveName(getDefaultPaintingName());
-    setShowSaveDialog(true);
+    setIsSaveDialogOpen(true);
   };
 
   const handleSave = async () => {
     const canvas = canvasRef.current;
-    if (!canvas || saving) return;
-    setSaving(true);
+    if (!canvas || isSaving) return;
+    setIsSaving(true);
     setSaveMessage('');
     try {
       await savePainting(canvas, saveName || undefined);
       setSaveMessage('Saved!');
-      setShowSaveDialog(false);
+      setIsSaveDialogOpen(false);
     } catch {
       setSaveMessage('Error saving');
     } finally {
-      setSaving(false);
+      setIsSaving(false);
       setTimeout(() => setSaveMessage(''), 2000);
     }
   };
 
   const handleQuickSave = async () => {
     const canvas = canvasRef.current;
-    if (!canvas || saving) return;
-    setSaving(true);
+    if (!canvas || isSaving) return;
+    setIsSaving(true);
     try {
       await savePainting(canvas);
       setSaveMessage('Saved!');
     } catch {
       setSaveMessage('Error');
     } finally {
-      setSaving(false);
+      setIsSaving(false);
       setTimeout(() => setSaveMessage(''), 2000);
     }
   };
@@ -472,11 +266,10 @@ export default function FilesContent() {
     <div className="paint98-wrap">
       {/* Menu bar */}
       <div className="paint98-menubar" ref={menuRef}>
-        {/* File menu */}
         <div className="paint98-menu-entry">
           <button
             type="button"
-            className={`paint98-menu-btn${openMenu === 'file' ? ' active' : ''}`}
+            className={clsx('paint98-menu-btn', { active: openMenu === 'file' })}
             onMouseDown={(e) => {
               e.stopPropagation();
               setOpenMenu(openMenu === 'file' ? null : 'file');
@@ -519,7 +312,7 @@ export default function FilesContent() {
             {TOOLBOX_TOOLS.map((t) => (
               <button
                 key={t.id}
-                className={`paint98-tool-btn${tool === t.id ? ' active' : ''}`}
+                className={clsx('paint98-tool-btn', { active: tool === t.id })}
                 onClick={() => setTool(t.id)}
                 title={t.title}
                 type="button"
@@ -529,12 +322,11 @@ export default function FilesContent() {
             ))}
           </div>
           <div className="paint98-toolbox-sep" />
-          {/* Size selector */}
           <div className="paint98-size-selector">
             {([1, 2, 3, 4] as const).map((s) => (
               <button
                 key={s}
-                className={`paint98-size-btn${brushSize === s ? ' active' : ''}`}
+                className={clsx('paint98-size-btn', { active: brushSize === s })}
                 onClick={() => setBrushSize(s)}
                 title={`Size ${s}`}
                 type="button"
@@ -561,8 +353,8 @@ export default function FilesContent() {
               style={{ cursor: getCursorStyle(tool) }}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
-              onPointerUp={stopDrawing}
-              onPointerLeave={stopDrawing}
+              onPointerUp={handlePointerUp}
+              onPointerLeave={handlePointerUp}
               onContextMenu={(e) => e.preventDefault()}
             />
           </div>
@@ -601,7 +393,7 @@ export default function FilesContent() {
           {TOOLBOX_TOOLS.find((t) => t.id === tool)?.title ?? tool}
         </div>
         <div className="paint98-status-div" />
-        <button type="button" className="paint98-status-btn" onClick={openSaveDialog} disabled={saving}>
+        <button type="button" className="paint98-status-btn" onClick={openSaveDialog} disabled={isSaving}>
           {saveMessage || 'Save As...'}
         </button>
         <div className="paint98-status-div" />
@@ -611,7 +403,7 @@ export default function FilesContent() {
       </div>
 
       {/* Save dialog modal */}
-      {showSaveDialog && (
+      {isSaveDialogOpen && (
         <div className="paint98-modal-overlay" onMouseDown={() => {}}>
           <div className="paint98-modal" onMouseDown={(e) => e.stopPropagation()}>
             <div className="paint98-modal-titlebar">
@@ -619,7 +411,7 @@ export default function FilesContent() {
               <button
                 type="button"
                 className="paint98-modal-close"
-                onClick={() => setShowSaveDialog(false)}
+                onClick={() => setIsSaveDialogOpen(false)}
               >
                 ✕
               </button>
@@ -638,7 +430,7 @@ export default function FilesContent() {
                   onChange={(e) => setSaveName(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSave();
-                    if (e.key === 'Escape') setShowSaveDialog(false);
+                    if (e.key === 'Escape') setIsSaveDialogOpen(false);
                   }}
                   spellCheck={false}
                   autoComplete="off"
@@ -654,14 +446,14 @@ export default function FilesContent() {
                 type="button"
                 className="paint98-modal-btn paint98-modal-btn-primary"
                 onClick={handleSave}
-                disabled={saving}
+                disabled={isSaving}
               >
-                {saving ? 'Saving...' : 'Save'}
+                {isSaving ? 'Saving...' : 'Save'}
               </button>
               <button
                 type="button"
                 className="paint98-modal-btn"
-                onClick={() => setShowSaveDialog(false)}
+                onClick={() => setIsSaveDialogOpen(false)}
               >
                 Cancel
               </button>
