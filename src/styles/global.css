@@ -2738,6 +2738,7 @@
   /* === Terminal Window === */
   .window-terminal {
     width: 460px;
+    min-height: 350px;
   }
 
   .window-terminal .window-toolbar {
