@@ -2,20 +2,20 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import type { WindowType } from '../../types/window';
 import { windowRegistry } from '../../data/windowRegistry';
-import iconDisc from '../../../assets/icon-disc.png';
-import iconTransport from '../../../assets/icon-transport.png';
-import iconMusic from '../../../assets/icon-music.png';
-import iconMemo from '../../../assets/icon-memo.png';
-import iconPaint from '../../../assets/icon-paint.png';
-import iconGallery from '../../../assets/icon-gallery.png';
-import iconFolderOpen from '../../../assets/icon-folder-open.png';
-import iconTetris from '../../../assets/icon-tetris.png';
-import iconInternet from '../../../assets/icon-internet.png';
-import iconGame from '../../../assets/icon-game.png';
-import iconMinesweeper from '../../../assets/icon-minsweeper.png';
-import iconSnake from '../../../assets/icon-snake.png';
-import iconTerminal from '../../../assets/icon-terminal.png';
-import iconYahoo from '../../../assets/yahoo.png';
+import iconDisc from '../../../assets/images/icon-disc.png';
+import iconTransport from '../../../assets/images/icon-transport.png';
+import iconMusic from '../../../assets/images/icon-music.png';
+import iconMemo from '../../../assets/images/icon-memo.png';
+import iconPaint from '../../../assets/images/icon-paint.png';
+import iconGallery from '../../../assets/images/icon-gallery.png';
+import iconFolderOpen from '../../../assets/images/icon-folder-open.png';
+import iconTetris from '../../../assets/images/icon-tetris.png';
+import iconInternet from '../../../assets/images/icon-internet.png';
+import iconGame from '../../../assets/images/icon-game.png';
+import iconMinesweeper from '../../../assets/images/icon-minsweeper.png';
+import iconSnake from '../../../assets/images/icon-snake.png';
+import iconTerminal from '../../../assets/images/icon-terminal.png';
+import iconYahoo from '../../../assets/images/yahoo.png';
 
 const appIcons: Partial<Record<WindowType, string>> = {
   profile: iconDisc,

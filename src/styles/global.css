@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'DungGeunMo';
-  src: url('../../assets/DungGeunMo.ttf') format('truetype');
+  src: url('../../assets/font/DungGeunMo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -4033,7 +4033,7 @@
   .desktop-bg {
     background:
       linear-gradient(rgba(8, 12, 20, 0.18), rgba(8, 12, 20, 0.18)),
-      url('../../assets/mood/bg.png') center / cover no-repeat !important;
+      url('../../assets/images/mood/bg.png') center / cover no-repeat !important;
   }
 
   .desktop-bg::before,
@@ -4051,7 +4051,7 @@
   .desktop-bg {
     background:
       linear-gradient(rgba(8, 12, 20, 0.22), rgba(8, 12, 20, 0.22)),
-      url('../../assets/mood/bg.png') center / cover no-repeat !important;
+      url('../../assets/images/mood/bg.png') center / cover no-repeat !important;
     filter: none !important;
   }
 
@@ -4351,7 +4351,7 @@
     top: 52%;
     width: min(58vw, 820px);
     aspect-ratio: 1024 / 768;
-    background: url('../../assets/mood/m12.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m12.png') center / contain no-repeat;
     transform: translate(-50%, -50%);
     opacity: 0.58;
     mix-blend-mode: screen;
@@ -4364,7 +4364,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: url('../../assets/mood/m12.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m12.png') center / contain no-repeat;
     pointer-events: none;
     mix-blend-mode: screen;
   }
@@ -4984,7 +4984,7 @@
     aspect-ratio: 1 / 1;
     top: -8vh;
     right: 6vw;
-    background: url('../../assets/mood/m11.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m11.png') center / contain no-repeat;
     opacity: 0.2;
     filter: blur(1px) drop-shadow(0 0 20px rgba(43, 183, 255, 0.32));
     animation: globe-float 20s ease-in-out infinite;
@@ -4996,7 +4996,7 @@
     aspect-ratio: 677 / 710;
     left: -2vw;
     bottom: -18vh;
-    background: url('../../assets/mood/m5.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m5.png') center / contain no-repeat;
     opacity: 0.12;
     filter: grayscale(0.35) brightness(0.62) saturate(0.7);
   }
@@ -5024,7 +5024,7 @@
     aspect-ratio: 430 / 126;
     left: 8vw;
     top: 14vh;
-    background: url('../../assets/mood/m8.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m8.png') center / contain no-repeat;
     filter: drop-shadow(-1px 0 rgba(255, 45, 84, 0.26)) drop-shadow(1px 0 rgba(46, 160, 255, 0.38))
       drop-shadow(0 0 6px rgba(43, 183, 255, 0.24));
   }
@@ -5034,7 +5034,7 @@
     aspect-ratio: 512 / 406;
     right: 9vw;
     top: 17vh;
-    background: url('../../assets/mood/m10.gif') center / contain no-repeat;
+    background: url('../../assets/images/mood/m10.gif') center / contain no-repeat;
     filter: blur(0.25px) drop-shadow(0 0 7px rgba(43, 183, 255, 0.2));
     animation: glitch-flicker 7s steps(2, end) infinite;
   }
@@ -5171,7 +5171,7 @@
     z-index: 1;
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.6) 45%, rgba(0, 0, 0, 0.9) 100%),
-      url('../../assets/mood/bg.png') center / cover no-repeat;
+      url('../../assets/images/mood/bg.png') center / cover no-repeat;
     opacity: 0.44;
     filter: contrast(1.08) saturate(0.86);
   }
@@ -5198,7 +5198,7 @@
     aspect-ratio: 1 / 1;
     left: 46%;
     top: -9%;
-    background: url('../../assets/mood/m11.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m11.png') center / contain no-repeat;
     opacity: 0.52;
     filter: drop-shadow(0 0 24px rgba(53, 173, 255, 0.6));
   }
@@ -5217,7 +5217,7 @@
     left: 1.6vw;
     top: 2vh;
     transform: rotate(-1.8deg);
-    background-image: url('../../assets/mood/m1.png');
+    background-image: url('../../assets/images/mood/m1.png');
   }
 
   .collapse-tv-stack-b {
@@ -5227,7 +5227,7 @@
     top: 34vh;
     transform: rotate(-3deg);
     opacity: 0.62;
-    background-image: url('../../assets/mood/m12.png');
+    background-image: url('../../assets/images/mood/m12.png');
   }
 
   .collapse-tv-stack-c {
@@ -5236,7 +5236,7 @@
     left: 2.5vw;
     top: 54vh;
     transform: rotate(-2.1deg);
-    background-image: url('../../assets/mood/m8.png');
+    background-image: url('../../assets/images/mood/m8.png');
   }
 
   .collapse-suit-figure {
@@ -5245,7 +5245,7 @@
     aspect-ratio: 529 / 742;
     left: 20vw;
     bottom: -7vh;
-    background: url('../../assets/mood/m13.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m13.png') center / contain no-repeat;
     --suit-opacity: 0.5;
     opacity: var(--suit-opacity);
     filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.6));
@@ -5260,7 +5260,7 @@
     left: 29vw;
     top: 2vh;
     transform: rotate(-12deg);
-    background: url('../../assets/mood/m10.gif') center / contain no-repeat;
+    background: url('../../assets/images/mood/m10.gif') center / contain no-repeat;
     opacity: 0.88;
     filter: drop-shadow(0 0 16px rgba(103, 195, 255, 0.45));
   }
@@ -5271,7 +5271,7 @@
     aspect-ratio: 565 / 591;
     left: 45vw;
     bottom: 20vh;
-    background: url('../../assets/mood/m2.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m2.png') center / contain no-repeat;
     opacity: 0.7;
   }
 
@@ -5281,7 +5281,7 @@
     aspect-ratio: 640 / 480;
     right: 3vw;
     bottom: 7vh;
-    background: url('../../assets/mood/m3.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m3.png') center / contain no-repeat;
     opacity: 0.5;
     transform: rotate(-0.8deg);
     mix-blend-mode: screen;
@@ -5294,7 +5294,7 @@
     top: 50%;
     width: 100vh;
     aspect-ratio: 728 / 426;
-    background: url('../../assets/mood/m9.png') center / contain no-repeat;
+    background: url('../../assets/images/mood/m9.png') center / contain no-repeat;
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
     mix-blend-mode: screen;

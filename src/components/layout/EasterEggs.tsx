@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import catImg from '../../../assets/cat.jpg';
+import catImg from '../../../assets/images/cat.jpg';
 
 /* ── BSOD (Blue Screen of Death) ────────────────────────── */
 

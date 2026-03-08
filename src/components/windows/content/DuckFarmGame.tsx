@@ -1,5 +1,13 @@
 import { useEffect, useRef, useCallback } from 'react';
 
+// ── Sound imports ────────────────────────────────────
+import bgmSrc from '../../../../assets/sound/duck/bgm_main_theme.mp3';
+import sayHiSrc from '../../../../assets/sound/duck/say_hi.mp3';
+import waterSrc from '../../../../assets/sound/duck/sfx_pine_nature.mp3';
+import jumpSrc from '../../../../assets/sound/duck/sfx_jump.mp3';
+import duckScreamSrc from '../../../../assets/sound/duck/duck_scream.mp3';
+import duckSoundSrc from '../../../../assets/sound/duck/duck_sound.mp3';
+
 // ── Constants ──────────────────────────────────────────
 const W = 800, H = 600, FPS = 30;
 const C_SKY = '#87CEEB';
@@ -267,6 +275,7 @@ interface GameData {
   wolfTimer: number; wolfInterval: number;
   totalEggsLaid: number; totalEggsSold: number;
   goldCheckTimer: number; heartTimer: number;
+  soundQueue: string[];
 }
 
 function initGame(): GameData {
@@ -298,6 +307,7 @@ function initGame(): GameData {
     wolfTimer: 0, wolfInterval: rand(25, 45),
     totalEggsLaid: 0, totalEggsSold: 0,
     goldCheckTimer: 0, heartTimer: 0,
+    soundQueue: [],
   };
 }
 
@@ -533,10 +543,15 @@ function updateGame(g: GameData, dt: number): Particle[] {
 
   // ducks
   for (const duck of g.ducks) {
+    const wasSwimming = duck.state === DuckState.SWIMMING;
     const laid = updateDuck(duck, dt, g.farm.waterRect, g.farm.groundRect);
+    if (!wasSwimming && duck.state === DuckState.SWIMMING) {
+      g.soundQueue.push('water');
+    }
     if (laid) {
       g.eggs.push(laid);
       g.totalEggsLaid++;
+      g.soundQueue.push('duck_sound');
       for (let i = 0; i < 5; i++) {
         newParticles.push(makeParticle(
           duck.x + rand(-10, 10), duck.y + rand(-5, 5),
@@ -554,6 +569,7 @@ function updateGame(g: GameData, dt: number): Particle[] {
       baby.eggInterval = rand(18, 30);
       g.ducks.push(baby);
       g.hearts.push(makeHeart(egg.x, egg.y - 20));
+      g.soundQueue.push('say_hi');
       for (let i = 0; i < 8; i++) {
         newParticles.push(makeParticle(
           egg.x + rand(-5, 5), egg.y + rand(-5, 5),
@@ -581,6 +597,7 @@ function updateGame(g: GameData, dt: number): Particle[] {
     const stole = updateCrab(crab, dt, g.eggs);
     if (stole) {
       g.notifications.push({ text: '게가 알을 훔쳐갔어요!', timer: 2 });
+      g.soundQueue.push('duck_scream');
     }
   }
 
@@ -612,6 +629,7 @@ function updateGame(g: GameData, dt: number): Particle[] {
     updateWolf(wolf, dt, g.ducks, g.farm.fences);
     if (wolf.stolenDuck && !prevStolen) {
       g.notifications.push({ text: '늑대가 오리를 잡아갔어요!', timer: 2.5 });
+      g.soundQueue.push('duck_scream');
     }
   }
   g.wolves = g.wolves.filter(w => w.active);
@@ -1608,6 +1626,8 @@ function getBottomButton(mx: number, my: number): string | null {
 function handleGameClick(g: GameData, mx: number, my: number) {
   if (g.state === GameState.TITLE) {
     g.state = GameState.PLAYING;
+    g.soundQueue.push('say_hi');
+    g.soundQueue.push('bgm');
     return;
   }
 
@@ -1724,6 +1744,7 @@ function handleGameClick(g: GameData, mx: number, my: number) {
         g.selectedDuck = duck;
         duck.selected = true;
       }
+      g.soundQueue.push('duck_sound');
       return;
     }
   }
@@ -1735,6 +1756,7 @@ function handleGameClick(g: GameData, mx: number, my: number) {
         dist(n, egg) < dist(best, egg) ? n : best, g.farm.nestPositions[0]);
       egg.x += (nearest.x - egg.x) * 0.3;
       egg.y += (nearest.y - egg.y) * 0.3;
+      g.soundQueue.push('jump');
       for (let i = 0; i < 3; i++) {
         g.particles.push(makeParticle(egg.x, egg.y, rand(-2, 2), rand(-3, -1), 0.5, C_FEATHER, 3, 'feather'));
       }
@@ -1805,6 +1827,7 @@ function handleWarehouseClick(g: GameData, mx: number, my: number) {
     g.totalEggsSold += sold;
     if (sold > 0) {
       g.notifications.push({ text: `알 ${sold}개 판매! +${totalPrice}원`, timer: 2.5 });
+      g.soundQueue.push('jump');
     }
   }
 }
@@ -1839,6 +1862,98 @@ function placeItem(g: GameData, itemId: number, x: number, y: number) {
 }
 
 // ── React Component ──────────────────────────────────
+// ── Sound System ─────────────────────────────────────
+const SOUND_FILES: Record<string, string> = {
+  bgm: bgmSrc,
+  say_hi: sayHiSrc,
+  water: waterSrc,
+  jump: jumpSrc,
+  duck_scream: duckScreamSrc,
+  duck_sound: duckSoundSrc,
+};
+
+function createSoundPlayer() {
+  let ctx: AudioContext | null = null;
+  const bufferCache: Record<string, AudioBuffer> = {};
+  let bgmSource: AudioBufferSourceNode | null = null;
+  let bgmGain: GainNode | null = null;
+  let bgmPlaying = false;
+
+  function getCtx() {
+    if (!ctx) ctx = new AudioContext();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  async function loadBuffer(name: string): Promise<AudioBuffer | null> {
+    if (bufferCache[name]) return bufferCache[name];
+    const src = SOUND_FILES[name];
+    if (!src) return null;
+    try {
+      const res = await fetch(src);
+      const arr = await res.arrayBuffer();
+      const buffer = await getCtx().decodeAudioData(arr);
+      bufferCache[name] = buffer;
+      return buffer;
+    } catch {
+      return null;
+    }
+  }
+
+  // preload all sounds
+  function preload() {
+    for (const name of Object.keys(SOUND_FILES)) {
+      loadBuffer(name);
+    }
+  }
+
+  function play(name: string) {
+    if (name === 'bgm') {
+      if (bgmPlaying) return;
+      bgmPlaying = true;
+      loadBuffer('bgm').then(buffer => {
+        if (!buffer) return;
+        const ac = getCtx();
+        bgmGain = ac.createGain();
+        bgmGain.gain.value = 0.3;
+        bgmGain.connect(ac.destination);
+        bgmSource = ac.createBufferSource();
+        bgmSource.buffer = buffer;
+        bgmSource.loop = true;
+        bgmSource.connect(bgmGain);
+        bgmSource.start();
+      });
+      return;
+    }
+
+    loadBuffer(name).then(buffer => {
+      if (!buffer) return;
+      const ac = getCtx();
+      const gain = ac.createGain();
+      gain.gain.value = 0.5;
+      gain.connect(ac.destination);
+      const source = ac.createBufferSource();
+      source.buffer = buffer;
+      source.connect(gain);
+      source.start();
+    });
+  }
+
+  function cleanup() {
+    if (bgmSource) {
+      try { bgmSource.stop(); } catch {}
+      bgmSource = null;
+    }
+    bgmPlaying = false;
+    if (ctx) {
+      ctx.close();
+      ctx = null;
+    }
+  }
+
+  return { play, cleanup, preload };
+}
+
 export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameRef = useRef<GameData>(initGame());
@@ -1846,6 +1961,9 @@ export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
   const rafRef = useRef<number>(0);
   const lastTimeRef = useRef(0);
   const scaleRef = useRef(1);
+  const soundRef = useRef<ReturnType<typeof createSoundPlayer> | null>(null);
+  const onExitRef = useRef(onExit);
+  onExitRef.current = onExit;
 
   const getCanvasCoords = useCallback((e: React.MouseEvent | MouseEvent) => {
     const canvas = canvasRef.current;
@@ -1856,6 +1974,13 @@ export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
       x: (e.clientX - rect.left) / scale,
       y: (e.clientY - rect.top) / scale,
     };
+  }, []);
+
+  useEffect(() => {
+    const sound = createSoundPlayer();
+    soundRef.current = sound;
+    sound.preload();
+    return () => { sound.cleanup(); };
   }, []);
 
   useEffect(() => {
@@ -1889,6 +2014,15 @@ export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
       updateGame(gameRef.current, dt);
       drawGame(ctx, gameRef.current, time, mouseRef.current);
 
+      // process sound queue
+      const g = gameRef.current;
+      if (soundRef.current) {
+        for (const s of g.soundQueue) {
+          soundRef.current.play(s);
+        }
+      }
+      g.soundQueue.length = 0;
+
       rafRef.current = requestAnimationFrame(loop);
     };
     rafRef.current = requestAnimationFrame(loop);
@@ -1899,7 +2033,7 @@ export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
         if (g.state === GameState.SHOP || g.state === GameState.WAREHOUSE || g.state === GameState.HELP) {
           g.state = GameState.PLAYING;
         } else if (g.state === GameState.PLAYING) {
-          onExit();
+          onExitRef.current();
         }
       }
       if (e.key === 'h' || e.key === 'H') {
@@ -1919,7 +2053,7 @@ export default function DuckFarmGame({ onExit }: { onExit: () => void }) {
       ro.disconnect();
       window.removeEventListener('keydown', handleKey);
     };
-  }, [onExit]);
+  }, []);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     const { x, y } = getCanvasCoords(e);

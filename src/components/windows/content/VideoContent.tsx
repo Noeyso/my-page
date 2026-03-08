@@ -1,13 +1,13 @@
-import a1 from '../../../../assets/mood-asset/a-1.png';
-import a2 from '../../../../assets/mood-asset/a-2.png';
-import a3 from '../../../../assets/mood-asset/a-3.png';
-import a4 from '../../../../assets/mood-asset/a-4.png';
-import a5 from '../../../../assets/mood-asset/a-5.png';
-import a6 from '../../../../assets/mood-asset/a-6.png';
-import a7 from '../../../../assets/mood-asset/a-7.png';
-import a8 from '../../../../assets/mood-asset/a-8.png';
-import a9 from '../../../../assets/mood-asset/a-9.png';
-import a10 from '../../../../assets/mood-asset/a-10.png';
+import a1 from '../../../../assets/images/mood-asset/a-1.png';
+import a2 from '../../../../assets/images/mood-asset/a-2.png';
+import a3 from '../../../../assets/images/mood-asset/a-3.png';
+import a4 from '../../../../assets/images/mood-asset/a-4.png';
+import a5 from '../../../../assets/images/mood-asset/a-5.png';
+import a6 from '../../../../assets/images/mood-asset/a-6.png';
+import a7 from '../../../../assets/images/mood-asset/a-7.png';
+import a8 from '../../../../assets/images/mood-asset/a-8.png';
+import a9 from '../../../../assets/images/mood-asset/a-9.png';
+import a10 from '../../../../assets/images/mood-asset/a-10.png';
 
 interface CollageItem {
   src: string;

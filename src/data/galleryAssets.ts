@@ -1,12 +1,12 @@
-import m1Image from '../../assets/mood/m1.png';
-import m2Image from '../../assets/mood/m2.png';
-import m3Image from '../../assets/mood/m3.png';
-import m4Image from '../../assets/mood/m4.jpg';
-import m8Image from '../../assets/mood/m8.png';
-import m9Image from '../../assets/mood/m9.png';
-import m10Image from '../../assets/mood/m10.gif';
-import m11Image from '../../assets/mood/m11.png';
-import m13Image from '../../assets/mood/m13.png';
+import m1Image from '../../assets/images/mood/m1.png';
+import m2Image from '../../assets/images/mood/m2.png';
+import m3Image from '../../assets/images/mood/m3.png';
+import m4Image from '../../assets/images/mood/m4.jpg';
+import m8Image from '../../assets/images/mood/m8.png';
+import m9Image from '../../assets/images/mood/m9.png';
+import m10Image from '../../assets/images/mood/m10.gif';
+import m11Image from '../../assets/images/mood/m11.png';
+import m13Image from '../../assets/images/mood/m13.png';
 
 export interface GalleryAsset {
   id: string;

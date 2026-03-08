@@ -11,8 +11,8 @@ import { windowRegistry } from './data/windowRegistry';
 import useWindowManager from './hooks/useWindowManager';
 import { useSessionStore } from './store/useSessionStore';
 import type { WindowType } from './types/window';
-import loaderGif from '../assets/loader.gif';
-import bg2Gif from '../assets/mood/bg2.gif';
+import loaderGif from '../assets/images/loader.gif';
+import bg2Gif from '../assets/images/mood/bg2.gif';
 
 export default function App() {
   const { windows, openWindow, closeWindow, focusWindow, minimizeWindow } = useWindowManager();

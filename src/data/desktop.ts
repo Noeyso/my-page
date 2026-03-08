@@ -1,15 +1,15 @@
 import type { DesktopIcon, DockApp } from '../types/desktop';
-import iconInternet from '../../assets/icon-internet.png';
-import iconGallery from '../../assets/icon-gallery.png';
-import iconFolderOpen from '../../assets/icon-folder-open.png';
-import iconMemo from '../../assets/icon-memo.png';
-import iconTerminal from '../../assets/icon-terminal.png';
-import iconDisc from '../../assets/icon-disc.png';
-import iconMusic from '../../assets/icon-music.png';
-import iconPaint from '../../assets/icon-paint.png';
-import iconTransport from '../../assets/icon-transport.png';
-import iconTrash from '../../assets/icon-trash.png';
-import iconGame from '../../assets/icon-game.png';
+import iconInternet from '../../assets/images/icon-internet.png';
+import iconGallery from '../../assets/images/icon-gallery.png';
+import iconFolderOpen from '../../assets/images/icon-folder-open.png';
+import iconMemo from '../../assets/images/icon-memo.png';
+import iconTerminal from '../../assets/images/icon-terminal.png';
+import iconDisc from '../../assets/images/icon-disc.png';
+import iconMusic from '../../assets/images/icon-music.png';
+import iconPaint from '../../assets/images/icon-paint.png';
+import iconTransport from '../../assets/images/icon-transport.png';
+import iconTrash from '../../assets/images/icon-trash.png';
+import iconGame from '../../assets/images/icon-game.png';
 
 export const dockApps: DockApp[] = [
   { id: 'profile', img: iconDisc, label: 'About Me', color: '#d4d4d4' },

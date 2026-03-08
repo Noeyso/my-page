@@ -1,4 +1,4 @@
-import albumCover from '../../../../assets/thumbnail-one.jpg';
+import albumCover from '../../../../assets/images/thumbnail-one.jpg';
 
 export default function MusicContent() {
   return (
