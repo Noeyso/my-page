@@ -66,6 +66,14 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         position: { x: 460, y: 180 },
         isMinimized: false,
       },
+      {
+        id: 'default-instagram',
+        type: 'instagram',
+        zIndex: 204,
+        tilt: 1,
+        position: { x: 1200, y: 60 },
+        isMinimized: false,
+      },
     ];
 
 const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
@@ -84,11 +92,12 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   snake: 0,
   terminal: 0,
   yahoo: 0,
+  instagram: 0,
 };
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 204,
+  nextZIndex: 205,
 };
 
 function getWindowId(): string {
@@ -153,9 +162,7 @@ function windowReducer(state: WindowState, action: WindowAction): WindowState {
     case 'MINIMIZE': {
       return {
         ...state,
-        windows: state.windows.map((item) =>
-          item.id === action.windowId ? { ...item, isMinimized: true } : item,
-        ),
+        windows: state.windows.map((item) => (item.id === action.windowId ? { ...item, isMinimized: true } : item)),
       };
     }
 

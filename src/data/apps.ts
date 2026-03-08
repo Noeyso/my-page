@@ -13,6 +13,8 @@ import iconMinesweeper from '../../assets/images/icons/icon-minsweeper.png';
 import iconSnake from '../../assets/images/icons/icon-snake.png';
 import iconTerminal from '../../assets/images/icons/icon-terminal.png';
 import iconYahoo from '../../assets/images/icons/yahoo.png';
+import iconInstagram from '../../assets/images/icons/icon-insta.png';
+import iconVideo from '../../assets/images/icons/icon-video.png';
 import iconTrash from '../../assets/images/icons/icon-trash.png';
 
 type AppLocation = 'dock' | 'desktop' | 'launchpad';
@@ -45,6 +47,8 @@ export const apps: AppDefinition[] = [
   { id: 'minesweeper', label: 'Minesweeper', img: iconMinesweeper, showIn: ['launchpad'] },
   { id: 'snake', label: 'Snake', img: iconSnake, showIn: ['launchpad'] },
   { id: 'yahoo', label: 'Yahoo!', img: iconYahoo, showIn: ['launchpad'] },
+  { id: 'video', label: 'Video', img: iconVideo, showIn: ['launchpad'] },
+  { id: 'instagram', label: 'Instagram', img: iconInstagram, showIn: ['launchpad'] },
 ];
 
 /** Recycle Bin - special desktop icon with no associated window */

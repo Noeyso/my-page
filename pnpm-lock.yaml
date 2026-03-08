@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@hackernoon/pixel-icon-library':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@supabase/supabase-js':
         specifier: ^2.98.0
         version: 2.98.0
@@ -293,6 +296,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@hackernoon/pixel-icon-library@1.0.6':
+    resolution: {integrity: sha512-WCkDFAJq6Xyp2rdVV7qcmx/vlixoScikEv2DpWUNtzWchDOyeTFrU3GTvd0jD/DGYJomLy2tKwkl13wycaO3Ng==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1181,6 +1187,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.12':
     optional: true
+
+  '@hackernoon/pixel-icon-library@1.0.6': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
