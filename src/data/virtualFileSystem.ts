@@ -41,7 +41,8 @@ export const VIRTUAL_FS: FSNode = {
     Videos: {
       type: 'dir',
       children: {
-        'untitled_memory.avi': { type: 'file', content: '[Video Data - Memory Fragment]', size: 2400000, date: '03/06/2026' },
+        'video-1.mp4': { type: 'file', content: '[Video Data]', size: 3200000, date: '03/06/2026' },
+        'video-2.mp4': { type: 'file', content: '[Video Data]', size: 2800000, date: '03/06/2026' },
       },
     },
     Windows: {

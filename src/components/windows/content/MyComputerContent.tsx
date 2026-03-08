@@ -5,6 +5,7 @@ import { fetchMessages, type MessageRow } from '../../../services/messageService
 import { monitorAssets } from '../../../data/galleryAssets';
 import { useSessionStore } from '../../../store/useSessionStore';
 import iconFolder from '../../../../assets/images/icon-folder.png';
+import { setCurrentVideo, type VideoId } from '../../../data/currentVideo';
 import FileItem from './FileItem';
 
 type FolderType = 'root' | 'paintings' | 'memo' | 'gallery' | 'videos';
@@ -259,19 +260,23 @@ export default function MyComputerContent() {
           {/* Videos folder */}
           {currentFolder === 'videos' && (
             <div className="explorer-file-list">
-              <FileItem
-                id="video-1"
-                isSelected={false}
-                onSelect={() => {}}
-                onDoubleClick={() => {
-                  window.dispatchEvent(
-                    new CustomEvent('open-window', { detail: { windowType: 'video' } }),
-                  );
-                }}
-                thumbnail={<span className="explorer-memo-icon">🎬</span>}
-                name="untitled_memory.avi"
-                subtitle="2.4 MB"
-              />
+              {(['video-1', 'video-2'] as VideoId[]).map((id) => (
+                <FileItem
+                  key={id}
+                  id={id}
+                  isSelected={selectedFile === id}
+                  onSelect={() => setSelectedFile(selectedFile === id ? null : id)}
+                  onDoubleClick={() => {
+                    setCurrentVideo(id);
+                    window.dispatchEvent(
+                      new CustomEvent('open-window', { detail: { windowType: 'video' } }),
+                    );
+                  }}
+                  thumbnail={<span className="explorer-memo-icon">🎬</span>}
+                  name={`${id}.mp4`}
+                  subtitle={id === 'video-1' ? '3.2 MB' : '2.8 MB'}
+                />
+              ))}
             </div>
           )}
 
@@ -315,7 +320,7 @@ export default function MyComputerContent() {
           {currentFolder === 'paintings' && `${paintings.length} object(s)`}
           {currentFolder === 'memo' && `${memos.length} object(s)`}
           {currentFolder === 'gallery' && `${monitorAssets.length} object(s)`}
-          {currentFolder === 'videos' && '1 object(s)'}
+          {currentFolder === 'videos' && '2 object(s)'}
         </span>
       </div>
     </div>

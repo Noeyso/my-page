@@ -1,24 +1,28 @@
+import zzzzImg from '../../../../assets/images/zzzz.gif';
+
 export default function ProfileContent() {
   return (
     <div>
       <div className="window-heading">Digital Memory Deck</div>
       <div className="profile-card">
-        <div className="mb-3 text-center text-5xl">🛰️✧</div>
-        <div className="pixel-font text-center text-[20px]">
-          <div>name: YANG SO YEON</div>
-          <div>status: online now</div>
-          <div className="blink mt-2">listening: midnight cassette loop 📼</div>
+        <div className="mb-3 flex justify-center">
+          <img src={zzzzImg} alt="" className="h-16 w-24 object-cover" />
+        </div>
+        <div className="pixel-font text-center text-[20px] flex flex-col items-center">
+          <div>YANG SO YEON</div>
+          {/* <div className="mt-2">mode: AI experiments...🤖</div> */}
+          <div className="flex items-center gap-1">status: online now</div>
         </div>
       </div>
 
       <div className="inset-box">
         <div className="pixel-font text-[18px] text-[#355f8a]">About Me</div>
         <div className="mt-2 leading-[1.6]">
-          ✦ building dreamlike terminals like it is
+          ✦ building dreamlike terminals and tiny interfaces
           <br />
-          ✦ collecting old interfaces, soft scanlines, and memory artifacts
+          ✦ collecting soft scanlines and old UI fragments
           <br />
-          ✦ coding with tape hiss and orbit radio on repeat
+          ✦ experimenting with AI late at night
           <br />
         </div>
       </div>
