@@ -7194,6 +7194,11 @@ img.insta-post-image {
   word-break: break-word;
 }
 
+.cal-event-author {
+  font-size: 9px;
+  color: #909090;
+}
+
 .cal-event-delete {
   background: none;
   border: none;

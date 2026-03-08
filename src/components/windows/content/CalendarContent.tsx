@@ -272,6 +272,7 @@ export default function CalendarContent() {
                     {ev.description && (
                       <span className="cal-event-desc">{ev.description}</span>
                     )}
+                    <span className="cal-event-author">by {ev.nickname}</span>
                   </div>
                   <button
                     className="cal-event-delete"

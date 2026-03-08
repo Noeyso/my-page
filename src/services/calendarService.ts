@@ -11,11 +11,8 @@ export interface CalendarEventRow {
   created_at: string;
 }
 
-/** 특정 월의 일정 조회 */
+/** 특정 월의 일정 조회 (모든 사용자의 일정) */
 export async function fetchEvents(year: number, month: number): Promise<CalendarEventRow[]> {
-  const nickname = useSessionStore.getState().nickname;
-  if (!nickname) return [];
-
   const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
   const endDate =
     month === 12
@@ -25,7 +22,6 @@ export async function fetchEvents(year: number, month: number): Promise<Calendar
   const { data, error } = await supabase
     .from('calendar_events')
     .select('*')
-    .eq('nickname', nickname)
     .gte('date', startDate)
     .lt('date', endDate)
     .order('date', { ascending: true });
@@ -54,33 +50,25 @@ export async function addEvent(
   return data as CalendarEventRow;
 }
 
-/** 일정 삭제 */
+/** 일정 삭제 (누구나 삭제 가능) */
 export async function deleteEvent(eventId: string): Promise<void> {
-  const nickname = useSessionStore.getState().nickname;
-  if (!nickname) throw new Error('Nickname session not found');
-
   const { error } = await supabase
     .from('calendar_events')
     .delete()
-    .eq('id', eventId)
-    .eq('nickname', nickname);
+    .eq('id', eventId);
 
   if (error) throw error;
 }
 
-/** 일정 수정 */
+/** 일정 수정 (누구나 수정 가능) */
 export async function updateEvent(
   eventId: string,
   updates: { title?: string; description?: string; date?: string; color?: string },
 ): Promise<CalendarEventRow> {
-  const nickname = useSessionStore.getState().nickname;
-  if (!nickname) throw new Error('Nickname session not found');
-
   const { data, error } = await supabase
     .from('calendar_events')
     .update(updates)
     .eq('id', eventId)
-    .eq('nickname', nickname)
     .select('*')
     .single();
 
