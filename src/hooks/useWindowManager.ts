@@ -94,6 +94,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   yahoo: 0,
   instagram: 0,
   calendar: 0,
+  cyworld: 0,
 };
 
 const INITIAL_STATE: WindowState = {

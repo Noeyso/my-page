@@ -17,6 +17,7 @@ import iconInstagram from '../../assets/images/icons/icon-insta.png';
 import iconVideo from '../../assets/images/icons/icon-video.png';
 import iconTrash from '../../assets/images/icons/icon-trash.png';
 import iconCalendar from '../../assets/images/icons/icon-calendar.png';
+import iconCyworld from '../../assets/images/icons/icon-cyworld.png';
 
 type AppLocation = 'dock' | 'desktop' | 'launchpad';
 
@@ -69,6 +70,7 @@ export const apps: AppDefinition[] = [
   { id: 'video', label: 'Video', img: iconVideo, showIn: ['launchpad'] },
   { id: 'instagram', label: 'Instagram', img: iconInstagram, showIn: ['launchpad'] },
   { id: 'calendar', label: 'Calendar', img: iconCalendar, showIn: ['launchpad'] },
+  { id: 'cyworld', label: 'Cyworld', img: iconCyworld, showIn: ['launchpad'] },
 ];
 
 /** Recycle Bin - special desktop icon with no associated window */

@@ -15,6 +15,7 @@ import VideoContent from '../components/windows/content/VideoContent';
 import InstagramContent from '../components/windows/content/InstagramContent';
 import YahooContent from '../components/windows/content/YahooContent';
 import CalendarContent from '../components/windows/content/CalendarContent';
+import CyworldContent from '../components/windows/content/CyworldContent';
 import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
@@ -31,8 +32,19 @@ export const windowRegistry: WindowRegistry = {
   games: { title: 'Games', icon: '🎮', component: GamesContent, className: 'window-games' },
   minesweeper: { title: 'minesweeper.exe', icon: '💣', component: MinesweeperContent },
   snake: { title: 'snake.exe', icon: '🐍', component: SnakeContent },
-  terminal: { title: 'C:\\WINDOWS\\system32\\cmd.exe', icon: '💻', component: TerminalContent, className: 'window-terminal' },
-  yahoo: { title: 'Yahoo! Korea - Internet Explorer', icon: '🌐', component: YahooContent, className: 'window-internet' },
+  terminal: {
+    title: 'C:\\WINDOWS\\system32\\cmd.exe',
+    icon: '💻',
+    component: TerminalContent,
+    className: 'window-terminal',
+  },
+  yahoo: {
+    title: 'Yahoo! Korea - Internet Explorer',
+    icon: '🌐',
+    component: YahooContent,
+    className: 'window-internet',
+  },
   instagram: { title: 'Instagram.exe', icon: '📸', component: InstagramContent, className: 'window-instagram' },
   calendar: { title: 'Calendar.exe', icon: '📅', component: CalendarContent, className: 'window-calendar' },
+  cyworld: { title: 'Cyworld - Internet Explorer', icon: '🌐', component: CyworldContent, className: 'window-cyworld' },
 };

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="360" viewBox="0 0 64 360" fill="none">
+  <defs>
+    <linearGradient id="metalFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8C8C8C"/>
+      <stop offset="0.18" stop-color="#F4F4F4"/>
+      <stop offset="0.42" stop-color="#C8C8C8"/>
+      <stop offset="0.62" stop-color="#F9F9F9"/>
+      <stop offset="1" stop-color="#8E8E8E"/>
+    </linearGradient>
+    <linearGradient id="metalStroke" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#666"/>
+      <stop offset="0.5" stop-color="#D7D7D7"/>
+      <stop offset="1" stop-color="#666"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.7" flood-color="#000" flood-opacity="0.16"/>
+    </filter>
+    <g id="ring" filter="url(#shadow)">
+      <rect x="23" y="7.1" width="18" height="4.8" rx="2.4" fill="url(#metalFill)" stroke="url(#metalStroke)" stroke-width="1"/>
+    </g>
+  </defs>
+
+  <rect width="64" height="360" fill="none"/>
+
+  <use href="#ring" x="0" y="28"/>
+  <use href="#ring" x="0" y="88"/>
+  <use href="#ring" x="0" y="242"/>
+  <use href="#ring" x="0" y="302"/>
+</svg>

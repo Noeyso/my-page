@@ -831,6 +831,7 @@
     max-width: 640px;
     max-height: 70vh;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 40px;
   }
 
@@ -5887,6 +5888,7 @@
     gap: 20px 16px;
     padding: 24px 16px;
     max-height: 80vh;
+    overflow-x: hidden;
   }
 
   .launchpad-icon-wrapper {
@@ -7473,5 +7475,1448 @@ img.insta-post-image {
   .tray-clock-svg {
     width: 100px;
     height: 100px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Cyworld 싸이월드 미니홈피
+   ═══════════════════════════════════════════════════════════ */
+
+.window-cyworld {
+  width: 960px !important;
+  min-height: 620px;
+}
+
+.cy-browser {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  font-family: 'DungGeunMo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+/* ── Gray grid background wrapper ── */
+.cy-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 6px;
+  padding: 12px;
+  overflow: hidden;
+  background-color: #d8d8d8;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* ── Outer blue frame (notebook cover) ── */
+.cy-outer-frame {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: linear-gradient(145deg, #b0cfe6 0%, #a3c1e0 30%, #96b6d8 70%, #8aaed0 100%);
+  border-radius: 14px;
+  border: 2px solid #7da4c8;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.18),
+    0 1px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Red top header bar ── */
+.cy-red-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  background: linear-gradient(180deg, #e04040 0%, #cc3030 100%);
+  border-bottom: 2px solid #aa2020;
+  min-height: 28px;
+}
+
+.cy-red-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cy-red-search-label {
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.cy-red-search-input {
+  width: 100px;
+  height: 18px;
+  border: 1px solid #aa2020;
+  border-radius: 2px;
+  padding: 0 4px;
+  font-size: 10px;
+  font-family: inherit;
+  background: #fff;
+}
+
+.cy-red-search-btn {
+  padding: 2px 8px;
+  background: #8b0000;
+  color: #fff;
+  border: 1px solid #6b0000;
+  border-radius: 2px;
+  font-size: 10px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cy-red-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* ── Inner white stitch frame (notebook paper) ── */
+.cy-inner-frame {
+  flex: 1;
+  min-height: 0;
+  margin: 8px;
+  background: #f8f8f6;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.cy-stitch-border {
+  flex: 1;
+  min-height: 0;
+  border: 2px dotted #b8c8d8;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: inset 0 0 0 3px #f0f4f8;
+  overflow: hidden;
+}
+
+/* ── Top bar: TODAY + Title + Buttons ── */
+.cy-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid #d8e8f0;
+  margin-bottom: 8px;
+}
+
+.cy-today {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-size: 10px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.cy-today-t {
+  color: #e53e3e;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.cy-today-num {
+  color: #e53e3e;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.cy-today-sep {
+  color: #ccc;
+  margin: 0 2px;
+}
+
+.cy-total-t {
+  color: #888;
+  font-size: 9px;
+}
+
+.cy-total-num {
+  color: #888;
+  font-size: 10px;
+}
+
+.cy-hompy-title {
+  flex: 1;
+}
+
+.cy-hompy-title strong {
+  font-size: 14px;
+  color: #333;
+}
+
+.cy-hompy-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.cy-small-btn {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-family: inherit;
+  border: 1px solid #c0c0c0;
+  border-radius: 3px;
+  background: #f5f5f5;
+  cursor: pointer;
+  color: #555;
+}
+
+.cy-small-btn:hover {
+  background: #e8e8e8;
+}
+
+.cy-btn-orange {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+.cy-btn-orange:hover {
+  background: #e85d00;
+}
+
+/* ── Notebook layout: Left + Binder + Right ── */
+.cy-columns {
+  flex: 1;
+  min-height: 580px;
+  display: flex;
+  position: relative;
+}
+
+/* ── LEFT: Profile column (left notebook page) ── */
+.cy-col-left {
+  width: 170px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  background: #fff;
+  border: 1px solid #d8e0e8;
+  border-radius: 6px 0 0 6px;
+  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Mood selector row */
+.cy-mood-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0;
+}
+
+.cy-mood-label {
+  font-size: 9px;
+  font-weight: bold;
+  color: #999;
+  white-space: nowrap;
+}
+
+.cy-mood-select {
+  font-size: 10px;
+  font-family: inherit;
+  padding: 1px 4px;
+  border: 1px solid #c0d0e0;
+  border-radius: 2px;
+  background: #fff;
+  max-width: 60px;
+}
+
+.cy-mood-value {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+/* Profile image area */
+.cy-profile-area {
+  text-align: center;
+  padding: 6px 0;
+}
+
+.cy-profile-img-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.cy-profile-img {
+  width: 90px;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid #d0dce5;
+  border-radius: 4px;
+  background: #f8fbfd;
+  padding: 4px;
+}
+
+/* Name + Status */
+.cy-profile-name-area {
+  text-align: center;
+  padding: 4px 0;
+}
+
+.cy-profile-realname {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.cy-profile-status {
+  font-size: 10px;
+  color: #888;
+  line-height: 1.3;
+}
+
+/* Personal info box */
+.cy-profile-info-box {
+  border-top: 1px solid #e0e8f0;
+  padding-top: 4px;
+}
+
+.cy-profile-info-row {
+  display: flex;
+  gap: 6px;
+  padding: 2px 0;
+  font-size: 10px;
+  border-bottom: 1px dotted #e8f0f4;
+}
+
+.cy-info-label {
+  color: #5a8a9e;
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.cy-info-value {
+  color: #555;
+  word-break: break-all;
+}
+
+/* Edit / History actions */
+.cy-left-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  border-top: 1px solid #e0e8f0;
+}
+
+.cy-history-star {
+  color: #ff6600;
+  font-size: 11px;
+}
+
+.cy-action-link {
+  font-size: 10px;
+  color: #5a8a9e;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cy-action-link:hover {
+  text-decoration: underline;
+}
+
+.cy-action-sep {
+  color: #ccc;
+  font-size: 10px;
+}
+
+/* Padotagi (파도타기) */
+.cy-padotagi {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.cy-padotagi-icon {
+  font-size: 14px;
+}
+
+.cy-padotagi-select {
+  flex: 1;
+  font-size: 10px;
+  font-family: inherit;
+  padding: 2px 4px;
+  border: 1px solid #c0d0e0;
+  border-radius: 2px;
+  background: #fff;
+}
+
+/* ── Ring binder (metallic SVG) ── */
+.cy-binder {
+  position: absolute;
+  left: 170px;
+  top: 0;
+  bottom: 0;
+  width: 64px;
+  margin-left: -28px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cy-binder-img {
+  width: 64px;
+  height: 85%;
+  max-height: 440px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* ── RIGHT: Main content area (right notebook page) ── */
+.cy-col-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 178px;
+  right: 58px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px 6px 6px 10px;
+  background: #fff;
+  border: 1px solid #d8e0e8;
+  border-right: none;
+  border-radius: 0;
+  box-shadow: inset 1px 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Vertical tab menu (far right edge) ── */
+.cy-vtabs {
+  width: 58px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: auto;
+  padding-top: 8px;
+}
+
+.cy-vtab {
+  padding: 5px 8px;
+  background: #e8eff5;
+  border: 1px solid #c0d0e0;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  margin-left: -1px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  color: #555;
+  text-align: center;
+  white-space: nowrap;
+  transition: background 0.15s;
+  writing-mode: horizontal-tb;
+}
+
+.cy-vtab:hover {
+  background: #d8e8f2;
+}
+
+.cy-vtab-active {
+  background: #a3c1e0;
+  color: #fff;
+  font-weight: bold;
+  border-color: #8aaed0;
+}
+
+/* ── Far right sidebar ── */
+.cy-sidebar-right {
+  width: 130px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cy-sidebar-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.cy-sidebar-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.cy-sidebar-subtitle {
+  font-size: 10px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.cy-sidebar-highlight {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.cy-sidebar-badge {
+  background: #ff6600;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 9px;
+  margin-left: 2px;
+}
+
+.cy-friend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cy-friend-item:last-child {
+  border-bottom: none;
+}
+
+.cy-friend-avatar {
+  font-size: 18px;
+}
+
+.cy-friend-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cy-friend-name {
+  font-size: 11px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cy-friend-mutual {
+  font-size: 9px;
+  color: #999;
+}
+
+.cy-sidebar-icons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.cy-sidebar-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 9px;
+  color: #666;
+  cursor: pointer;
+}
+
+.cy-sidebar-icon-item span:first-child {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.cy-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cy-sidebar-nav-item {
+  padding: 3px 6px;
+  font-size: 10px;
+  font-family: inherit;
+  color: #555;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cy-sidebar-nav-item:hover {
+  background: #e8e8e8;
+}
+
+.cy-sidebar-nav-active {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+/* ═══════════════════════════════════════════
+   Cyworld Home View
+   ═══════════════════════════════════════════ */
+
+.cy-home {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Recent news / stats ── */
+.cy-news-section {
+  border: 1px solid #d8e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cy-news-header {
+  background: #eef5fa;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #4a7a9e;
+  border-bottom: 1px solid #d8e8f0;
+}
+
+.cy-news-content {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 10px;
+}
+
+.cy-news-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cy-news-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 0;
+  color: #555;
+}
+
+.cy-news-icon {
+  font-size: 11px;
+}
+
+.cy-news-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.cy-news-stats {
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid #e8f0f4;
+  padding-left: 8px;
+}
+
+.cy-stat-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.cy-stat-label {
+  font-size: 10px;
+  color: #5a8a9e;
+  min-width: 40px;
+}
+
+.cy-stat-count {
+  font-size: 10px;
+  color: #999;
+  min-width: 30px;
+}
+
+/* ── Mini tabs (미니라이프/미니룸/사이월드) ── */
+.cy-mini-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 4px;
+  border-bottom: 1px solid #c0d0e0;
+}
+
+.cy-mini-tab {
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #777;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.cy-mini-tab:hover {
+  color: #333;
+}
+
+.cy-mini-tab-active {
+  color: #ff6600;
+  font-weight: bold;
+  border-bottom-color: #ff6600;
+}
+
+.cy-mini-tab-sep {
+  color: #ccc;
+  font-size: 10px;
+  padding: 0 2px;
+}
+
+/* ── Miniroom ── */
+.cy-miniroom-area {
+  border: 1px solid #d8e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cy-miniroom-header {
+  background: #eef5fa;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #4a7a9e;
+  border-bottom: 1px solid #d8e8f0;
+}
+
+.cy-miniroom-scene {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  perspective: 600px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: #a8c0c8;
+}
+
+/* ── Isometric room: 2.5D walls & floor ── */
+
+/* Left wall - shadow side (darker) */
+.cy-room-wall-left {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 50%;
+  height: 90%;
+  background: #d0dfe4;
+  transform-origin: bottom right;
+  transform: skewY(-26.5deg);
+  z-index: 2;
+}
+
+/* Right wall - light side (brighter) */
+.cy-room-wall-right {
+  position: absolute;
+  top: -50%;
+  right: 0;
+  width: 50%;
+  height: 90%;
+  background: #dde9ec;
+  transform-origin: bottom left;
+  transform: skewY(26.5deg);
+  z-index: 2;
+}
+
+/* Corner edge is barely visible */
+.cy-room-corner {
+  display: none;
+}
+
+/* Floor - rotateX + rotateZ for natural isometric diamond */
+.cy-room-floor {
+  position: absolute;
+  bottom: -40%;
+  left: 50%;
+  width: 260%;
+  height: 140%;
+  background: #a8c0c8;
+  transform-origin: center top;
+  transform: translateX(-50%) rotateX(60deg) rotateZ(45deg);
+  z-index: 1;
+}
+
+/* Shadow elements not needed with this approach */
+.cy-room-shadow-left,
+.cy-room-shadow-right {
+  display: none;
+}
+
+/* ── Character in miniroom ── */
+.cy-minimi-standing {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cy-minimi-room-img {
+  width: 52px;
+  height: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Character shadow on floor */
+.cy-minimi-shadow {
+  width: 36px;
+  height: 8px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -2px;
+}
+
+/* Speech bubble */
+.cy-speech-bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 2px solid #aaa;
+  border-radius: 12px;
+  padding: 5px 10px;
+  font-size: 10px;
+  color: #333;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cy-speech-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #fff;
+}
+
+.cy-speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: #aaa;
+}
+
+/* Miniroom footer */
+.cy-miniroom-footer {
+  display: flex;
+  gap: 4px;
+  padding: 3px 8px;
+  background: #eef5fa;
+  border-top: 1px solid #d8e8f0;
+  font-size: 9px;
+  color: #7a9aaa;
+}
+
+/* ── 일촌평 Section ── */
+.cy-ilchon-pyeong {
+  border: 1px solid #d8e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cy-ilchon-pyeong-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #eef5fa;
+  border-bottom: 1px solid #d8e8f0;
+}
+
+.cy-ilchon-pyeong-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.cy-ilchon-pyeong-count {
+  font-size: 10px;
+  color: #999;
+}
+
+.cy-ilchon-pyeong-notice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: #777;
+  background: #fefefe;
+  border-bottom: 1px solid #eee;
+}
+
+.cy-notice-dot {
+  color: #ff6600;
+  font-size: 8px;
+}
+
+.cy-btn-ilchon-req {
+  margin-left: auto;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-family: inherit;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cy-btn-ilchon-req:hover {
+  background: #e85d00;
+}
+
+.cy-ilchon-write {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.cy-ilchon-input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 1px solid #d0d8e0;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: inherit;
+  background: #fafafa;
+}
+
+.cy-ilchon-input:focus {
+  outline: none;
+  border-color: #8ab8ca;
+  background: #fff;
+}
+
+.cy-ilchon-submit {
+  padding: 4px 12px;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cy-ilchon-submit:hover {
+  background: #e85d00;
+}
+
+.cy-ilchon-list {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.cy-ilchon-entry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cy-ilchon-author {
+  font-weight: bold;
+  color: #4a7a9e;
+  min-width: 36px;
+}
+
+.cy-ilchon-text {
+  flex: 1;
+  color: #555;
+}
+
+.cy-ilchon-date {
+  font-size: 9px;
+  color: #bbb;
+}
+
+/* ═══════════════════════════════════════════
+   Cyworld Tab Content Views
+   ═══════════════════════════════════════════ */
+
+.cy-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cy-tab-content-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #a3c1e0;
+}
+
+/* Profile View */
+.cy-profile-card {
+  display: flex;
+  gap: 16px;
+}
+
+.cy-profile-photo-lg {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  background: #f0f4f8;
+  border: 2px solid #c0d0e0;
+  border-radius: 6px;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.cy-profile-details {
+  flex: 1;
+}
+
+.cy-pd-row {
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px dotted #d8e8f0;
+  font-size: 11px;
+  color: #444;
+}
+
+.cy-pd-label {
+  width: 50px;
+  font-weight: bold;
+  color: #4a7a9e;
+  flex-shrink: 0;
+}
+
+/* Diary View */
+.cy-diary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cy-diary-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: #f8fbfd;
+  border: 1px solid #e0ecf2;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cy-diary-row:hover {
+  background: #eef5fa;
+}
+
+.cy-diary-mood {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.cy-diary-ttl {
+  flex: 1;
+  font-size: 12px;
+  color: #333;
+}
+
+.cy-diary-dt {
+  font-size: 10px;
+  color: #999;
+}
+
+.cy-diary-detail {
+  padding: 0;
+}
+
+.cy-back-btn {
+  padding: 4px 10px;
+  background: #f0f4f8;
+  border: 1px solid #c0d0e0;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  color: #4a7a9e;
+  margin-bottom: 10px;
+}
+
+.cy-back-btn:hover {
+  background: #e0ecf2;
+}
+
+.cy-diary-detail-mood {
+  font-size: 36px;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.cy-diary-detail-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.cy-diary-detail-date {
+  font-size: 10px;
+  color: #999;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.cy-diary-detail-body {
+  font-size: 12px;
+  color: #444;
+  line-height: 1.8;
+  padding: 10px;
+  background: #f8fbfd;
+  border: 1px solid #e0ecf2;
+  border-radius: 4px;
+}
+
+/* Jukebox View */
+.cy-jukebox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cy-jukebox-now {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: #f0f4f8;
+  border: 1px solid #d0dce5;
+  border-radius: 4px;
+}
+
+.cy-jukebox-icon {
+  font-size: 18px;
+}
+
+.cy-jukebox-playing {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cy-jukebox-controls {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.cy-jukebox-btn {
+  width: 32px;
+  height: 28px;
+  background: #f0f4f8;
+  border: 1px solid #c0d0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.cy-jukebox-btn:hover {
+  background: #e0ecf2;
+}
+
+.cy-jukebox-play {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+.cy-jukebox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cy-jukebox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  font-size: 11px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cy-jukebox-item:hover {
+  background: #f8fbfd;
+}
+
+.cy-jukebox-current {
+  background: #eef5fa;
+  font-weight: bold;
+}
+
+.cy-jukebox-num {
+  width: 20px;
+  text-align: center;
+  color: #999;
+}
+
+.cy-jukebox-song {
+  flex: 1;
+  color: #333;
+}
+
+.cy-jukebox-artist {
+  color: #888;
+  font-size: 10px;
+}
+
+/* Photo View */
+.cy-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.cy-photo-item {
+  background: #f8fbfd;
+  border: 1px solid #e0ecf2;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cy-photo-item:hover {
+  background: #eef5fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.cy-photo-thumb {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.cy-photo-name {
+  font-size: 10px;
+  color: #555;
+}
+
+/* Board View */
+.cy-board-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.cy-board-table th {
+  background: #eef5fa;
+  color: #4a7a9e;
+  padding: 5px 6px;
+  border: 1px solid #d0dce5;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cy-board-table td {
+  padding: 5px 6px;
+  border: 1px solid #e0ecf2;
+  text-align: center;
+  color: #444;
+}
+
+.cy-board-ttl {
+  text-align: left !important;
+  cursor: pointer;
+}
+
+.cy-board-ttl:hover {
+  text-decoration: underline;
+  color: #333;
+}
+
+/* Guestbook View */
+.cy-gb-write {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cy-gb-textarea {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #d0dce5;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: inherit;
+  resize: none;
+  background: #fafafa;
+}
+
+.cy-gb-textarea:focus {
+  outline: none;
+  border-color: #8ab8ca;
+  background: #fff;
+}
+
+.cy-gb-submit {
+  padding: 0 14px;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.cy-gb-submit:hover {
+  background: #e85d00;
+}
+
+.cy-gb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cy-gb-entry {
+  background: #f8fbfd;
+  border: 1px solid #e0ecf2;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.cy-gb-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.cy-gb-avatar {
+  font-size: 16px;
+}
+
+.cy-gb-author {
+  font-size: 11px;
+  font-weight: bold;
+  color: #4a7a9e;
+}
+
+.cy-gb-date {
+  font-size: 9px;
+  color: #bbb;
+  margin-left: auto;
+}
+
+.cy-gb-content {
+  font-size: 12px;
+  color: #444;
+  line-height: 1.5;
+  padding-left: 26px;
+}
+
+/* ── Cyworld Responsive ── */
+@media (max-width: 800px) {
+  .window-cyworld {
+    width: 100% !important;
+  }
+
+  .cy-wrapper {
+    flex-direction: column;
+    padding: 8px;
+  }
+
+  .cy-sidebar-right {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cy-sidebar-section {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .cy-columns {
+    flex-direction: column;
+  }
+
+  .cy-col-left {
+    width: 100%;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cy-binder {
+    display: none;
+  }
+
+  .cy-col-left {
+    border-radius: 6px;
+  }
+
+  .cy-col-right {
+    border-radius: 6px;
+  }
+
+  .cy-vtabs {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cy-vtab {
+    border-radius: 4px;
+    border-left: 1px solid #c0d0e0;
   }
 }

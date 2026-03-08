@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="360" viewBox="0 0 64 360">
+  <g id="ring" fill="#b7b7b7" stroke="#8f8f8f" stroke-width="1">
+    <!-- left -->
+    
+    <!-- bridge -->
+    <rect x="24" y="7" width="16" height="6" rx="3"/>
+    
+    <!-- right -->
+  </g>
+
+  <use href="#ring" y="28"/>
+  <use href="#ring" y="88"/>
+  <use href="#ring" y="242"/>
+  <use href="#ring" y="302"/>
+</svg>
