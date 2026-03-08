@@ -6372,6 +6372,31 @@
   filter: brightness(1.2);
 }
 
+.insta-grid-likes {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 5px;
+  font-family: 'VT323', monospace;
+}
+
+.insta-grid-likes .insta-pixel-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.insta-post-hint {
+  font-size: 11px;
+  color: #808080;
+  font-style: italic;
+}
+
 /* Bottom Navigation */
 .insta-bottom-nav {
   display: flex;

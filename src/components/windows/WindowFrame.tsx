@@ -42,6 +42,38 @@ export default function WindowFrame({
   const [position, setPosition] = useState<WindowPosition>(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
+
+  // 화면 리사이즈 시 윈도우가 뷰포트 밖으로 나가지 않도록 보정
+  useEffect(() => {
+    if (isMaximized) return;
+
+    const handleViewportResize = () => {
+      const el = windowRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const margin = 40; // 최소 보이는 영역
+
+      setPosition((prev) => {
+        let { x, y } = prev;
+        // 오른쪽으로 넘어가면 보정
+        if (x + margin > vw) x = Math.max(0, vw - rect.width);
+        // 아래로 넘어가면 보정
+        if (y + margin > vh) y = Math.max(0, vh - rect.height);
+        // 왼쪽으로 넘어가면 보정
+        if (x + rect.width < margin) x = 0;
+        // 위로 넘어가면 보정
+        if (y < 0) y = 0;
+
+        if (x === prev.x && y === prev.y) return prev;
+        return { x, y };
+      });
+    };
+
+    window.addEventListener('resize', handleViewportResize);
+    return () => window.removeEventListener('resize', handleViewportResize);
+  }, [isMaximized]);
   const [animState, setAnimState] = useState<AnimState>(isMinimized ? 'minimized' : 'visible');
   const [size, setSize] = useState<{ width: number; height: number } | null>(null);
   const [resizeDir, setResizeDir] = useState<ResizeDir>(null);
@@ -80,6 +112,23 @@ export default function WindowFrame({
 
   const stopDragging = useCallback(() => {
     setIsDragging(false);
+    // 드래그 종료 시 뷰포트 밖으로 나가지 않도록 보정
+    const el = windowRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 40;
+
+    setPosition((prev) => {
+      let { x, y } = prev;
+      if (x + margin > vw) x = vw - margin;
+      if (y + rect.height < margin) y = 0;
+      if (x + rect.width < margin) x = margin - rect.width;
+      if (y > vh - margin) y = vh - margin;
+      if (x === prev.x && y === prev.y) return prev;
+      return { x, y };
+    });
   }, []);
 
   useEffect(() => {

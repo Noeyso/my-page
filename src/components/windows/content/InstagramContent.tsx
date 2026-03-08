@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import profileImg from '../../../../assets/images/insta/insta-profile.png';
 import content1 from '../../../../assets/images/insta/insta-content-1.png';
 import content2 from '../../../../assets/images/insta/insta-content-2.png';
@@ -6,6 +6,8 @@ import content4 from '../../../../assets/images/insta/insta-content-4.png';
 import content5 from '../../../../assets/images/insta/insta-content-5.png';
 import content6 from '../../../../assets/images/insta/insta-content-6.png';
 import content7 from '../../../../assets/images/insta/insta-content-7.png';
+import { fetchAllLikes, toggleLike } from '../../../services/likeService';
+import { useSessionStore } from '../../../store/useSessionStore';
 
 // Pixel Icon Library - SVG icons
 import iconHome from '@hackernoon/pixel-icon-library/icons/SVG/solid/home-solid.svg';
@@ -37,6 +39,8 @@ const POSTS: PostData[] = [
   { id: 6, img: content7, caption: 'with my buddy #dog #love' },
 ];
 
+const POST_IDS = POSTS.map((p) => p.id);
+
 const FILTERS = [
   { name: 'Normal', style: 'none' },
   { name: 'Mac 86', style: 'grayscale(80%) contrast(1.2) brightness(0.9)' },
@@ -48,6 +52,11 @@ const FILTERS = [
 type Tab = 'grid' | 'list' | 'reels' | 'tagged';
 type View = 'profile' | 'post' | 'filter';
 
+interface LikeState {
+  count: number;
+  likedByMe: boolean;
+}
+
 function PixelIcon({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return <img src={src} alt={alt} className={`insta-pixel-icon ${className ?? ''}`} />;
 }
@@ -58,12 +67,29 @@ export default function InstagramContent() {
   const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
   const [activeFilter, setActiveFilter] = useState(0);
   const [showDialog, setShowDialog] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState({ likes: 0, action: '' });
+  const [likesMap, setLikesMap] = useState<Record<number, LikeState>>({});
+  const [toggling, setToggling] = useState(false);
+
+  const nickname = useSessionStore((s) => s.nickname);
+
+  // 좋아요 데이터 로드
+  const loadLikes = useCallback(async () => {
+    try {
+      const result = await fetchAllLikes(POST_IDS);
+      setLikesMap(result);
+    } catch {
+      // 실패 시 기본값 유지
+    }
+  }, []);
+
+  useEffect(() => {
+    loadLikes();
+  }, [loadLikes]);
 
   const handlePostClick = (post: PostData) => {
     setSelectedPost(post);
     setCurrentView('post');
-    setLiked(false);
     setActiveFilter(0);
   };
 
@@ -82,12 +108,35 @@ export default function InstagramContent() {
     }
   };
 
-  const handleLike = () => {
-    if (!liked) {
-      setLiked(true);
-      setShowDialog(true);
+  const handleLike = async (postId: number) => {
+    if (!nickname || toggling) return;
+    setToggling(true);
+
+    try {
+      const nowLiked = await toggleLike(postId);
+      const prev = likesMap[postId] ?? { count: 0, likedByMe: false };
+      const newCount = nowLiked ? prev.count + 1 : prev.count - 1;
+
+      setLikesMap((m) => ({
+        ...m,
+        [postId]: { count: newCount, likedByMe: nowLiked },
+      }));
+
+      if (nowLiked) {
+        setDialogMessage({ likes: newCount, action: 'liked' });
+        setShowDialog(true);
+      }
+    } catch {
+      // 에러 무시
+    } finally {
+      setToggling(false);
     }
   };
+
+  const getLikeInfo = (postId: number): LikeState =>
+    likesMap[postId] ?? { count: 0, likedByMe: false };
+
+  const totalLikes = Object.values(likesMap).reduce((sum, v) => sum + v.count, 0);
 
   return (
     <div className="insta-app">
@@ -106,8 +155,8 @@ export default function InstagramContent() {
               </button>
             </div>
             <div className="insta-dialog-body">
-              <p>You earn 17 likes</p>
-              <p>4 new followers and 1 comment</p>
+              <p>You earned {dialogMessage.likes} likes</p>
+              <p>on this post!</p>
             </div>
             <div className="insta-dialog-buttons">
               <button type="button" onClick={() => setShowDialog(false)}>
@@ -143,10 +192,15 @@ export default function InstagramContent() {
           <div className="insta-post-actions">
             <button
               type="button"
-              className={`insta-action-btn ${liked ? 'insta-liked' : ''}`}
-              onClick={handleLike}
+              className="insta-action-btn"
+              onClick={() => handleLike(selectedPost.id)}
+              disabled={!nickname || toggling}
             >
-              <PixelIcon src={iconHeart} alt="like" className={liked ? 'insta-icon-liked' : ''} />
+              <PixelIcon
+                src={iconHeart}
+                alt="like"
+                className={getLikeInfo(selectedPost.id).likedByMe ? 'insta-icon-liked' : ''}
+              />
             </button>
             <button type="button" className="insta-action-btn">
               <PixelIcon src={iconComment} alt="comment" />
@@ -160,8 +214,13 @@ export default function InstagramContent() {
             </button>
           </div>
           <div className="insta-post-info">
-            <span className="insta-post-likes">{liked ? '18' : '17'} likes</span>
+            <span className="insta-post-likes">
+              {getLikeInfo(selectedPost.id).count} likes
+            </span>
             <span className="insta-post-caption">{selectedPost.caption}</span>
+            {!nickname && (
+              <span className="insta-post-hint">* Log in to like posts</span>
+            )}
           </div>
           <div className="insta-bottom-bar">
             <button type="button" onClick={handleBack}>Filter</button>
@@ -234,12 +293,12 @@ export default function InstagramContent() {
             <div className="insta-stats-area">
               <div className="insta-stats">
                 <div className="insta-stat">
-                  <span className="insta-stat-num">42</span>
+                  <span className="insta-stat-num">{POSTS.length}</span>
                   <span className="insta-stat-label">posts</span>
                 </div>
                 <div className="insta-stat">
-                  <span className="insta-stat-num">1.2k</span>
-                  <span className="insta-stat-label">followers</span>
+                  <span className="insta-stat-num">{totalLikes}</span>
+                  <span className="insta-stat-label">likes</span>
                 </div>
                 <div className="insta-stat">
                   <span className="insta-stat-num">256</span>
@@ -292,15 +351,24 @@ export default function InstagramContent() {
 
           {/* Grid */}
           <div className="insta-grid">
-            {POSTS.map((post) => (
-              <div
-                key={post.id}
-                className="insta-grid-item"
-                onClick={() => handlePostClick(post)}
-              >
-                <img src={post.img} alt={`post-${post.id}`} />
-              </div>
-            ))}
+            {POSTS.map((post) => {
+              const info = getLikeInfo(post.id);
+              return (
+                <div
+                  key={post.id}
+                  className="insta-grid-item"
+                  onClick={() => handlePostClick(post)}
+                >
+                  <img src={post.img} alt={`post-${post.id}`} />
+                  {info.count > 0 && (
+                    <span className="insta-grid-likes">
+                      <PixelIcon src={iconHeart} alt="likes" className="insta-icon-liked" />
+                      {info.count}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Bottom Navigation */}
