@@ -7,6 +7,18 @@ import content5 from '../../../../assets/images/insta/insta-content-5.png';
 import content6 from '../../../../assets/images/insta/insta-content-6.png';
 import content7 from '../../../../assets/images/insta/insta-content-7.png';
 import { fetchAllLikes, toggleLike } from '../../../services/likeService';
+import {
+  fetchComments,
+  fetchAllCommentCounts,
+  addComment,
+  deleteComment,
+  CommentRow,
+} from '../../../services/commentService';
+import {
+  fetchCommentLikes,
+  toggleCommentLike,
+  CommentLikeState,
+} from '../../../services/commentLikeService';
 import { useSessionStore } from '../../../store/useSessionStore';
 
 // Pixel Icon Library - SVG icons
@@ -50,7 +62,7 @@ const FILTERS = [
 ];
 
 type Tab = 'grid' | 'list' | 'reels' | 'tagged';
-type View = 'profile' | 'post' | 'filter';
+type View = 'profile' | 'post' | 'filter' | 'comments';
 
 interface LikeState {
   count: number;
@@ -70,27 +82,44 @@ export default function InstagramContent() {
   const [dialogMessage, setDialogMessage] = useState({ likes: 0, action: '' });
   const [likesMap, setLikesMap] = useState<Record<number, LikeState>>({});
   const [toggling, setToggling] = useState(false);
+  const [comments, setComments] = useState<CommentRow[]>([]);
+  const [commentCounts, setCommentCounts] = useState<Record<number, number>>({});
+  const [commentText, setCommentText] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [previewComments, setPreviewComments] = useState<CommentRow[]>([]);
+  const [commentLikesMap, setCommentLikesMap] = useState<Record<string, CommentLikeState>>({});
+  const [togglingCommentLike, setTogglingCommentLike] = useState(false);
 
   const nickname = useSessionStore((s) => s.nickname);
 
-  // 좋아요 데이터 로드
-  const loadLikes = useCallback(async () => {
+  // 좋아요 + 댓글 수 데이터 로드
+  const loadData = useCallback(async () => {
     try {
-      const result = await fetchAllLikes(POST_IDS);
-      setLikesMap(result);
+      const [likesResult, countsResult] = await Promise.all([
+        fetchAllLikes(POST_IDS),
+        fetchAllCommentCounts(POST_IDS),
+      ]);
+      setLikesMap(likesResult);
+      setCommentCounts(countsResult);
     } catch {
       // 실패 시 기본값 유지
     }
   }, []);
 
   useEffect(() => {
-    loadLikes();
-  }, [loadLikes]);
+    loadData();
+  }, [loadData]);
 
-  const handlePostClick = (post: PostData) => {
+  const handlePostClick = async (post: PostData) => {
     setSelectedPost(post);
     setCurrentView('post');
     setActiveFilter(0);
+    try {
+      const all = await fetchComments(post.id);
+      setPreviewComments(all.slice(-2));
+    } catch {
+      setPreviewComments([]);
+    }
   };
 
   const handleFilterClick = () => {
@@ -101,6 +130,8 @@ export default function InstagramContent() {
 
   const handleBack = () => {
     if (currentView === 'filter') {
+      setCurrentView('post');
+    } else if (currentView === 'comments') {
       setCurrentView('post');
     } else {
       setCurrentView('profile');
@@ -132,6 +163,88 @@ export default function InstagramContent() {
       setToggling(false);
     }
   };
+
+  const handleOpenComments = async (post: PostData) => {
+    setSelectedPost(post);
+    setCurrentView('comments');
+    setCommentText('');
+    try {
+      const result = await fetchComments(post.id);
+      setComments(result);
+      if (result.length > 0) {
+        const likes = await fetchCommentLikes(result.map((c) => c.id));
+        setCommentLikesMap(likes);
+      } else {
+        setCommentLikesMap({});
+      }
+    } catch {
+      setComments([]);
+      setCommentLikesMap({});
+    }
+  };
+
+  const handleSubmitComment = async () => {
+    if (!nickname || !selectedPost || !commentText.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      const newComment = await addComment(selectedPost.id, commentText.trim());
+      setComments((prev) => {
+        const updated = [...prev, newComment];
+        setPreviewComments(updated.slice(-2));
+        return updated;
+      });
+      setCommentCounts((prev) => ({
+        ...prev,
+        [selectedPost.id]: (prev[selectedPost.id] ?? 0) + 1,
+      }));
+      setCommentText('');
+    } catch {
+      // 에러 무시
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!selectedPost) return;
+    try {
+      await deleteComment(commentId);
+      setComments((prev) => {
+        const updated = prev.filter((c) => c.id !== commentId);
+        setPreviewComments(updated.slice(-2));
+        return updated;
+      });
+      setCommentCounts((prev) => ({
+        ...prev,
+        [selectedPost.id]: Math.max((prev[selectedPost.id] ?? 1) - 1, 0),
+      }));
+    } catch {
+      // 에러 무시
+    }
+  };
+
+  const handleCommentLike = async (commentId: string) => {
+    if (!nickname || togglingCommentLike) return;
+    setTogglingCommentLike(true);
+    try {
+      const nowLiked = await toggleCommentLike(commentId);
+      const prev = commentLikesMap[commentId] ?? { count: 0, likedByMe: false };
+      setCommentLikesMap((m) => ({
+        ...m,
+        [commentId]: {
+          count: nowLiked ? prev.count + 1 : prev.count - 1,
+          likedByMe: nowLiked,
+        },
+      }));
+    } catch {
+      // 에러 무시
+    } finally {
+      setTogglingCommentLike(false);
+    }
+  };
+
+  const getCommentLikeInfo = (commentId: string): CommentLikeState =>
+    commentLikesMap[commentId] ?? { count: 0, likedByMe: false };
 
   const getLikeInfo = (postId: number): LikeState =>
     likesMap[postId] ?? { count: 0, likedByMe: false };
@@ -202,7 +315,11 @@ export default function InstagramContent() {
                 className={getLikeInfo(selectedPost.id).likedByMe ? 'insta-icon-liked' : ''}
               />
             </button>
-            <button type="button" className="insta-action-btn">
+            <button
+              type="button"
+              className="insta-action-btn"
+              onClick={() => selectedPost && handleOpenComments(selectedPost)}
+            >
               <PixelIcon src={iconComment} alt="comment" />
             </button>
             <button type="button" className="insta-action-btn">
@@ -218,8 +335,30 @@ export default function InstagramContent() {
               {getLikeInfo(selectedPost.id).count} likes
             </span>
             <span className="insta-post-caption">{selectedPost.caption}</span>
+            {(commentCounts[selectedPost.id] ?? 0) > 2 && (
+              <button
+                type="button"
+                className="insta-view-comments"
+                onClick={() => handleOpenComments(selectedPost)}
+              >
+                View all {commentCounts[selectedPost.id]} comments
+              </button>
+            )}
+            {previewComments.length > 0 && (
+              <div
+                className="insta-comment-preview"
+                onClick={() => handleOpenComments(selectedPost)}
+              >
+                {previewComments.map((c) => (
+                  <div key={c.id} className="insta-comment-preview-item">
+                    <span className="insta-comment-nickname">{c.nickname}</span>
+                    <span className="insta-comment-preview-text">{c.content}</span>
+                  </div>
+                ))}
+              </div>
+            )}
             {!nickname && (
-              <span className="insta-post-hint">* Log in to like posts</span>
+              <span className="insta-post-hint">* Log in to like & comment</span>
             )}
           </div>
           <div className="insta-bottom-bar">
@@ -276,6 +415,88 @@ export default function InstagramContent() {
           <div className="insta-bottom-bar">
             <button type="button" onClick={handleBack}>Filter</button>
             <button type="button">Edit</button>
+          </div>
+        </>
+      )}
+
+      {/* Comments View */}
+      {currentView === 'comments' && selectedPost && (
+        <>
+          <div className="insta-nav-top">
+            <button type="button" className="insta-nav-btn" onClick={handleBack}>
+              Back
+            </button>
+            <span className="insta-nav-title">Comments</span>
+            <span className="insta-nav-btn" />
+          </div>
+          <div className="insta-comments-list">
+            {comments.length === 0 && (
+              <div className="insta-comments-empty">No comments yet.</div>
+            )}
+            {comments.map((c) => {
+              const cLike = getCommentLikeInfo(c.id);
+              return (
+                <div key={c.id} className="insta-comment-item">
+                  <div className="insta-comment-header">
+                    <span className="insta-comment-nickname">{c.nickname}</span>
+                    <span className="insta-comment-time">
+                      {new Date(c.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="insta-comment-body">
+                    <span className="insta-comment-content">{c.content}</span>
+                    <div className="insta-comment-actions">
+                      <button
+                        type="button"
+                        className="insta-comment-like-btn"
+                        onClick={() => handleCommentLike(c.id)}
+                        disabled={!nickname || togglingCommentLike}
+                      >
+                        <PixelIcon
+                          src={iconHeart}
+                          alt="like"
+                          className={cLike.likedByMe ? 'insta-icon-liked' : ''}
+                        />
+                      </button>
+                      {cLike.count > 0 && (
+                        <span className="insta-comment-like-count">{cLike.count}</span>
+                      )}
+                      {c.nickname === nickname && (
+                        <button
+                          type="button"
+                          className="insta-comment-delete"
+                          onClick={() => handleDeleteComment(c.id)}
+                        >
+                          X
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="insta-comment-input-area">
+            <input
+              type="text"
+              className="insta-comment-input"
+              placeholder={nickname ? 'Add a comment...' : 'Log in to comment'}
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSubmitComment();
+              }}
+              disabled={!nickname}
+              maxLength={200}
+            />
+            <button
+              type="button"
+              className="insta-comment-submit"
+              onClick={handleSubmitComment}
+              disabled={!nickname || !commentText.trim() || submitting}
+            >
+              Post
+            </button>
           </div>
         </>
       )}
