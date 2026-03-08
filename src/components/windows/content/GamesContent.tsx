@@ -1,6 +1,6 @@
-import iconTetris from '../../../../assets/images/icon-tetris.png';
-import iconMinesweeper from '../../../../assets/images/icon-minsweeper.png';
-import iconSnake from '../../../../assets/images/icon-snake.png';
+import iconTetris from '../../../../assets/images/icons/icon-tetris.png';
+import iconMinesweeper from '../../../../assets/images/icons/icon-minsweeper.png';
+import iconSnake from '../../../../assets/images/icons/icon-snake.png';
 
 interface GameItem {
   id: string;

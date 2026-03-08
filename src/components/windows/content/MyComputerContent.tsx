@@ -4,7 +4,7 @@ import { fetchPaintings, deletePainting, type PaintingRow } from '../../../servi
 import { fetchMessages, type MessageRow } from '../../../services/messageService';
 import { monitorAssets } from '../../../data/galleryAssets';
 import { useSessionStore } from '../../../store/useSessionStore';
-import iconFolder from '../../../../assets/images/icon-folder.png';
+import iconFolder from '../../../../assets/images/icons/icon-folder.png';
 import { setCurrentVideo, type VideoId } from '../../../data/currentVideo';
 import FileItem from './FileItem';
 

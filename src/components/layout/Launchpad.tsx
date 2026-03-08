@@ -2,20 +2,20 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import type { WindowType } from '../../types/window';
 import { windowRegistry } from '../../data/windowRegistry';
-import iconComputer from '../../../assets/images/icon-computer.png';
-import iconTransport from '../../../assets/images/icon-transport.png';
-import iconMusic from '../../../assets/images/icon-music.png';
-import iconMemo from '../../../assets/images/icon-memo.png';
-import iconPaint from '../../../assets/images/icon-paint.png';
-import iconGallery from '../../../assets/images/icon-gallery.png';
-import iconFolderOpen from '../../../assets/images/icon-folder-open.png';
-import iconTetris from '../../../assets/images/icon-tetris.png';
-import iconInternet from '../../../assets/images/icon-internet.png';
-import iconGame from '../../../assets/images/icon-game.png';
-import iconMinesweeper from '../../../assets/images/icon-minsweeper.png';
-import iconSnake from '../../../assets/images/icon-snake.png';
-import iconTerminal from '../../../assets/images/icon-terminal.png';
-import iconYahoo from '../../../assets/images/yahoo.png';
+import iconComputer from '../../../assets/images/icons/icon-computer.png';
+import iconTransport from '../../../assets/images/icons/icon-transport.png';
+import iconMusic from '../../../assets/images/icons/icon-music.png';
+import iconMemo from '../../../assets/images/icons/icon-memo.png';
+import iconPaint from '../../../assets/images/icons/icon-paint.png';
+import iconGallery from '../../../assets/images/icons/icon-gallery.png';
+import iconFolderOpen from '../../../assets/images/icons/icon-folder-open.png';
+import iconTetris from '../../../assets/images/icons/icon-tetris.png';
+import iconInternet from '../../../assets/images/icons/icon-internet.png';
+import iconGame from '../../../assets/images/icons/icon-game.png';
+import iconMinesweeper from '../../../assets/images/icons/icon-minsweeper.png';
+import iconSnake from '../../../assets/images/icons/icon-snake.png';
+import iconTerminal from '../../../assets/images/icons/icon-terminal.png';
+import iconYahoo from '../../../assets/images/icons/yahoo.png';
 
 const appIcons: Partial<Record<WindowType, string>> = {
   profile: iconComputer,
