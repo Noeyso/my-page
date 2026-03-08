@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import type { WindowType } from '../../types/window';
 import { windowRegistry } from '../../data/windowRegistry';
-import iconDisc from '../../../assets/images/icon-disc.png';
+import iconComputer from '../../../assets/images/icon-computer.png';
 import iconTransport from '../../../assets/images/icon-transport.png';
 import iconMusic from '../../../assets/images/icon-music.png';
 import iconMemo from '../../../assets/images/icon-memo.png';
@@ -18,7 +18,7 @@ import iconTerminal from '../../../assets/images/icon-terminal.png';
 import iconYahoo from '../../../assets/images/yahoo.png';
 
 const appIcons: Partial<Record<WindowType, string>> = {
-  profile: iconDisc,
+  profile: iconComputer,
   chat: iconTransport,
   music: iconMusic,
   memo: iconMemo,

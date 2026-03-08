@@ -54,33 +54,41 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         id: 'default-system',
         type: 'gallery',
         zIndex: 202,
-        tilt: -2,
+        tilt: 0,
         position: { x: 760, y: 360 },
+        isMinimized: false,
+      },
+      {
+        id: 'default-chat',
+        type: 'chat',
+        zIndex: 203,
+        tilt: 0,
+        position: { x: 460, y: 180 },
         isMinimized: false,
       },
     ];
 
 const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
-  profile: -2,
-  chat: 2,
-  music: -1,
-  memo: 3,
-  files: -3,
-  gallery: 1,
-  mycomputer: -1,
+  profile: 0,
+  chat: 0,
+  music: 0,
+  memo: 0,
+  files: 0,
+  gallery: 0,
+  mycomputer: 0,
   tetris: 0,
-  internet: 1,
+  internet: 0,
   video: 0,
-  games: -1,
-  minesweeper: 1,
-  snake: -2,
+  games: 0,
+  minesweeper: 0,
+  snake: 0,
   terminal: 0,
-  yahoo: 1,
+  yahoo: 0,
 };
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 203,
+  nextZIndex: 204,
 };
 
 function getWindowId(): string {
