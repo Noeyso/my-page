@@ -14,6 +14,7 @@ import TetrisContent from '../components/windows/content/TetrisContent';
 import VideoContent from '../components/windows/content/VideoContent';
 import InstagramContent from '../components/windows/content/InstagramContent';
 import YahooContent from '../components/windows/content/YahooContent';
+import CalendarContent from '../components/windows/content/CalendarContent';
 import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
@@ -33,4 +34,5 @@ export const windowRegistry: WindowRegistry = {
   terminal: { title: 'C:\\WINDOWS\\system32\\cmd.exe', icon: '💻', component: TerminalContent, className: 'window-terminal' },
   yahoo: { title: 'Yahoo! Korea - Internet Explorer', icon: '🌐', component: YahooContent, className: 'window-internet' },
   instagram: { title: 'Instagram.exe', icon: '📸', component: InstagramContent, className: 'window-instagram' },
+  calendar: { title: 'Calendar.exe', icon: '📅', component: CalendarContent, className: 'window-calendar' },
 };
