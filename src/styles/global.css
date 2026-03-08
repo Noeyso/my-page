@@ -2345,83 +2345,60 @@
   .gg-page {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
     background: #fff;
+  }
+  .gg-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   /* ── Header ── */
   .gg-header {
-    background: linear-gradient(180deg, #fff8d0 0%, #ffe8a0 100%);
-    padding: 6px 10px 0;
-    border-bottom: 2px solid #e8c840;
     position: relative;
+    overflow: hidden;
   }
-  .gg-header-top {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .gg-header-frame {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
   .gg-back-btn {
+    position: absolute;
+    top: 4px;
+    left: 4px;
     font-size: 10px;
-    background: #4c6ea1;
+    background: rgba(76, 110, 161, 0.85);
     color: #fff;
     border: 1px solid #3a5a8a;
     padding: 2px 8px;
     cursor: pointer;
     border-radius: 2px;
+    z-index: 1;
   }
   .gg-back-btn:hover {
-    background: #5a7eb5;
-  }
-  .gg-logo {
-    display: flex;
-    align-items: baseline;
-    gap: 2px;
-  }
-  .gg-logo-yahoo {
-    font-size: 20px;
-    font-weight: 900;
-    color: #cc0000;
-  }
-  .gg-logo-title {
-    font-size: 22px;
-    font-weight: 900;
-    color: #ff6600;
-    text-shadow: 1px 1px 0 #cc4400;
-  }
-  .gg-subtitle {
-    font-size: 9px;
-    color: #888;
-    margin-left: auto;
-  }
-  .gg-banner-chars {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 6px 0 4px;
-    font-size: 22px;
-    line-height: 1;
+    background: rgba(90, 126, 181, 0.95);
   }
 
-  /* ── Tabs ── */
+  /* ── Tabs (overlaid on banner) ── */
   .gg-tabs {
     display: flex;
     gap: 2px;
-    padding: 3px 6px;
-    background: #f8e8a0;
-    border-bottom: 2px solid #e8c840;
+    padding: 0 6px 3px;
   }
   .gg-tab {
     flex: 1;
-    padding: 4px 2px;
+    padding: 5px 2px;
     color: #fff;
     font-size: 10px;
     font-weight: 700;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px 4px 0 0;
     cursor: pointer;
     text-align: center;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.5px;
   }
   .gg-tab:hover {
     filter: brightness(1.15);
