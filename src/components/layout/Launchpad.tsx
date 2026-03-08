@@ -2,37 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import type { WindowType } from '../../types/window';
 import { windowRegistry } from '../../data/windowRegistry';
-import iconComputer from '../../../assets/images/icons/icon-computer.png';
-import iconTransport from '../../../assets/images/icons/icon-transport.png';
-import iconMusic from '../../../assets/images/icons/icon-music.png';
-import iconMemo from '../../../assets/images/icons/icon-memo.png';
-import iconPaint from '../../../assets/images/icons/icon-paint.png';
-import iconGallery from '../../../assets/images/icons/icon-gallery.png';
-import iconFolderOpen from '../../../assets/images/icons/icon-folder-open.png';
-import iconTetris from '../../../assets/images/icons/icon-tetris.png';
-import iconInternet from '../../../assets/images/icons/icon-internet.png';
-import iconGame from '../../../assets/images/icons/icon-game.png';
-import iconMinesweeper from '../../../assets/images/icons/icon-minsweeper.png';
-import iconSnake from '../../../assets/images/icons/icon-snake.png';
-import iconTerminal from '../../../assets/images/icons/icon-terminal.png';
-import iconYahoo from '../../../assets/images/icons/yahoo.png';
-
-const appIcons: Partial<Record<WindowType, string>> = {
-  profile: iconComputer,
-  chat: iconTransport,
-  music: iconMusic,
-  memo: iconMemo,
-  files: iconPaint,
-  gallery: iconGallery,
-  mycomputer: iconFolderOpen,
-  tetris: iconTetris,
-  internet: iconInternet,
-  games: iconGame,
-  minesweeper: iconMinesweeper,
-  snake: iconSnake,
-  terminal: iconTerminal,
-  yahoo: iconYahoo,
-};
+import { getAppIcon } from '../../data/apps';
 
 interface LaunchpadProps {
   isOpen: boolean;
@@ -85,7 +55,7 @@ export default function Launchpad({ isOpen, onClose, onOpen }: LaunchpadProps) {
     >
       <div className="launchpad-grid">
         {allApps.map(([type, app]) => {
-          const icon = appIcons[type];
+          const icon = getAppIcon(type);
           return (
             <button
               key={type}

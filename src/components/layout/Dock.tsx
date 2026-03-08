@@ -1,7 +1,9 @@
 import type { KeyboardEvent } from 'react';
 import clsx from 'clsx';
-import { dockApps } from '../../data/desktop';
+import { getDockApps } from '../../data/apps';
 import type { ManagedWindow, WindowType } from '../../types/window';
+
+const dockApps = getDockApps();
 
 interface DockProps {
   onOpen: (windowType: WindowType) => void;
@@ -78,16 +80,12 @@ export default function Dock({ onOpen, onRestore, windows, onMinimize, onFocus, 
             tabIndex={0}
             onKeyDown={(event) => handleKeyDown(event, app.id)}
           >
-            {app.img ? (
-              <img
-                src={app.img}
-                alt={app.label}
-                className="h-7 w-7 object-contain dock-pixel-icon"
-                style={{ imageRendering: 'pixelated' }}
-              />
-            ) : (
-              <span>{app.icon}</span>
-            )}
+            <img
+              src={app.img}
+              alt={app.label}
+              className="h-7 w-7 object-contain dock-pixel-icon"
+              style={{ imageRendering: 'pixelated' }}
+            />
             <div className="dock-tooltip">{app.label}</div>
             {isOpen && <div className="dock-indicator" />}
           </div>

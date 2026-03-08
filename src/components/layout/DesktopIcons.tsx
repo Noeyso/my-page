@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
-import { desktopIcons } from '../../data/desktop';
+import { getDesktopApps, recycleBin } from '../../data/apps';
 import type { WindowType } from '../../types/window';
+
+const desktopApps = getDesktopApps();
 
 interface DesktopIconsProps {
   onOpen?: (type: WindowType) => void;
@@ -35,42 +37,41 @@ export default function DesktopIcons({ onOpen }: DesktopIconsProps) {
 
   return (
     <>
-      {desktopIcons.map((item) => {
-        const isTrash = item.label === 'Recycle Bin';
-        return (
-          <div
-            key={item.label}
-            className="desktop-icon desktop-icon-glass"
-            style={{ top: item.top, left: item.left }}
-            onClick={() => {
-              if (isTrash) {
-                handleTrashClick();
-              } else if (item.windowType) {
-                onOpen?.(item.windowType);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if ((e.key === 'Enter' || e.key === ' ') && item.windowType) {
-                onOpen?.(item.windowType);
-              }
-            }}
-          >
-            <div className="desktop-icon-img desktop-icon-img-glass">
-              {'img' in item ? (
-                <img src={item.img} alt={item.label} className="object-contain desktop-pixel-icon" />
-              ) : (
-                item.icon
-              )}
-            </div>
-            <div className="desktop-icon-label">{item.label}</div>
-            {isTrash && trashMsg && (
-              <div className="trash-easter-bubble">{trashMsg}</div>
-            )}
+      {desktopApps.map((app) => (
+        <div
+          key={app.id}
+          className="desktop-icon desktop-icon-glass"
+          style={{ top: app.desktopPosition?.top, left: app.desktopPosition?.left }}
+          onClick={() => onOpen?.(app.id)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              onOpen?.(app.id);
+            }
+          }}
+        >
+          <div className="desktop-icon-img desktop-icon-img-glass">
+            <img src={app.img} alt={app.label} className="object-contain desktop-pixel-icon" />
           </div>
-        );
-      })}
+          <div className="desktop-icon-label">{app.label}</div>
+        </div>
+      ))}
+
+      {/* Recycle Bin - special icon with no window */}
+      <div
+        className="desktop-icon desktop-icon-glass"
+        style={{ top: recycleBin.desktopPosition.top, left: recycleBin.desktopPosition.left }}
+        onClick={handleTrashClick}
+        role="button"
+        tabIndex={0}
+      >
+        <div className="desktop-icon-img desktop-icon-img-glass">
+          <img src={recycleBin.img} alt={recycleBin.label} className="object-contain desktop-pixel-icon" />
+        </div>
+        <div className="desktop-icon-label">{recycleBin.label}</div>
+        {trashMsg && <div className="trash-easter-bubble">{trashMsg}</div>}
+      </div>
     </>
   );
 }
