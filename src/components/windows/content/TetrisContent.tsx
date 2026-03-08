@@ -2,13 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from '../../../store/useSessionStore';
 import { useGameLoop } from '../../../hooks/useGameLoop';
 import GameOverlay from './GameOverlay';
+import { fetchTopScores, submitScore, TetrisScoreRow } from '../../../services/tetrisScoreService';
 
 const COLS = 10;
 const ROWS = 20;
 const CELL = 20;
 const TICK_MS = 500;
-const SCOREBOARD_KEY = 'tetris-highscores';
-const MAX_SCORES = 5;
 
 type Board = number[][];
 
@@ -38,14 +37,6 @@ interface Piece {
   color: number;
   x: number;
   y: number;
-}
-
-interface ScoreEntry {
-  name: string;
-  score: number;
-  lines: number;
-  level: number;
-  date: string;
 }
 
 function createBoard(): Board {
@@ -112,24 +103,6 @@ function getGhostY(board: Board, piece: Piece): number {
   return gy;
 }
 
-function loadScores(): ScoreEntry[] {
-  try {
-    const raw = localStorage.getItem(SCOREBOARD_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveScore(entry: ScoreEntry): ScoreEntry[] {
-  const scores = loadScores();
-  scores.push(entry);
-  scores.sort((a, b) => b.score - a.score);
-  const top = scores.slice(0, MAX_SCORES);
-  localStorage.setItem(SCOREBOARD_KEY, JSON.stringify(top));
-  return top;
-}
-
 const SCORE_TABLE = [0, 100, 300, 500, 800];
 
 export default function TetrisContent() {
@@ -144,7 +117,15 @@ export default function TetrisContent() {
   const [gameOver, setGameOver] = useState(false);
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
-  const [highScores, setHighScores] = useState<ScoreEntry[]>(loadScores);
+  const [highScores, setHighScores] = useState<TetrisScoreRow[]>([]);
+  const [submittedScoreId, setSubmittedScoreId] = useState<string | null>(null);
+
+  // 초기 랭킹 로드
+  useEffect(() => {
+    fetchTopScores()
+      .then((rows) => setHighScores(rows))
+      .catch(() => {});
+  }, []);
 
   const boardRef = useRef(board);
   const pieceRef = useRef(piece);
@@ -169,15 +150,18 @@ export default function TetrisContent() {
 
   const endGame = useCallback(() => {
     setGameOver(true);
-    const entry: ScoreEntry = {
-      name: nickname || 'Anonymous',
-      score: scoreRef.current,
-      lines: linesRef.current,
-      level: Math.floor(linesRef.current / 10),
-      date: new Date().toLocaleDateString(),
-    };
-    const updated = saveScore(entry);
-    setHighScores(updated);
+    const name = nickname || 'Anonymous';
+    const finalScore = scoreRef.current;
+    const finalLines = linesRef.current;
+    const finalLevel = Math.floor(finalLines / 10);
+
+    submitScore(name, finalScore, finalLines, finalLevel)
+      .then((saved) => {
+        setSubmittedScoreId(saved.id);
+        return fetchTopScores();
+      })
+      .then((rows) => setHighScores(rows))
+      .catch(() => {});
   }, [nickname]);
 
   const spawnNext = useCallback(() => {
@@ -344,6 +328,7 @@ export default function TetrisContent() {
     setGameOver(false);
     setPaused(false);
     setStarted(true);
+    setSubmittedScoreId(null);
   };
 
   const ghostY = getGhostY(board, piece);
@@ -409,7 +394,7 @@ export default function TetrisContent() {
             <div style={{ fontSize: 14, color: '#ffdd00', marginBottom: 6, textAlign: 'center' }}>HIGH SCORES</div>
             {highScores.map((s, i) => (
               <div
-                key={i}
+                key={s.id}
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -418,7 +403,7 @@ export default function TetrisContent() {
                   padding: '2px 0',
                 }}
               >
-                <span>{i + 1}. {s.name || '???'}</span>
+                <span>{i + 1}. {s.nickname || '???'}</span>
                 <span>{s.score}</span>
               </div>
             ))}
@@ -541,15 +526,13 @@ export default function TetrisContent() {
             <div style={{ fontSize: 12, color: '#8899aa', marginTop: 4 }}>HIGH SCORES</div>
             {highScores.map((s, i) => (
               <div
-                key={i}
+                key={s.id ?? i}
                 style={{
                   fontSize: 12,
-                  color: s.score === score && s.date === new Date().toLocaleDateString()
-                    ? '#00d4ff'
-                    : '#8899aa',
+                  color: s.id === submittedScoreId ? '#00d4ff' : '#8899aa',
                 }}
               >
-                {i + 1}. {s.name || '???'} - {s.score}
+                {i + 1}. {s.nickname || '???'} - {s.score}
               </div>
             ))}
             <button
