@@ -7695,6 +7695,16 @@ img.insta-post-image {
   background: #e85d00;
 }
 
+.cy-btn-gray {
+  background: #999;
+  color: #fff;
+  border-color: #777;
+}
+
+.cy-btn-gray:hover {
+  background: #888;
+}
+
 /* ── Notebook layout: Left + Binder + Right ── */
 .cy-columns {
   flex: 1;
@@ -7711,7 +7721,7 @@ img.insta-post-image {
   flex-direction: column;
 
   gap: 6px;
-  padding: 4px 8px 4px 4px;
+  padding: 12px;
   background: #fff;
   border: 1px solid #d8e0e8;
   border-radius: 6px 0 0 6px;
@@ -7719,54 +7729,52 @@ img.insta-post-image {
 }
 
 /* Mood selector row */
-.cy-mood-row {
+.cy-mood-box {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 0;
+  padding: 4px 6px;
+  border: 1px solid #c0d0e0;
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cy-mood-box:hover {
+  background: #f5f9fc;
 }
 
 .cy-mood-label {
   font-size: 9px;
   font-weight: bold;
-  color: #999;
+  color: #4a7a9e;
   white-space: nowrap;
-}
-
-.cy-mood-select {
-  font-size: 10px;
-  font-family: inherit;
-  padding: 1px 4px;
-  border: 1px solid #c0d0e0;
-  border-radius: 2px;
-  background: #fff;
-  max-width: 60px;
 }
 
 .cy-mood-value {
   font-size: 11px;
-  font-weight: bold;
-  color: #ff6600;
+  white-space: nowrap;
 }
 
 /* Profile image area */
 .cy-profile-area {
   text-align: center;
-  padding: 6px 0;
 }
 
 .cy-profile-img-wrap {
+  width: 100%;
   display: flex;
   justify-content: center;
+  border: 1px solid #d0dce5;
+  border-radius: 4px;
 }
 
 .cy-profile-img {
   width: 90px;
   height: auto;
   image-rendering: pixelated;
-  border: 1px solid #d0dce5;
-  border-radius: 4px;
-  background: #f8fbfd;
   padding: 4px;
 }
 
@@ -7896,13 +7904,12 @@ img.insta-post-image {
   top: 0;
   bottom: 0;
   left: 178px;
-  right: 58px;
+  right: 57px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 6px 6px 6px 10px;
+  padding: 6px 8px 6px 10px;
   background: #fff;
   border: 1px solid #d8e0e8;
-  border-right: none;
   border-radius: 0;
   box-shadow: inset 1px 0 3px rgba(0, 0, 0, 0.04);
 }
@@ -7933,6 +7940,8 @@ img.insta-post-image {
   white-space: nowrap;
   transition: background 0.15s;
   writing-mode: horizontal-tb;
+  position: relative;
+  z-index: 1;
 }
 
 .cy-vtab:hover {
@@ -7940,10 +7949,12 @@ img.insta-post-image {
 }
 
 .cy-vtab-active {
-  background: #a3c1e0;
-  color: #fff;
+  background: #fff;
+  color: #4a7a9e;
   font-weight: bold;
-  border-color: #8aaed0;
+  border-color: #d8e0e8;
+  border-left: 1px solid #fff;
+  z-index: 2;
 }
 
 /* ── Far right sidebar ── */
@@ -8469,6 +8480,35 @@ img.insta-post-image {
   color: #bbb;
 }
 
+/* Context menu */
+.cy-context-menu {
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #c0c0c0;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  min-width: 80px;
+  padding: 2px 0;
+}
+
+.cy-context-menu-item {
+  display: block;
+  width: 100%;
+  padding: 4px 12px;
+  font-size: 11px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.cy-context-menu-item:hover {
+  background: #4a7a9e;
+  color: #fff;
+}
+
 /* ═══════════════════════════════════════════
    Cyworld Tab Content Views
    ═══════════════════════════════════════════ */
@@ -8889,20 +8929,8 @@ img.insta-post-image {
     flex-direction: column;
   }
 
-  .cy-col-left {
-    width: 100%;
-    padding-right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
   .cy-binder {
     display: none;
-  }
-
-  .cy-col-left {
-    border-radius: 6px;
   }
 
   .cy-col-right {

@@ -10,7 +10,16 @@ export const TAB_LIST: { id: CyTab; label: string }[] = [
   { id: 'guestbook', label: '방명록' },
 ];
 
-export const MOODS = ['행복', '신남', '그냥', '우울', '파이팅', '졸림', '설렘', '분노'];
+export const MOODS: { label: string; emoji: string }[] = [
+  { label: '행복', emoji: '😊' },
+  { label: '신남', emoji: '🥳' },
+  { label: '그냥', emoji: '😐' },
+  { label: '우울', emoji: '😢' },
+  { label: '파이팅', emoji: '💪' },
+  { label: '졸림', emoji: '😴' },
+  { label: '설렘', emoji: '💓' },
+  { label: '분노', emoji: '😡' },
+];
 
 export const RECENT_NEWS = [
   { icon: '📢', text: '맘에 드는 아이템을 쇼핑상...', category: '쥬크박스', count: '0/2' },

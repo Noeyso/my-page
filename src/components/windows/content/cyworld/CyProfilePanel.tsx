@@ -8,22 +8,25 @@ interface CyProfilePanelProps {
 }
 
 export default function CyProfilePanel({ nickname, mood, onMoodChange }: CyProfilePanelProps) {
+  const currentMood = MOODS.find((m) => m.label === mood) ?? MOODS[0];
+
+  const handleMoodCycle = () => {
+    const currentIndex = MOODS.findIndex((m) => m.label === mood);
+    const nextIndex = (currentIndex + 1) % MOODS.length;
+    onMoodChange(MOODS[nextIndex].label);
+  };
+
   return (
     <div className="cy-col-left">
-      <div className="cy-mood-row">
+      <div className="cy-mood-box" onClick={handleMoodCycle}>
         <span className="cy-mood-label">TODAY IS...</span>
-        <select className="cy-mood-select" value={mood} onChange={(e) => onMoodChange(e.target.value)}>
-          {MOODS.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <span className="cy-mood-value">{mood}</span>
+        <span className="cy-mood-value">
+          {currentMood.label} {currentMood.emoji}
+        </span>
       </div>
 
-      <div className="flex flex-col justify-between h-full">
-        <div>
+      <div className="flex flex-col justify-between h-full w-full">
+        <div className="w-full">
           <div className="cy-profile-area">
             <div className="cy-profile-img-wrap">
               <img src={defaultProfileImg} alt="미니미" className="cy-profile-img" />
@@ -31,8 +34,9 @@ export default function CyProfilePanel({ nickname, mood, onMoodChange }: CyProfi
           </div>
 
           <div className="cy-profile-name-area">
-            <div className="cy-profile-realname">{nickname}</div>
-            <div className="cy-profile-status">사이좋은 사람들 싸이월드</div>
+            {/* <div className="cy-profile-realname">{nickname}</div> */}
+            <div className="cy-profile-realname">YANG SO YEON</div>
+            <div className="cy-profile-status">반갑습니다.</div>
           </div>
         </div>
 

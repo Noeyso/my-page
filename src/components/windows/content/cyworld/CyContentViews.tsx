@@ -1,28 +1,51 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import defaultProfileImg from '../../../../../assets/images/cyworld/default-img.png';
 import cyCharacterImg from '../../../../../assets/images/cyworld/cy-character.png';
-import {
-  BOARD_POSTS,
-  DIARY_ENTRIES,
-  JUKEBOX_SONGS,
-  PHOTOS,
-  RECENT_NEWS,
-  type GuestbookEntry,
-  type IlchonEntry,
-} from './const';
+import { BOARD_POSTS, DIARY_ENTRIES, JUKEBOX_SONGS, PHOTOS, RECENT_NEWS } from './const';
+import type { GuestbookRow, IlchonPyeongRow } from '../../../../services/cyworldService';
 
 /* ── HomeView ── */
 
 interface HomeViewProps {
   nickname: string;
-  ilchonPyeong: IlchonEntry[];
+  ilchonPyeong: IlchonPyeongRow[];
   ilchonInput: string;
   onIlchonInputChange: (v: string) => void;
   onIlchonSubmit: () => void;
+  onIlchonDelete: (id: string) => void;
 }
 
-export function HomeView({ nickname, ilchonPyeong, ilchonInput, onIlchonInputChange, onIlchonSubmit }: HomeViewProps) {
+export function HomeView({
+  nickname,
+  ilchonPyeong,
+  ilchonInput,
+  onIlchonInputChange,
+  onIlchonSubmit,
+  onIlchonDelete,
+}: HomeViewProps) {
   const [miniTab, setMiniTab] = useState<'minilife' | 'miniroom' | 'cyworld'>('miniroom');
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; id: string } | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const handleContextMenu = useCallback(
+    (e: React.MouseEvent, entry: IlchonPyeongRow) => {
+      if (entry.nickname !== nickname) return;
+      e.preventDefault();
+      setContextMenu({ x: e.clientX, y: e.clientY, id: entry.id });
+    },
+    [nickname],
+  );
+
+  useEffect(() => {
+    if (!contextMenu) return;
+    const close = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setContextMenu(null);
+      }
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, [contextMenu]);
 
   return (
     <div className="cy-home">
@@ -133,15 +156,35 @@ export function HomeView({ nickname, ilchonPyeong, ilchonInput, onIlchonInputCha
           </button>
         </div>
         <div className="cy-ilchon-list">
-          {ilchonPyeong.map((entry, i) => (
-            <div key={i} className="cy-ilchon-entry">
-              <span className="cy-ilchon-author">{entry.author}</span>
+          {ilchonPyeong.map((entry) => (
+            <div key={entry.id} className="cy-ilchon-entry" onContextMenu={(e) => handleContextMenu(e, entry)}>
+              <span className="cy-ilchon-author">{entry.nickname}</span>
               <span className="cy-ilchon-text">{entry.content}</span>
-              <span className="cy-ilchon-date">{entry.date}</span>
+              <span className="cy-ilchon-date">
+                {new Date(entry.created_at)
+                  .toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
+                  .replace('. ', '.')
+                  .replace(/\.$/, '')}
+              </span>
             </div>
           ))}
         </div>
       </div>
+
+      {contextMenu && (
+        <div ref={menuRef} className="cy-context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
+          <button
+            type="button"
+            className="cy-context-menu-item"
+            onClick={() => {
+              onIlchonDelete(contextMenu.id);
+              setContextMenu(null);
+            }}
+          >
+            삭제
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -157,7 +200,8 @@ export function ProfileView({ nickname }: { nickname: string }) {
         <div className="cy-profile-details">
           <div className="cy-pd-row">
             <span className="cy-pd-label">이름</span>
-            <span>{nickname}</span>
+            {/* <span>{nickname}</span> */}
+            <span>YANG SO YEON</span>
           </div>
           <div className="cy-pd-row">
             <span className="cy-pd-label">생일</span>
@@ -326,13 +370,33 @@ export function BoardView() {
 /* ── GuestbookView ── */
 
 interface GuestbookViewProps {
-  entries: GuestbookEntry[];
+  nickname: string;
+  entries: GuestbookRow[];
   input: string;
   onInputChange: (v: string) => void;
   onSubmit: () => void;
+  onDelete: (id: string) => void;
 }
 
-export function GuestbookView({ entries, input, onInputChange, onSubmit }: GuestbookViewProps) {
+export function GuestbookView({ nickname, entries, input, onInputChange, onSubmit, onDelete }: GuestbookViewProps) {
+  const [ctxMenu, setCtxMenu] = useState<{ x: number; y: number; id: string } | null>(null);
+  const ctxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ctxMenu) return;
+    const close = (e: MouseEvent) => {
+      if (ctxRef.current && !ctxRef.current.contains(e.target as Node)) setCtxMenu(null);
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, [ctxMenu]);
+
+  const handleCtx = (e: React.MouseEvent, entry: GuestbookRow) => {
+    if (entry.nickname !== nickname) return;
+    e.preventDefault();
+    setCtxMenu({ x: e.clientX, y: e.clientY, id: entry.id });
+  };
+
   return (
     <div className="cy-tab-content">
       <div className="cy-tab-content-title">방명록</div>
@@ -349,17 +413,30 @@ export function GuestbookView({ entries, input, onInputChange, onSubmit }: Guest
         </button>
       </div>
       <div className="cy-gb-list">
-        {entries.map((e, i) => (
-          <div key={i} className="cy-gb-entry">
+        {entries.map((e) => (
+          <div key={e.id} className="cy-gb-entry" onContextMenu={(ev) => handleCtx(ev, e)}>
             <div className="cy-gb-header">
-              <span className="cy-gb-avatar">{e.avatar}</span>
-              <span className="cy-gb-author">{e.author}</span>
-              <span className="cy-gb-date">{e.date}</span>
+              <span className="cy-gb-avatar">😊</span>
+              <span className="cy-gb-author">{e.nickname}</span>
+              <span className="cy-gb-date">
+                {new Date(e.created_at).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' }).replace('. ', '.').replace(/\.$/, '')}
+              </span>
             </div>
             <div className="cy-gb-content">{e.content}</div>
           </div>
         ))}
       </div>
+      {ctxMenu && (
+        <div ref={ctxRef} className="cy-context-menu" style={{ top: ctxMenu.y, left: ctxMenu.x }}>
+          <button
+            type="button"
+            className="cy-context-menu-item"
+            onClick={() => { onDelete(ctxMenu.id); setCtxMenu(null); }}
+          >
+            삭제
+          </button>
+        </div>
+      )}
     </div>
   );
 }

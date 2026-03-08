@@ -1,54 +1,87 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from '../../../../store/useSessionStore';
 import binderRingsSvg from '../../../../../assets/images/cyworld/cyworld_binder_rings.svg';
 import type { CyTab } from './const';
-import { GUESTBOOK_ENTRIES, ILCHON_PYEONG, TAB_LIST } from './const';
+import { TAB_LIST } from './const';
 import CyTopBar from './CyTopBar';
 import CyProfilePanel from './CyProfilePanel';
 import CySidebar from './CySidebar';
 import { BoardView, DiaryView, GuestbookView, HomeView, JukeboxView, PhotoView, ProfileView } from './CyContentViews';
+import {
+  addGuestbook,
+  addIlchonPyeong,
+  deleteGuestbook,
+  deleteIlchonPyeong,
+  fetchGuestbook,
+  fetchIlchonPyeong,
+  type GuestbookRow,
+  type IlchonPyeongRow,
+} from '../../../../services/cyworldService';
 
 export default function CyworldContent() {
   const [activeTab, setActiveTab] = useState<CyTab>('home');
   const [mood, setMood] = useState('파이팅');
   const [ilchonInput, setIlchonInput] = useState('');
-  const [localIlchonPyeong, setLocalIlchonPyeong] = useState(ILCHON_PYEONG);
+  const [ilchonPyeongList, setIlchonPyeongList] = useState<IlchonPyeongRow[]>([]);
   const [guestbookInput, setGuestbookInput] = useState('');
-  const [localGuestbook, setLocalGuestbook] = useState(GUESTBOOK_ENTRIES);
+  const [guestbookList, setGuestbookList] = useState<GuestbookRow[]>([]);
   const nickname = useSessionStore((s) => s.nickname) ?? '소연';
+  const submittingRef = useRef(false);
 
-  const handleIlchonSubmit = () => {
-    if (!ilchonInput.trim()) return;
-    setLocalIlchonPyeong((prev) => [
-      {
-        author: nickname,
-        content: ilchonInput,
-        date: new Date()
-          .toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
-          .replace('. ', '.')
-          .replace(/\.$/, ''),
-      },
-      ...prev,
-    ]);
-    setIlchonInput('');
-  };
+  useEffect(() => {
+    fetchIlchonPyeong()
+      .then(setIlchonPyeongList)
+      .catch(() => {});
+    fetchGuestbook()
+      .then(setGuestbookList)
+      .catch(() => {});
+  }, []);
 
-  const handleGuestbookSubmit = () => {
-    if (!guestbookInput.trim()) return;
-    setLocalGuestbook((prev) => [
-      {
-        author: nickname,
-        avatar: '😊',
-        date: new Date()
-          .toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
-          .replace('. ', '.')
-          .replace(/\.$/, ''),
-        content: guestbookInput,
-      },
-      ...prev,
-    ]);
-    setGuestbookInput('');
-  };
+  const handleIlchonSubmit = useCallback(async () => {
+    if (!ilchonInput.trim() || submittingRef.current) return;
+    submittingRef.current = true;
+    try {
+      const newEntry = await addIlchonPyeong(ilchonInput.trim());
+      setIlchonPyeongList((prev) => [newEntry, ...prev]);
+      setIlchonInput('');
+    } catch {
+      /* ignore */
+    } finally {
+      submittingRef.current = false;
+    }
+  }, [ilchonInput]);
+
+  const handleIlchonDelete = useCallback(async (id: string) => {
+    try {
+      await deleteIlchonPyeong(id);
+      setIlchonPyeongList((prev) => prev.filter((e) => e.id !== id));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const handleGuestbookSubmit = useCallback(async () => {
+    if (!guestbookInput.trim() || submittingRef.current) return;
+    submittingRef.current = true;
+    try {
+      const newEntry = await addGuestbook(guestbookInput.trim());
+      setGuestbookList((prev) => [newEntry, ...prev]);
+      setGuestbookInput('');
+    } catch {
+      /* ignore */
+    } finally {
+      submittingRef.current = false;
+    }
+  }, [guestbookInput]);
+
+  const handleGuestbookDelete = useCallback(async (id: string) => {
+    try {
+      await deleteGuestbook(id);
+      setGuestbookList((prev) => prev.filter((e) => e.id !== id));
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   return (
     <div className="cy-browser">
@@ -77,10 +110,11 @@ export default function CyworldContent() {
                   {activeTab === 'home' && (
                     <HomeView
                       nickname={nickname}
-                      ilchonPyeong={localIlchonPyeong}
+                      ilchonPyeong={ilchonPyeongList}
                       ilchonInput={ilchonInput}
                       onIlchonInputChange={setIlchonInput}
                       onIlchonSubmit={handleIlchonSubmit}
+                      onIlchonDelete={handleIlchonDelete}
                     />
                   )}
                   {activeTab === 'profile' && <ProfileView nickname={nickname} />}
@@ -90,10 +124,12 @@ export default function CyworldContent() {
                   {activeTab === 'board' && <BoardView />}
                   {activeTab === 'guestbook' && (
                     <GuestbookView
-                      entries={localGuestbook}
+                      nickname={nickname}
+                      entries={guestbookList}
                       input={guestbookInput}
                       onInputChange={setGuestbookInput}
                       onSubmit={handleGuestbookSubmit}
+                      onDelete={handleGuestbookDelete}
                     />
                   )}
                 </div>
