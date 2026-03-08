@@ -63,7 +63,7 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         type: 'chat',
         zIndex: 203,
         tilt: 0,
-        position: { x: 460, y: 180 },
+        position: { x: 460, y: 80 },
         isMinimized: false,
       },
       {
@@ -72,6 +72,14 @@ const INITIAL_WINDOWS: ManagedWindow[] = isMobile()
         zIndex: 204,
         tilt: 1,
         position: { x: 1200, y: 60 },
+        isMinimized: false,
+      },
+      {
+        id: 'default-video',
+        type: 'video',
+        zIndex: 205,
+        tilt: 0,
+        position: { x: 120, y: 500 },
         isMinimized: false,
       },
     ];
@@ -99,7 +107,7 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
 
 const INITIAL_STATE: WindowState = {
   windows: INITIAL_WINDOWS,
-  nextZIndex: 205,
+  nextZIndex: 206,
 };
 
 function getWindowId(): string {

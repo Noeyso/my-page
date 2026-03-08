@@ -20,7 +20,7 @@ import type { WindowRegistry } from '../types/window';
 
 export const windowRegistry: WindowRegistry = {
   profile: { title: 'about_me.txt', icon: '🛰️', component: ProfileContent },
-  chat: { title: 'guestbook.exe', icon: '📟', component: ChatContent },
+  chat: { title: 'guestbook.exe', icon: '📟', component: ChatContent, className: 'window-chat' },
   music: { title: 'music_player.exe', icon: '🎛️', component: MusicContent, className: 'window-music' },
   memo: { title: 'memo.txt', icon: '📝', component: MemoContent },
   files: { title: 'mspaint.exe', icon: '🖌️', component: FilesContent, className: 'window-paint' },
