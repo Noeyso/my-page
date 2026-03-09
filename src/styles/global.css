@@ -3070,9 +3070,14 @@
     gap: 8px;
   }
 
+  /* === Guestbook Window === */
+  .window-chat {
+    width: 500px;
+  }
+
   /* === Video Player Window === */
   .window-video {
-    width: 480px;
+    width: 320px;
   }
 
   /* === Games Folder Window === */
@@ -6368,6 +6373,11 @@
 .insta-grid-likes .insta-pixel-icon {
   width: 10px;
   height: 10px;
+  filter: brightness(0) invert(1);
+}
+
+.insta-grid-likes .insta-icon-liked {
+  filter: invert(15%) sepia(95%) saturate(6000%) hue-rotate(355deg) brightness(95%);
 }
 
 .insta-post-hint {

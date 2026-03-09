@@ -574,6 +574,7 @@ export default function InstagramContent() {
           <div className="insta-grid">
             {POSTS.map((post) => {
               const info = getLikeInfo(post.id);
+              const cCount = commentCounts[post.id] ?? 0;
               return (
                 <div
                   key={post.id}
@@ -581,10 +582,20 @@ export default function InstagramContent() {
                   onClick={() => handlePostClick(post)}
                 >
                   <img src={post.img} alt={`post-${post.id}`} />
-                  {info.count > 0 && (
+                  {(info.count > 0 || cCount > 0) && (
                     <span className="insta-grid-likes">
-                      <PixelIcon src={iconHeart} alt="likes" className="insta-icon-liked" />
-                      {info.count}
+                      {info.count > 0 && (
+                        <>
+                          <PixelIcon src={iconHeart} alt="likes" className="insta-icon-liked" />
+                          {info.count}
+                        </>
+                      )}
+                      {cCount > 0 && (
+                        <>
+                          <PixelIcon src={iconComment} alt="comments" />
+                          {cCount}
+                        </>
+                      )}
                     </span>
                   )}
                 </div>
