@@ -9,20 +9,20 @@
 
 ## 요약
 
-| 카테고리 | 심각도 | 건수 | 우선순위 |
-|----------|--------|------|----------|
-| `any` 타입 사용 | - | 0 | 없음 |
-| Props 타이핑 문제 | Medium | 4 | 높음 |
-| 커스텀 훅 추출 필요 | High | 14 | **최우선** |
-| 반복 JSX 패턴 | Medium | 10 | 높음 |
-| className 조건부 처리 | Low | 8 | 중간 |
-| 이벤트 핸들러 네이밍 | Low | 15 | 낮음 |
-| Boolean 네이밍 | Low | 10 | 낮음 |
-| Props Drilling | Low | 2 | 낮음 |
-| 코드 중복 | High | 7 | 높음 |
-| Dead Code | Low | 2 | 낮음 |
-| 중복 컴포넌트 | Critical | 1 | **최우선** |
-| CSS 중복/!important | Medium | 166건 | 중간 |
+| 카테고리              | 심각도   | 건수  | 우선순위   |
+| --------------------- | -------- | ----- | ---------- |
+| `any` 타입 사용       | -        | 0     | 없음       |
+| Props 타이핑 문제     | Medium   | 4     | 높음       |
+| 커스텀 훅 추출 필요   | High     | 14    | **최우선** |
+| 반복 JSX 패턴         | Medium   | 10    | 높음       |
+| className 조건부 처리 | Low      | 8     | 중간       |
+| 이벤트 핸들러 네이밍  | Low      | 15    | 낮음       |
+| Boolean 네이밍        | Low      | 10    | 낮음       |
+| Props Drilling        | Low      | 2     | 낮음       |
+| 코드 중복             | High     | 7     | 높음       |
+| Dead Code             | Low      | 2     | 낮음       |
+| 중복 컴포넌트         | Critical | 1     | **최우선** |
+| CSS 중복/!important   | Medium   | 166건 | 중간       |
 
 ---
 
@@ -34,12 +34,12 @@
 
 ### 1-2. Props 타이핑 문제: 4건
 
-| 파일 | 위치 | 문제 | 개선안 |
-|------|------|------|--------|
-| `FilesContent.tsx` | Line 26 | 인라인 props 타입 `{ id: Tool }` | `interface ToolIconProps` 추출 |
-| `ChatWindow.tsx` | Line 4-8 | `type?: string` — 너무 넓은 타입 | `'chat' \| 'memo'` 유니온 타입 |
-| `DesktopIcons.tsx` | Line 5 | `onOpen?` — optional이지만 필수로 사용됨 | `?` 제거 또는 기본값 제공 |
-| `LockScreen.tsx (layout/)` | Line 12-16 | 미사용 인터페이스 정의 | 파일 자체 삭제 |
+| 파일                       | 위치       | 문제                                     | 개선안                         |
+| -------------------------- | ---------- | ---------------------------------------- | ------------------------------ |
+| `FilesContent.tsx`         | Line 26    | 인라인 props 타입 `{ id: Tool }`         | `interface ToolIconProps` 추출 |
+| `ChatWindow.tsx`           | Line 4-8   | `type?: string` — 너무 넓은 타입         | `'chat' \| 'memo'` 유니온 타입 |
+| `DesktopIcons.tsx`         | Line 5     | `onOpen?` — optional이지만 필수로 사용됨 | `?` 제거 또는 기본값 제공      |
+| `LockScreen.tsx (layout/)` | Line 12-16 | 미사용 인터페이스 정의                   | 파일 자체 삭제                 |
 
 ---
 
@@ -56,30 +56,30 @@
 
 ### 2-2. HIGH: FilesContent.tsx — 캔버스/그리기 로직
 
-| 대상 | 라인 | 줄 수 | 추출 훅 이름 |
-|------|------|-------|-------------|
-| 캔버스 리사이즈 & 이벤트 관리 | 206-250 | 45줄 | `useCanvasResize()` |
-| 그리기 로직 (포인터 이벤트) | 305-422 | 118줄 | `usePaintingLogic()` |
-| Flood Fill 알고리즘 | 262-303 | 42줄 | `usePaintTools()` 또는 유틸 함수 |
+| 대상                          | 라인    | 줄 수 | 추출 훅 이름                     |
+| ----------------------------- | ------- | ----- | -------------------------------- |
+| 캔버스 리사이즈 & 이벤트 관리 | 206-250 | 45줄  | `useCanvasResize()`              |
+| 그리기 로직 (포인터 이벤트)   | 305-422 | 118줄 | `usePaintingLogic()`             |
+| Flood Fill 알고리즘           | 262-303 | 42줄  | `usePaintTools()` 또는 유틸 함수 |
 
 ### 2-3. HIGH: 게임 공통 로직
 
-| 대상 | 파일 | 라인 | 추출 훅 이름 |
-|------|------|------|-------------|
-| 키보드 이벤트 핸들링 | TetrisContent.tsx | 281-321 | `useGameKeyboard()` |
-| 게임 루프 (tick) | TetrisContent.tsx | 323-330 | `useGameLoop()` |
-| Refs 동기화 패턴 | TetrisContent.tsx | 158-167 | `useRefSync()` |
-| 캔버스 렌더링 | SnakeContent.tsx | 50-93 | `useSnakeRenderer()` |
-| 게임 틱 로직 | SnakeContent.tsx | 95-144 | `useSnakeGameLogic()` |
-| 키보드 입력 처리 | TerminalContent.tsx | 566-603 | `useTerminalInput()` |
+| 대상                 | 파일                | 라인    | 추출 훅 이름          |
+| -------------------- | ------------------- | ------- | --------------------- |
+| 키보드 이벤트 핸들링 | TetrisContent.tsx   | 281-321 | `useGameKeyboard()`   |
+| 게임 루프 (tick)     | TetrisContent.tsx   | 323-330 | `useGameLoop()`       |
+| Refs 동기화 패턴     | TetrisContent.tsx   | 158-167 | `useRefSync()`        |
+| 캔버스 렌더링        | SnakeContent.tsx    | 50-93   | `useSnakeRenderer()`  |
+| 게임 틱 로직         | SnakeContent.tsx    | 95-144  | `useSnakeGameLogic()` |
+| 키보드 입력 처리     | TerminalContent.tsx | 566-603 | `useTerminalInput()`  |
 
 ### 2-4. MEDIUM: 기타
 
-| 대상 | 파일 | 라인 | 추출 훅 이름 |
-|------|------|------|-------------|
-| 데이터 페칭 패턴 (중복) | MyComputerContent.tsx | 33-58 | `useFetchData<T>()` |
-| Clippy 메시지 스케줄링 | EasterEggs.tsx | 50-62 | `useClippy()` |
-| 코나미 코드 감지 | EasterEggs.tsx | 97-123 | `useKonamiCode()` |
+| 대상                    | 파일                  | 라인   | 추출 훅 이름        |
+| ----------------------- | --------------------- | ------ | ------------------- |
+| 데이터 페칭 패턴 (중복) | MyComputerContent.tsx | 33-58  | `useFetchData<T>()` |
+| Clippy 메시지 스케줄링  | EasterEggs.tsx        | 50-62  | `useClippy()`       |
+| 코나미 코드 감지        | EasterEggs.tsx        | 97-123 | `useKonamiCode()`   |
 
 ---
 
@@ -107,6 +107,7 @@
 - **파일**: MyComputerContent.tsx (197-230, 258-272, 313-327)
 - **문제**: 85줄 이상의 거의 동일한 파일/폴더 표시 JSX가 3회 반복
 - **개선안**:
+
 ```typescript
 interface FileItemProps {
   id: string;
@@ -120,13 +121,13 @@ interface FileItemProps {
 
 ### 3-5. 기타 추출 대상
 
-| 대상 | 파일 | 라인 |
-|------|------|------|
-| Tetris 피스 프리뷰 | TetrisContent.tsx | 355-385 (2곳) |
-| Paint 툴바 버튼 | FilesContent.tsx | 519-529 |
-| 색상 팔레트 | FilesContent.tsx | 579-591 |
-| 지뢰찾기 셀 | MinesweeperContent.tsx | 234-255 |
-| Yahoo 뉴스 리스트 | YahooContent.tsx | 107-135 |
+| 대상               | 파일                   | 라인          |
+| ------------------ | ---------------------- | ------------- |
+| Tetris 피스 프리뷰 | TetrisContent.tsx      | 355-385 (2곳) |
+| Paint 툴바 버튼    | FilesContent.tsx       | 519-529       |
+| 색상 팔레트        | FilesContent.tsx       | 579-591       |
+| 지뢰찾기 셀        | MinesweeperContent.tsx | 234-255       |
+| Yahoo 뉴스 리스트  | YahooContent.tsx       | 107-135       |
 
 ---
 
@@ -150,8 +151,11 @@ useEffect(() => {
 ```typescript
 // SnakeContent.tsx (26-32), TetrisContent.tsx (122-129)
 const [highScore, setHighScore] = useState(() => {
-  try { return Number(localStorage.getItem('key')) || 0; }
-  catch { return 0; }
+  try {
+    return Number(localStorage.getItem('key')) || 0;
+  } catch {
+    return 0;
+  }
 });
 ```
 
@@ -174,9 +178,7 @@ const [highScore, setHighScore] = useState(() => {
 
 ```typescript
 // MyComputerContent.tsx (282-285)
-window.dispatchEvent(
-  new CustomEvent('open-window', { detail: { windowType: 'video' } }),
-);
+window.dispatchEvent(new CustomEvent('open-window', { detail: { windowType: 'video' } }));
 ```
 
 **개선안**: `useWindowDispatch()` 훅 또는 Context Provider
@@ -189,14 +191,14 @@ window.dispatchEvent(
 
 ### 주요 사례
 
-| 파일 | 라인 | 현재 코드 |
-|------|------|-----------|
-| WindowFrame.tsx | 297 | `` `window${className ? ` ${className}` : ''}${isMaximized ? ' window-maximized' : ''}${animClass}${resizeDir ? ' window-resizing' : ''}` `` |
-| Dock.tsx | 73 | `` `dock-icon dock-icon-glass${isOpen ? ' dock-icon-active' : ''}` `` |
-| MyComputerContent.tsx | 135, 144, 200, 261 | `` `explorer-tree-item ${folder === key ? 'active' : ''}` `` (3회 반복) |
-| Launchpad.tsx | 80 | `` `launchpad-overlay${closing ? ' launchpad-closing' : ''}` `` |
-| FilesContent.tsx | 479 | `` `paint98-menu-btn${openMenu === 'file' ? ' active' : ''}` `` (3곳 이상) |
-| MinesweeperContent.tsx | 237 | 복잡한 셀 상태 조건부 클래스 |
+| 파일                   | 라인               | 현재 코드                                                                                                                                    |
+| ---------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| WindowFrame.tsx        | 297                | `` `window${className ? ` ${className}` : ''}${isMaximized ? ' window-maximized' : ''}${animClass}${resizeDir ? ' window-resizing' : ''}` `` |
+| Dock.tsx               | 73                 | `` `dock-icon dock-icon-glass${isOpen ? ' dock-icon-active' : ''}` ``                                                                        |
+| MyComputerContent.tsx  | 135, 144, 200, 261 | `` `explorer-tree-item ${folder === key ? 'active' : ''}` `` (3회 반복)                                                                      |
+| Launchpad.tsx          | 80                 | `` `launchpad-overlay${closing ? ' launchpad-closing' : ''}` ``                                                                              |
+| FilesContent.tsx       | 479                | `` `paint98-menu-btn${openMenu === 'file' ? ' active' : ''}` `` (3곳 이상)                                                                   |
+| MinesweeperContent.tsx | 237                | 복잡한 셀 상태 조건부 클래스                                                                                                                 |
 
 **개선안**: `clsx` 라이브러리 설치 후 적용
 
@@ -214,14 +216,14 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 > 규칙: 내부 함수는 `handleX`, Props 전달 시 `onX`
 
-| 파일 | 라인 | 현재 이름 | 개선안 |
-|------|------|-----------|--------|
-| FilesContent.tsx | 417 | `stopDrawing` | `handlePointerUp` |
-| TetrisContent.tsx | 337 | `restart` | `handleRestart` |
-| SnakeContent.tsx | 146 | `startGame` | `handleStartGame` |
-| MinesweeperContent.tsx | 164 | `reset` | `handleReset` |
-| MyComputerContent.tsx | 60 | `navigateTo` | `handleNavigateTo` |
-| App.tsx | 50 | `onMove` | `handleMouseMove` |
+| 파일                   | 라인 | 현재 이름     | 개선안             |
+| ---------------------- | ---- | ------------- | ------------------ |
+| FilesContent.tsx       | 417  | `stopDrawing` | `handlePointerUp`  |
+| TetrisContent.tsx      | 337  | `restart`     | `handleRestart`    |
+| SnakeContent.tsx       | 146  | `startGame`   | `handleStartGame`  |
+| MinesweeperContent.tsx | 164  | `reset`       | `handleReset`      |
+| MyComputerContent.tsx  | 60   | `navigateTo`  | `handleNavigateTo` |
+| App.tsx                | 50   | `onMove`      | `handleMouseMove`  |
 
 ---
 
@@ -229,17 +231,17 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 > 규칙: `is`, `has`, `should` 접두사 사용
 
-| 파일 | 라인 | 현재 이름 | 개선안 |
-|------|------|-----------|--------|
-| FilesContent.tsx | 192 | `saving` | `isSaving` |
-| FilesContent.tsx | 197 | `openMenu` | `isMenuOpen` 또는 enum 유지 |
-| FilesContent.tsx | 201 | `showSaveDialog` | `isSaveDialogOpen` |
+| 파일                  | 라인  | 현재 이름                          | 개선안                                 |
+| --------------------- | ----- | ---------------------------------- | -------------------------------------- |
+| FilesContent.tsx      | 192   | `saving`                           | `isSaving`                             |
+| FilesContent.tsx      | 197   | `openMenu`                         | `isMenuOpen` 또는 enum 유지            |
+| FilesContent.tsx      | 201   | `showSaveDialog`                   | `isSaveDialogOpen`                     |
 | MyComputerContent.tsx | 28-29 | `loadingPaintings`, `loadingMemos` | `isPaintingsLoading`, `isMemosLoading` |
-| Launchpad.tsx | 44 | `visible` | `isVisible` |
-| Launchpad.tsx | 45 | `closing` | `isClosing` |
-| EasterEggs.tsx | 45 | `visible` | `isVisible` |
-| EasterEggs.tsx | 47 | `dismissed` | `isDismissed` |
-| EasterEggs.tsx | 93 | `showBSOD` | `isBSODVisible` |
+| Launchpad.tsx         | 44    | `visible`                          | `isVisible`                            |
+| Launchpad.tsx         | 45    | `closing`                          | `isClosing`                            |
+| EasterEggs.tsx        | 45    | `visible`                          | `isVisible`                            |
+| EasterEggs.tsx        | 47    | `dismissed`                        | `isDismissed`                          |
+| EasterEggs.tsx        | 93    | `showBSOD`                         | `isBSODVisible`                        |
 
 ---
 
@@ -247,10 +249,10 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 ### LockScreen 이중 정의
 
-| 파일 | 줄 수 | 사용 여부 |
-|------|-------|-----------|
-| `src/components/LockScreen.tsx` | 65줄 | **사용 중** (App.tsx에서 import) |
-| `src/components/layout/LockScreen.tsx` | 62줄 | **미사용** |
+| 파일                                   | 줄 수 | 사용 여부                        |
+| -------------------------------------- | ----- | -------------------------------- |
+| `src/components/LockScreen.tsx`        | 65줄  | **사용 중** (App.tsx에서 import) |
+| `src/components/layout/LockScreen.tsx` | 62줄  | **미사용**                       |
 
 **조치**: `src/components/layout/LockScreen.tsx` 삭제
 
@@ -258,11 +260,11 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 ## 9. Dead Code & 미사용 코드
 
-| 파일 | 라인 | 내용 |
-|------|------|------|
-| App.tsx | Line 8 | `MarqueeBanner` import — 주석 처리됨 (Line 79) |
-| App.tsx | Line 17 | `metrixGif` import — 주석 처리됨 (Line 76) |
-| `components/layout/LockScreen.tsx` | 전체 | 미사용 컴포넌트 |
+| 파일                               | 라인    | 내용                                           |
+| ---------------------------------- | ------- | ---------------------------------------------- |
+| App.tsx                            | Line 8  | `MarqueeBanner` import — 주석 처리됨 (Line 79) |
+| App.tsx                            | Line 17 | `metrixGif` import — 주석 처리됨 (Line 76)     |
+| `components/layout/LockScreen.tsx` | 전체    | 미사용 컴포넌트                                |
 
 ---
 
@@ -275,18 +277,18 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 ### 10-2. CSS 클래스 중복 정의
 
-| 클래스 | 정의 횟수 | 위치 |
-|--------|-----------|------|
-| `.dock` | 3회 | Lines 668, 3350, 3380 |
-| `.dock-icon` | 3회 | Lines 685, 3359, 3389 |
-| `.desktop-bg` | 4회 | Lines 99, 3572, 3590, 3610 |
+| 클래스        | 정의 횟수 | 위치                       |
+| ------------- | --------- | -------------------------- |
+| `.dock`       | 3회       | Lines 668, 3350, 3380      |
+| `.dock-icon`  | 3회       | Lines 685, 3359, 3389      |
+| `.desktop-bg` | 4회       | Lines 99, 3572, 3590, 3610 |
 
 ### 10-3. 반복되는 box-shadow 패턴
 
-| 패턴 | 반복 횟수 |
-|------|-----------|
+| 패턴                                                                     | 반복 횟수 |
+| ------------------------------------------------------------------------ | --------- |
 | Windows 95 bevel shadow (`inset -1px -1px 0 #000, inset 1px 1px 0 #fff`) | 20회 이상 |
-| Panel inset shadow (`inset 1px 1px 0 rgba(232,243,250,0.86)...`) | 8회 이상 |
+| Panel inset shadow (`inset 1px 1px 0 rgba(232,243,250,0.86)...`)         | 8회 이상  |
 
 **개선안**: CSS 변수로 추출
 
@@ -313,12 +315,12 @@ className={clsx('window', className, { 'window-maximized': isMaximized, 'window-
 
 ## 11. 성능 개선 기회
 
-| 대상 | 파일 | 문제 | 개선안 |
-|------|------|------|--------|
-| `Object.entries` 매 렌더 호출 | Launchpad.tsx:75 | 불필요한 재계산 | `useMemo()` 적용 |
-| Canvas context 반복 조회 | FilesContent.tsx | 핸들러마다 `getContext('2d')` | ref에 캐싱 |
-| 인라인 style 객체 | 게임 컴포넌트 다수 | 매 렌더마다 새 객체 생성 | 컴포넌트 외부 상수로 추출 |
-| 게임 속도 계산 | SnakeContent.tsx:166 | 매 tick마다 계산 | `useMemo` 또는 ref 캐싱 |
+| 대상                          | 파일                 | 문제                          | 개선안                    |
+| ----------------------------- | -------------------- | ----------------------------- | ------------------------- |
+| `Object.entries` 매 렌더 호출 | Launchpad.tsx:75     | 불필요한 재계산               | `useMemo()` 적용          |
+| Canvas context 반복 조회      | FilesContent.tsx     | 핸들러마다 `getContext('2d')` | ref에 캐싱                |
+| 인라인 style 객체             | 게임 컴포넌트 다수   | 매 렌더마다 새 객체 생성      | 컴포넌트 외부 상수로 추출 |
+| 게임 속도 계산                | SnakeContent.tsx:166 | 매 tick마다 계산              | `useMemo` 또는 ref 캐싱   |
 
 ---
 
