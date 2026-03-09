@@ -6,7 +6,7 @@ export default function ProfileContent() {
       <div className="window-heading">Digital Memory Deck</div>
       <div className="profile-card">
         <div className="mb-3 flex justify-center">
-          <img src={zzzzImg} alt="" className="h-16 w-24 object-cover" />
+          <img src={zzzzImg} alt="" className="h-16 w-24 object-cover" loading="lazy" decoding="async" />
         </div>
         <div className="pixel-font text-center text-[20px] flex flex-col items-center">
           <div>YANG SO YEON</div>

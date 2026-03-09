@@ -180,7 +180,7 @@ export default function MyComputerContent() {
             <>
               {selectedPainting && (
                 <div className="explorer-preview">
-                  <img src={selectedPainting.image_url} alt="painting preview" />
+                  <img src={selectedPainting.image_url} alt="painting preview" loading="lazy" decoding="async" />
                   <button
                     type="button"
                     className="explorer-preview-close"
@@ -208,7 +208,7 @@ export default function MyComputerContent() {
                       id={painting.id}
                       isSelected={selectedFile === painting.id}
                       onSelect={() => setSelectedFile(painting.id === selectedFile ? null : painting.id)}
-                      thumbnail={<img src={painting.image_url} alt="painting thumbnail" />}
+                      thumbnail={<img src={painting.image_url} alt="painting thumbnail" loading="lazy" decoding="async" />}
                       name={displayName}
                       subtitle={new Date(painting.created_at).toLocaleString()}
                       onDelete={painting.nickname === nickname ? () => handleDeletePainting(painting) : undefined}
@@ -285,7 +285,7 @@ export default function MyComputerContent() {
             <>
               {selectedGallery && (
                 <div className="explorer-preview">
-                  <img src={selectedGallery.src} alt={selectedGallery.name} />
+                  <img src={selectedGallery.src} alt={selectedGallery.name} loading="lazy" decoding="async" />
                   <button
                     type="button"
                     className="explorer-preview-close"
@@ -302,7 +302,7 @@ export default function MyComputerContent() {
                     id={asset.id}
                     isSelected={selectedFile === asset.id}
                     onSelect={() => setSelectedFile(asset.id === selectedFile ? null : asset.id)}
-                    thumbnail={<img src={asset.src} alt={asset.name} />}
+                    thumbnail={<img src={asset.src} alt={asset.name} loading="lazy" decoding="async" />}
                     name={asset.name}
                     subtitle={`[${asset.tag}]`}
                   />

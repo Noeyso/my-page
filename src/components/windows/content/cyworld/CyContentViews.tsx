@@ -115,7 +115,7 @@ export function HomeView({
           {/* Character */}
           <div className="cy-minimi-standing">
             <div className="cy-speech-bubble">안녕하세요~ 😄</div>
-            <img src={cyCharacterImg} alt="미니미" className="cy-minimi-room-img" />
+            <img src={cyCharacterImg} alt="미니미" className="cy-minimi-room-img" loading="lazy" decoding="async" />
             <div className="cy-minimi-shadow" />
           </div>
         </div>
@@ -196,7 +196,7 @@ export function ProfileView({ nickname }: { nickname: string }) {
     <div className="cy-tab-content">
       <div className="cy-tab-content-title">프로필</div>
       <div className="cy-profile-card">
-        <img src={defaultProfileImg} alt="프로필" className="cy-profile-photo-lg" />
+        <img src={defaultProfileImg} alt="프로필" className="cy-profile-photo-lg" loading="lazy" decoding="async" />
         <div className="cy-profile-details">
           <div className="cy-pd-row">
             <span className="cy-pd-label">이름</span>

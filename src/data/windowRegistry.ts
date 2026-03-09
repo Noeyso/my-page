@@ -1,22 +1,24 @@
-import ChatContent from '../components/windows/content/ChatContent';
-import FilesContent from '../components/windows/content/FilesContent';
-import GamesContent from '../components/windows/content/GamesContent';
-import InternetContent from '../components/windows/content/InternetContent';
-import MemoContent from '../components/windows/content/MemoContent';
-import MinesweeperContent from '../components/windows/content/MinesweeperContent';
-import MusicContent from '../components/windows/content/MusicContent';
-import MyComputerContent from '../components/windows/content/MyComputerContent';
-import ProfileContent from '../components/windows/content/ProfileContent';
-import SnakeContent from '../components/windows/content/SnakeContent';
-import SystemContent from '../components/windows/content/SystemContent';
-import TerminalContent from '../components/windows/content/TerminalContent';
-import TetrisContent from '../components/windows/content/TetrisContent';
-import VideoContent from '../components/windows/content/VideoContent';
-import InstagramContent from '../components/windows/content/InstagramContent';
-import YahooContent from '../components/windows/content/YahooContent';
-import CalendarContent from '../components/windows/content/CalendarContent';
-import CyworldContent from '../components/windows/content/CyworldContent';
+import { lazy } from 'react';
 import type { WindowRegistry } from '../types/window';
+
+const ChatContent = lazy(() => import('../components/windows/content/ChatContent'));
+const FilesContent = lazy(() => import('../components/windows/content/FilesContent'));
+const GamesContent = lazy(() => import('../components/windows/content/GamesContent'));
+const InternetContent = lazy(() => import('../components/windows/content/InternetContent'));
+const MemoContent = lazy(() => import('../components/windows/content/MemoContent'));
+const MinesweeperContent = lazy(() => import('../components/windows/content/MinesweeperContent'));
+const MusicContent = lazy(() => import('../components/windows/content/MusicContent'));
+const MyComputerContent = lazy(() => import('../components/windows/content/MyComputerContent'));
+const ProfileContent = lazy(() => import('../components/windows/content/ProfileContent'));
+const SnakeContent = lazy(() => import('../components/windows/content/SnakeContent'));
+const SystemContent = lazy(() => import('../components/windows/content/SystemContent'));
+const TerminalContent = lazy(() => import('../components/windows/content/TerminalContent'));
+const TetrisContent = lazy(() => import('../components/windows/content/TetrisContent'));
+const VideoContent = lazy(() => import('../components/windows/content/VideoContent'));
+const InstagramContent = lazy(() => import('../components/windows/content/InstagramContent'));
+const YahooContent = lazy(() => import('../components/windows/content/YahooContent'));
+const CalendarContent = lazy(() => import('../components/windows/content/CalendarContent'));
+const CyworldContent = lazy(() => import('../components/windows/content/CyworldContent'));
 
 export const windowRegistry: WindowRegistry = {
   profile: { title: 'about_me.txt', icon: '🛰️', component: ProfileContent },

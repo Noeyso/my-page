@@ -734,7 +734,7 @@ function GgureogiPage({ onBack }: { onBack: () => void }) {
     <div className="gg-page">
       {/* Header - 원본 야후 꾸러기 프레임 이미지 */}
       <div className="gg-header">
-        <img src={yahooFrameImg} alt="Yahoo! 꾸러기" className="gg-header-frame" draggable={false} />
+        <img src={yahooFrameImg} alt="Yahoo! 꾸러기" className="gg-header-frame" draggable={false} loading="lazy" decoding="async" />
         <button type="button" className="gg-back-btn" onClick={onBack}>
           ← Yahoo!
         </button>

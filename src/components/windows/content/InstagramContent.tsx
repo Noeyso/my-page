@@ -70,7 +70,7 @@ interface LikeState {
 }
 
 function PixelIcon({ src, alt, className }: { src: string; alt: string; className?: string }) {
-  return <img src={src} alt={alt} className={`insta-pixel-icon ${className ?? ''}`} />;
+  return <img src={src} alt={alt} className={`insta-pixel-icon ${className ?? ''}`} loading="lazy" decoding="async" />;
 }
 
 export default function InstagramContent() {
@@ -509,7 +509,7 @@ export default function InstagramContent() {
           </div>
           <div className="insta-profile-section">
             <div className="insta-avatar">
-              <img src={profileImg} alt="profile" />
+              <img src={profileImg} alt="profile" loading="lazy" decoding="async" />
             </div>
             <div className="insta-stats-area">
               <div className="insta-stats">
@@ -581,7 +581,7 @@ export default function InstagramContent() {
                   className="insta-grid-item"
                   onClick={() => handlePostClick(post)}
                 >
-                  <img src={post.img} alt={`post-${post.id}`} />
+                  <img src={post.img} alt={`post-${post.id}`} loading="lazy" decoding="async" />
                   {(info.count > 0 || cCount > 0) && (
                     <span className="insta-grid-likes">
                       {info.count > 0 && (

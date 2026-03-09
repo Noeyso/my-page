@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import DesktopEffects from './components/layout/DesktopEffects';
 import DesktopIcons from './components/layout/DesktopIcons';
 import Dock from './components/layout/Dock';
@@ -100,7 +100,9 @@ export default function App() {
               onFocus={focusWindow}
               onMinimize={() => minimizeWindow(window.id)}
             >
-              <WindowContent />
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-[#c0c0c0] text-sm">Loading...</div>}>
+                <WindowContent />
+              </Suspense>
             </WindowFrame>
           );
         });

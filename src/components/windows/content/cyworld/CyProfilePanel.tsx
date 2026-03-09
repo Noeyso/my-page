@@ -29,7 +29,7 @@ export default function CyProfilePanel({ nickname, mood, onMoodChange }: CyProfi
         <div className="w-full">
           <div className="cy-profile-area">
             <div className="cy-profile-img-wrap">
-              <img src={defaultProfileImg} alt="미니미" className="cy-profile-img" />
+              <img src={defaultProfileImg} alt="미니미" className="cy-profile-img" loading="lazy" decoding="async" />
             </div>
           </div>
 

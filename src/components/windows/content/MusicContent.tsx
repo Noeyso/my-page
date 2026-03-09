@@ -6,7 +6,7 @@ export default function MusicContent() {
       <div className="window-heading">Music Player</div>
       <div className="music-player">
         <div className="mb-3 flex justify-center">
-          <img src={albumCover} alt="Epik High - One album cover" className="h-[150px] w-[150px] object-cover border border-[#6f8fb3]" />
+          <img src={albumCover} alt="Epik High - One album cover" className="h-[150px] w-[150px] object-cover border border-[#6f8fb3]" loading="lazy" decoding="async" />
         </div>
         <div className="pixel-font mb-1 text-center text-[22px]">Now Playing</div>
         <div className="mb-1 text-center text-[16px] font-bold">Epik High - One</div>
