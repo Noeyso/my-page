@@ -1,0 +1,57 @@
+import type { WindowType } from '@my-page/shared';
+import iconComputer from '../../assets/images/icons/icon-computer.png';
+import iconTransport from '../../assets/images/icons/icon-transport.png';
+import iconMusic from '../../assets/images/icons/icon-music.png';
+import iconMemo from '../../assets/images/icons/icon-memo.png';
+import iconPaint from '../../assets/images/icons/icon-paint.png';
+import iconGallery from '../../assets/images/icons/icon-gallery.png';
+import iconFolderOpen from '../../assets/images/icons/icon-folder-open.png';
+import iconTetris from '../../assets/images/icons/icon-tetris.png';
+import iconInternet from '../../assets/images/icons/icon-internet.png';
+import iconGame from '../../assets/images/icons/icon-game.png';
+import iconMinesweeper from '../../assets/images/icons/icon-minsweeper.png';
+import iconSnake from '../../assets/images/icons/icon-snake.png';
+import iconTerminal from '../../assets/images/icons/icon-terminal.png';
+import iconYahoo from '../../assets/images/icons/yahoo.png';
+import iconInstagram from '../../assets/images/icons/icon-insta.png';
+import iconVideo from '../../assets/images/icons/icon-video.png';
+import iconCalendar from '../../assets/images/icons/icon-calendar.png';
+import iconCyworld from '../../assets/images/icons/icon-cyworld.png';
+
+type AppLocation = 'dock' | 'launchpad';
+
+export interface MobileAppDefinition {
+  id: WindowType;
+  label: string;
+  img: string;
+  showIn: AppLocation[];
+}
+
+export const apps: MobileAppDefinition[] = [
+  // Dock + Launchpad
+  { id: 'profile', label: 'About Me', img: iconComputer, showIn: ['dock', 'launchpad'] },
+  { id: 'chat', label: 'Guestbook', img: iconTransport, showIn: ['dock', 'launchpad'] },
+  { id: 'music', label: 'Music', img: iconMusic, showIn: ['dock', 'launchpad'] },
+  { id: 'gallery', label: 'Gallery', img: iconGallery, showIn: ['dock', 'launchpad'] },
+  { id: 'memo', label: 'Memo', img: iconMemo, showIn: ['dock', 'launchpad'] },
+  { id: 'files', label: 'MS Paint', img: iconPaint, showIn: ['dock', 'launchpad'] },
+
+  // Launchpad only
+  { id: 'terminal', label: 'Terminal', img: iconTerminal, showIn: ['launchpad'] },
+  { id: 'mycomputer', label: 'My Computer', img: iconFolderOpen, showIn: ['launchpad'] },
+  { id: 'games', label: 'Games', img: iconGame, showIn: ['launchpad'] },
+  { id: 'internet', label: 'Internet', img: iconInternet, showIn: ['launchpad'] },
+  { id: 'tetris', label: 'Tetris', img: iconTetris, showIn: ['launchpad'] },
+  { id: 'minesweeper', label: 'Minesweeper', img: iconMinesweeper, showIn: ['launchpad'] },
+  { id: 'snake', label: 'Snake', img: iconSnake, showIn: ['launchpad'] },
+  { id: 'yahoo', label: 'Yahoo!', img: iconYahoo, showIn: ['launchpad'] },
+  { id: 'video', label: 'Video', img: iconVideo, showIn: ['launchpad'] },
+  { id: 'instagram', label: 'Instagram', img: iconInstagram, showIn: ['launchpad'] },
+  { id: 'calendar', label: 'Calendar', img: iconCalendar, showIn: ['launchpad'] },
+  { id: 'cyworld', label: 'Cyworld', img: iconCyworld, showIn: ['launchpad'] },
+];
+
+export const getDockApps = () => apps.filter((a) => a.showIn.includes('dock'));
+export const getLaunchpadApps = () => apps.filter((a) => a.showIn.includes('launchpad'));
+export const getAppIcon = (type: WindowType): string | undefined => apps.find((a) => a.id === type)?.img;
+export const getAppLabel = (type: WindowType): string => apps.find((a) => a.id === type)?.label ?? type;

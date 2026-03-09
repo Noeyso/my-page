@@ -14,6 +14,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@hackernoon/pixel-icon-library':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@my-page/shared':
         specifier: workspace:*
         version: link:../../packages/shared
