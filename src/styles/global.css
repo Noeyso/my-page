@@ -8948,3 +8948,327 @@ img.insta-post-image {
     border-left: 1px solid #c0d0e0;
   }
 }
+
+/* ── 일촌맺기 모달 ── */
+
+.cy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.cy-modal-ilchon {
+  background: #fff;
+  border: 1px solid #c0c0c0;
+  border-radius: 8px;
+  width: 340px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 0;
+  overflow: hidden;
+}
+
+.cy-modal-ilchon-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.cy-modal-ilchon-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cy-modal-ilchon-icon {
+  font-size: 20px;
+}
+
+.cy-modal-ilchon-title-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.cy-modal-ilchon-highlight {
+  color: #4a9bd9;
+  font-weight: bold;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.cy-modal-ilchon-characters {
+  font-size: 24px;
+}
+
+.cy-modal-ilchon-sender {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #666;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.cy-modal-ilchon-sender strong {
+  color: #333;
+}
+
+.cy-modal-ilchon-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.cy-modal-ilchon-avatar {
+  width: 50px;
+  height: 50px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.cy-modal-ilchon-desc {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.cy-modal-ilchon-relations {
+  padding: 8px 16px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.cy-modal-ilchon-rel-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  font-size: 11px;
+  color: #555;
+  flex-wrap: wrap;
+}
+
+.cy-modal-rel-label {
+  white-space: nowrap;
+}
+
+.cy-modal-rel-sep {
+  color: #4a9bd9;
+  font-weight: bold;
+}
+
+.cy-modal-rel-arrow {
+  color: #888;
+}
+
+.cy-modal-rel-select {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.cy-modal-rel-input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+  width: 60px;
+}
+
+.cy-modal-ilchon-msg {
+  padding: 8px 16px;
+}
+
+.cy-modal-ilchon-textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.cy-modal-ilchon-textarea:focus {
+  outline: none;
+  border-color: #4a9bd9;
+}
+
+.cy-modal-ilchon-footer-text {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  padding: 4px 16px 8px;
+}
+
+.cy-modal-ilchon-btns {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px 14px;
+}
+
+.cy-modal-btn {
+  padding: 5px 18px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.cy-modal-btn-primary {
+  background: #4a9bd9;
+  color: #fff;
+  border-color: #3a8bc9;
+}
+
+.cy-modal-btn-primary:hover {
+  background: #3a8bc9;
+}
+
+.cy-modal-btn-primary:disabled {
+  background: #aaa;
+  border-color: #999;
+  cursor: not-allowed;
+}
+
+.cy-modal-btn-cancel {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.cy-modal-btn-cancel:hover {
+  background: #e8e8e8;
+}
+
+/* ── 일촌 신청 목록 ── */
+
+.cy-ilchon-requests {
+  margin-bottom: 8px;
+  background: #fff8f0;
+  border: 1px solid #f0d8c0;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.cy-ilchon-requests-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.cy-ilchon-requests-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #e06000;
+}
+
+.cy-ilchon-requests-count {
+  background: #ff6600;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.cy-ilchon-requests-empty {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.cy-ilchon-requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cy-ilchon-request-item {
+  background: #fff;
+  border: 1px solid #e8d8c8;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.cy-ilchon-request-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.cy-ilchon-request-avatar {
+  font-size: 20px;
+}
+
+.cy-ilchon-request-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cy-ilchon-request-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cy-ilchon-request-date {
+  font-size: 10px;
+  color: #999;
+}
+
+.cy-ilchon-request-relations {
+  font-size: 10px;
+  color: #777;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+  padding-left: 28px;
+}
+
+.cy-ilchon-request-msg {
+  font-size: 11px;
+  color: #555;
+  font-style: italic;
+  padding-left: 28px;
+  margin-bottom: 6px;
+}
+
+.cy-ilchon-request-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.cy-ilchon-request-btns .cy-modal-btn {
+  padding: 3px 12px;
+  font-size: 11px;
+}
+
+/* ── 사이드바 빈 상태 ── */
+
+.cy-sidebar-empty {
+  font-size: 10px;
+  color: #999;
+  text-align: center;
+  padding: 8px 0;
+}

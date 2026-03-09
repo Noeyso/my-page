@@ -34,12 +34,7 @@ export const ILCHON_PYEONG = [
   { author: 'moon', content: '일촌맺어요~ㅎ', date: '06.07' },
 ];
 
-export const FRIEND_SUGGEST = [
-  { name: '보라', avatar: '👩‍🦰', mutual: 3 },
-  { name: '지훈', avatar: '👨', mutual: 5 },
-  { name: '예린', avatar: '👧', mutual: 2 },
-  { name: '태민', avatar: '🧑', mutual: 4 },
-];
+/* FRIEND_SUGGEST removed - replaced by DB-driven ilchon list */
 
 export const DIARY_ENTRIES = [
   { date: '2009.06.15', title: '오늘 날씨가 너무 좋다 ☀️', mood: '🌞' },

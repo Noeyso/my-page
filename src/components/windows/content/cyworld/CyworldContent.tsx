@@ -6,16 +6,20 @@ import { TAB_LIST } from './const';
 import CyTopBar from './CyTopBar';
 import CyProfilePanel from './CyProfilePanel';
 import CySidebar from './CySidebar';
+import CyIlchonRequestList from './CyIlchonRequestList';
 import { BoardView, DiaryView, GuestbookView, HomeView, JukeboxView, PhotoView, ProfileView } from './CyContentViews';
 import {
   addGuestbook,
   addIlchonPyeong,
   deleteGuestbook,
   deleteIlchonPyeong,
+  fetchAcceptedIlchon,
   fetchGuestbook,
   fetchIlchonPyeong,
+  fetchPendingIlchon,
   type GuestbookRow,
   type IlchonPyeongRow,
+  type IlchonRow,
 } from '../../../../services/cyworldService';
 
 export default function CyworldContent() {
@@ -25,8 +29,29 @@ export default function CyworldContent() {
   const [ilchonPyeongList, setIlchonPyeongList] = useState<IlchonPyeongRow[]>([]);
   const [guestbookInput, setGuestbookInput] = useState('');
   const [guestbookList, setGuestbookList] = useState<GuestbookRow[]>([]);
+  const [ilchonList, setIlchonList] = useState<IlchonRow[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<IlchonRow[]>([]);
   const nickname = useSessionStore((s) => s.nickname) ?? '소연';
   const submittingRef = useRef(false);
+
+  const isOwner = nickname === 'YANG SO YEON';
+
+  const loadIlchonData = useCallback(async () => {
+    try {
+      const accepted = await fetchAcceptedIlchon();
+      setIlchonList(accepted);
+    } catch {
+      /* ignore */
+    }
+    if (isOwner) {
+      try {
+        const pending = await fetchPendingIlchon();
+        setPendingRequests(pending);
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [isOwner]);
 
   useEffect(() => {
     fetchIlchonPyeong()
@@ -35,7 +60,8 @@ export default function CyworldContent() {
     fetchGuestbook()
       .then(setGuestbookList)
       .catch(() => {});
-  }, []);
+    loadIlchonData();
+  }, [loadIlchonData]);
 
   const handleIlchonSubmit = useCallback(async () => {
     if (!ilchonInput.trim() || submittingRef.current) return;
@@ -94,7 +120,7 @@ export default function CyworldContent() {
         <div className="cy-outer-frame">
           <div className="cy-inner-frame">
             <div className="cy-stitch-border">
-              <CyTopBar />
+              <CyTopBar onIlchonChange={loadIlchonData} />
 
               <div className="cy-columns">
                 {/* LEFT: Profile section */}
@@ -107,6 +133,14 @@ export default function CyworldContent() {
 
                 {/* RIGHT: Main content area */}
                 <div className="cy-col-right">
+                  {/* 일촌 신청 목록 (YANG SO YEON만 볼 수 있음) */}
+                  {isOwner && activeTab === 'home' && pendingRequests.length > 0 && (
+                    <CyIlchonRequestList
+                      requests={pendingRequests}
+                      onUpdate={loadIlchonData}
+                    />
+                  )}
+
                   {activeTab === 'home' && (
                     <HomeView
                       nickname={nickname}
@@ -152,7 +186,7 @@ export default function CyworldContent() {
           </div>
         </div>
 
-        <CySidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        <CySidebar activeTab={activeTab} onTabChange={setActiveTab} ilchonList={ilchonList} />
       </div>
     </div>
   );
