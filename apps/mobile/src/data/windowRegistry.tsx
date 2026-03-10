@@ -13,6 +13,7 @@ const ChatContent = lazy(() => import('../pages/ChatContent'));
 const MoreContent = lazy(() => import('../pages/MoreContent'));
 const InstagramContent = lazy(() => import('../pages/InstagramContent'));
 const TetrisContent = lazy(() => import('../pages/TetrisContent'));
+const CyworldContent = lazy(() => import('../pages/CyworldContent'));
 
 export const mobileWindowRegistry: Partial<Record<WindowType, MobileWindowRegistryItem>> = {
   profile: { title: 'About Me', component: HomeContent },
@@ -22,4 +23,5 @@ export const mobileWindowRegistry: Partial<Record<WindowType, MobileWindowRegist
   memo: { title: 'More', component: MoreContent },
   instagram: { title: 'Instagram.exe', component: InstagramContent },
   tetris: { title: 'Tetris', component: TetrisContent },
+  cyworld: { title: 'Cyworld', component: CyworldContent },
 };

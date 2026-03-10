@@ -1015,6 +1015,742 @@ img.insta-post-image {
 }
 .insta-view-comments:active { color: #333; }
 
+/* ════════════════════════════════════════════════════
+   Cyworld Mobile
+   ════════════════════════════════════════════════════ */
+
+.cym-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f8f8f6;
+  font-family: 'DungGeunMo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+/* ── Header ── */
+.cym-header {
+  background: linear-gradient(145deg, #a3c1e0, #8aaed0);
+  padding: 10px 14px 8px;
+  border-bottom: 2px solid #7da4c8;
+  flex-shrink: 0;
+}
+
+.cym-header-title {
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  margin-bottom: 4px;
+}
+
+.cym-header-stats {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.cym-today-label {
+  color: #ffe0e0;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.cym-today-num {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cym-stat-sep {
+  color: rgba(255,255,255,0.4);
+  margin: 0 2px;
+}
+
+.cym-total-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 9px;
+}
+
+.cym-total-num {
+  color: rgba(255,255,255,0.8);
+  font-size: 11px;
+}
+
+/* ── Scrollable content ── */
+.cym-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Profile card ── */
+.cym-profile-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border: 2px dotted #b8c8d8;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.cym-profile-left {
+  flex-shrink: 0;
+}
+
+.cym-profile-img-wrap {
+  width: 72px;
+  height: 72px;
+  border: 1px solid #d0dce5;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.cym-profile-img {
+  width: 64px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.cym-profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cym-profile-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cym-profile-status {
+  font-size: 11px;
+  color: #888;
+}
+
+.cym-mood-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border: 1px solid #c0d0e0;
+  border-radius: 4px;
+  background: #f5f9fc;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.cym-mood-label {
+  font-size: 9px;
+  font-weight: bold;
+  color: #4a7a9e;
+}
+
+.cym-mood-value {
+  font-size: 12px;
+}
+
+.cym-profile-actions {
+  margin-top: 2px;
+}
+
+/* ── Buttons ── */
+.cym-small-btn {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  background: #f5f5f5;
+  cursor: pointer;
+  color: #555;
+}
+
+.cym-btn-orange {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+.cym-btn-gray {
+  background: #999;
+  color: #fff;
+  border-color: #777;
+}
+
+/* ── Sections ── */
+.cym-section {
+  background: #fff;
+  border: 1px solid #e0e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.cym-section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #4a7a9e;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e8f0f4;
+}
+
+.cym-count-badge {
+  background: #ff6600;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+/* ── Requests ── */
+.cym-requests {
+  background: #fffaf0;
+  border: 1px solid #f0d8a8;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.cym-request-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dotted #e8e0d0;
+}
+
+.cym-request-item:last-child {
+  border-bottom: none;
+}
+
+.cym-request-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cym-request-name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cym-request-msg {
+  font-size: 10px;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cym-request-btns {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ── News ── */
+.cym-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cym-news-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #555;
+}
+
+.cym-news-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Miniroom ── */
+.cym-miniroom {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #a8c0c8;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cym-room-wall-left {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 50%;
+  height: 90%;
+  background: #d0dfe4;
+  transform-origin: bottom right;
+  transform: skewY(-26.5deg);
+  z-index: 1;
+}
+
+.cym-room-wall-right {
+  position: absolute;
+  top: -50%;
+  right: 0;
+  width: 50%;
+  height: 90%;
+  background: #dde9ec;
+  transform-origin: bottom left;
+  transform: skewY(26.5deg);
+  z-index: 1;
+}
+
+.cym-room-floor {
+  position: absolute;
+  bottom: -40%;
+  left: 50%;
+  width: 260%;
+  height: 140%;
+  background: #a8c0c8;
+  transform-origin: center top;
+  transform: translateX(-50%) rotateX(60deg) rotateZ(45deg);
+  z-index: 0;
+}
+
+.cym-minimi {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cym-speech-bubble {
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 11px;
+  margin-bottom: 6px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cym-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+}
+
+.cym-minimi-img {
+  width: 80px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* ── Write row (input + button) ── */
+.cym-write-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cym-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #c0d0e0;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  background: #fff;
+}
+
+.cym-input:focus {
+  outline: none;
+  border-color: #4a7a9e;
+}
+
+.cym-submit-btn {
+  padding: 6px 14px;
+  background: #ff6600;
+  color: #fff;
+  border: 1px solid #cc5200;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Entry list (ilchon pyeong, guestbook) ── */
+.cym-entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cym-entry-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+  border-bottom: 1px dotted #e8f0f4;
+  font-size: 12px;
+}
+
+.cym-entry-author {
+  font-weight: bold;
+  color: #4a7a9e;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.cym-entry-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #555;
+}
+
+.cym-entry-date {
+  color: #aaa;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.cym-delete-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.cym-delete-btn:active {
+  color: #e53e3e;
+}
+
+/* ── Guestbook ── */
+.cym-gb-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.cym-gb-content {
+  padding: 4px 0 4px 22px;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ── Friend list ── */
+.cym-friend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px dotted #e8f0f4;
+  font-size: 12px;
+}
+
+.cym-friend-item:last-child {
+  border-bottom: none;
+}
+
+.cym-friend-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.cym-friend-rel {
+  color: #999;
+  font-size: 10px;
+}
+
+/* ── Generic list (diary, board, jukebox) ── */
+.cym-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cym-list-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.cym-list-row:active {
+  background: #f5f9fc;
+}
+
+.cym-list-active {
+  background: #eef5fa;
+  font-weight: bold;
+  color: #4a7a9e;
+}
+
+.cym-list-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cym-list-main {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cym-list-sub {
+  font-size: 10px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+/* ── Detail view (diary detail) ── */
+.cym-detail-view {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cym-back-btn {
+  align-self: flex-start;
+  padding: 4px 10px;
+  background: #eef5fa;
+  border: 1px solid #c0d0e0;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  color: #4a7a9e;
+  cursor: pointer;
+}
+
+.cym-diary-mood {
+  font-size: 28px;
+  text-align: center;
+}
+
+.cym-diary-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.cym-diary-date {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+}
+
+.cym-diary-body {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  padding: 10px 4px;
+  border-top: 1px dotted #e0e8f0;
+  margin-top: 4px;
+}
+
+/* ── Jukebox ── */
+.cym-jukebox-now {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #eef5fa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.cym-jukebox-playing {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #4a7a9e;
+}
+
+.cym-jukebox-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cym-jukebox-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #c0d0e0;
+  background: #f5f5f5;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cym-jukebox-btn:active {
+  background: #e0e8f0;
+}
+
+.cym-jukebox-play {
+  background: #ff6600;
+  color: #fff;
+  border-color: #cc5200;
+}
+
+/* ── Photo grid ── */
+.cym-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.cym-photo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  background: #f5f9fc;
+  border-radius: 6px;
+  border: 1px solid #e0e8f0;
+}
+
+.cym-photo-thumb {
+  font-size: 28px;
+}
+
+.cym-photo-name {
+  font-size: 10px;
+  color: #555;
+}
+
+/* ── Profile detail ── */
+.cym-profile-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.cym-profile-lg {
+  width: 100px;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid #d0dce5;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.cym-detail-rows {
+  width: 100%;
+}
+
+.cym-detail-row {
+  display: flex;
+  gap: 10px;
+  padding: 6px 4px;
+  font-size: 12px;
+  border-bottom: 1px dotted #e8f0f4;
+}
+
+.cym-detail-label {
+  color: #4a7a9e;
+  font-weight: bold;
+  min-width: 50px;
+  flex-shrink: 0;
+}
+
+/* ── Bottom navigation ── */
+.cym-bottom-nav {
+  display: flex;
+  background: linear-gradient(180deg, #f8f8f6, #e8eff5);
+  border-top: 2px solid #c0d0e0;
+  padding: 4px 2px;
+  padding-bottom: max(4px, env(safe-area-inset-bottom));
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.cym-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: #888;
+  font-size: 9px;
+  transition: color 0.15s;
+}
+
+.cym-nav-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.cym-nav-label {
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.cym-nav-active {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.cym-nav-active .cym-nav-label {
+  color: #ff6600;
+}
+
 /* ────────────────────────────────────────────────────
    Safe Area Utilities
    ──────────────────────────────────────────────────── */

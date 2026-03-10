@@ -3164,7 +3164,7 @@
   /* === Terminal Window === */
   .window-terminal {
     width: 460px;
-    min-height: 350px;
+    height: 350px;
   }
 
   .window-terminal .window-toolbar {
@@ -3178,10 +3178,13 @@
     background: #0c0c0c;
     cursor: text;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .terminal-output {
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     padding: 8px 10px;
     font-family: 'VT323', monospace;
@@ -3211,16 +3214,91 @@
     white-space: pre;
   }
 
-  .terminal-input {
-    flex: 1;
-    background: transparent;
+  .terminal-input-line {
+    position: relative;
+    cursor: text;
+  }
+
+  .terminal-cmd-text {
+    white-space: pre;
+  }
+
+  .terminal-block-cursor {
+    color: #c0c0c0;
+  }
+
+  .terminal-cmd-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
     border: none;
     outline: none;
-    color: #c0c0c0;
+    background: transparent;
+    font-size: 14px;
+  }
+
+  /* === Vi Editor === */
+  .vi-editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     font-family: 'VT323', monospace;
     font-size: 14px;
-    padding: 0;
-    caret-color: #c0c0c0;
+    background: #0c0c0c;
+    color: #c0c0c0;
+    outline: none;
+    cursor: text;
+    line-height: 1.4;
+  }
+
+  .vi-content {
+    flex: 1;
+    overflow: hidden;
+    padding: 4px 8px;
+  }
+
+  .vi-line {
+    white-space: pre;
+    height: 1.4em;
+  }
+
+  .vi-line-num {
+    color: #666;
+    user-select: none;
+  }
+
+  .vi-tilde {
+    color: #4488ff;
+    padding-left: 4px;
+  }
+
+  .vi-cursor {
+    background: #c0c0c0;
+    color: #0c0c0c;
+  }
+
+  .vi-cursor-insert {
+    border-left: 2px solid #c0c0c0;
+    animation: vi-blink 1s step-end infinite;
+  }
+
+  @keyframes vi-blink {
+    50% { border-color: transparent; }
+  }
+
+  .vi-status-bar {
+    background: #c0c0c0;
+    color: #0c0c0c;
+    padding: 0 8px;
+    font-size: 14px;
+    white-space: pre;
+    display: flex;
+    justify-content: space-between;
+    min-height: 1.4em;
+    flex-shrink: 0;
   }
 
   /* === BSOD (Blue Screen of Death) === */

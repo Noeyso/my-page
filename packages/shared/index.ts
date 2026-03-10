@@ -60,7 +60,7 @@ export type { TetrisScoreRow } from './services/tetrisScoreService';
 // Data
 export { pixelDecorations } from './data/decorations';
 export { getHolidaysForYear, getHolidaysForMonth, getHolidayName, isHoliday } from './data/koreanHolidays';
-export { VIRTUAL_FS, deepCloneFS, resolvePath, formatSize, getPrompt } from './data/virtualFileSystem';
+export { VIRTUAL_FS, deepCloneFS, resolvePath, formatSize, getPrompt, findFiles, grepFiles } from './data/virtualFileSystem';
 export type { FSNode } from './data/virtualFileSystem';
 
 // Hooks
