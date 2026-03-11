@@ -1,14 +1,22 @@
-import video1Src from '../../assets/video/video-1.mp4';
-import video2Src from '../../assets/video/video-2.mp4';
+const videoModules = import.meta.glob('../../assets/video/*.mp4', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
 
-export const videoFiles = {
-  'video-1': { src: video1Src, name: 'video-1.mp4' },
-  'video-2': { src: video2Src, name: 'video-2.mp4' },
-} as const;
+export const videoFiles = Object.fromEntries(
+  Object.entries(videoModules).map(([path, src]) => {
+    const name = path.split('/').pop() ?? path;
+    const id = name.replace(/\.[^.]+$/, '');
+    return [id, { src, name }];
+  })
+) as Record<string, { src: string; name: string }>;
 
 export type VideoId = keyof typeof videoFiles;
 
-let currentVideoId: VideoId = 'video-1';
+const videoIdList = Object.keys(videoFiles) as VideoId[];
+const randomIndex = Math.floor(Math.random() * videoIdList.length);
+let currentVideoId: VideoId = videoIdList[randomIndex];
 
 export function setCurrentVideo(id: VideoId) {
   currentVideoId = id;

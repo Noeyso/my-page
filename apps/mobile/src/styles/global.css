@@ -1768,3 +1768,749 @@ img.insta-post-image {
     padding-right: env(safe-area-inset-right);
   }
 }
+
+/* ════════════════════════════════════════════════════
+   Cyworld Shop (선물가게) - Mobile
+   ════════════════════════════════════════════════════ */
+
+.cys-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f8f8f8;
+  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* Header */
+.cys-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+  flex-shrink: 0;
+}
+
+.cys-header-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.cys-header-acorn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: #fff5ee;
+  border: 1px solid #f0d0b0;
+  border-radius: 12px;
+  padding: 3px 10px;
+}
+
+.cys-acorn-icon {
+  font-size: 13px;
+}
+
+.cys-acorn-count {
+  font-size: 13px;
+  font-weight: bold;
+  color: #cc5500;
+}
+
+/* Tab bar */
+.cys-tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.cys-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+
+.cys-tab--active {
+  color: #cc5500;
+  font-weight: bold;
+  border-bottom-color: #cc5500;
+}
+
+/* Content scroll area */
+.cys-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+/* Items grid - 3 columns */
+.cys-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.cys-item {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.cys-item-img-wrap {
+  position: relative;
+  background: #fdf5ee;
+  padding: 12px 8px 8px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cys-badge-new {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff6600;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cys-item-img {
+  width: 100%;
+  max-height: 70px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.cys-item-name {
+  font-size: 11px;
+  color: #333;
+  padding: 6px 4px 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cys-item-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+.cys-coin-icon {
+  font-size: 11px;
+  color: #888;
+}
+
+.cys-price-num {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cys-buy-btn {
+  display: block;
+  margin: 0 8px;
+  width: calc(100% - 16px);
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  font-size: 11px;
+  padding: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cys-buy-btn:active {
+  background: #e55500;
+}
+
+.cys-buy-btn--done {
+  background: #ccc;
+  cursor: default;
+}
+
+/* Empty state */
+.cys-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+}
+
+.cys-empty-icon {
+  font-size: 40px;
+}
+
+.cys-empty-text {
+  font-size: 14px;
+  color: #999;
+}
+
+/* Bottom navigation */
+.cys-bottom-nav {
+  display: flex;
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.cys-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.cys-nav-item--active {
+  color: #cc5500;
+}
+
+.cys-nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.cys-nav-label {
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+/* ── Cyworld 내장 선물가게 탭 (ShopTab) ── */
+
+.cym-shop {
+  padding: 0;
+}
+
+.cym-shop-tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.cym-shop-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+
+.cym-shop-tab--active {
+  color: #cc5500;
+  font-weight: bold;
+  border-bottom-color: #cc5500;
+}
+
+.cym-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 4px 12px;
+}
+
+.cym-shop-item {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.cym-shop-item-img-wrap {
+  position: relative;
+  background: #fdf5ee;
+  padding: 10px 8px 6px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cym-shop-badge-n {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff6600;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cym-shop-item-img {
+  width: 100%;
+  max-height: 68px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.cym-shop-item-name {
+  font-size: 11px;
+  color: #333;
+  padding: 5px 4px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cym-shop-item-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.cym-shop-coin {
+  font-size: 11px;
+  color: #888;
+}
+
+.cym-shop-buy-btn {
+  display: block;
+  margin: 0 8px;
+  width: calc(100% - 16px);
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  font-size: 11px;
+  padding: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cym-shop-buy-btn:active { background: #e55500; }
+
+.cym-shop-buy-btn--done {
+  background: #ccc;
+  cursor: default;
+}
+
+.cym-shop-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* cys-app 임베드 모드 (싸이월드 내부 렌더링) */
+.cys-embedded {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f8f8f8;
+  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   Cyworld Mobile Main Page (cym-main-hd / cym-main-*)
+   ═══════════════════════════════════════════ */
+
+.cym-back-header-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: inherit;
+}
+
+.cym-main-hd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, #6699cc 0%, #336699 100%);
+  border-bottom: 2px solid #003366;
+  flex-shrink: 0;
+}
+
+.cym-main-hd-logo {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+}
+
+.cym-main-hd-cy {
+  color: #fff;
+  font-style: italic;
+}
+
+.cym-main-hd-world {
+  color: #ffdd00;
+  font-style: italic;
+}
+
+.cym-main-hd-search {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.cym-main-hd-input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  background: #fff;
+  font-family: inherit;
+  outline: none;
+}
+
+.cym-main-hd-btn {
+  padding: 4px 10px;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Main profile card (main view — horizontal layout) */
+.cym-main-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #dde8f8 0%, #c5d8f0 100%);
+  border: 1px solid #aac;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 4px;
+}
+
+.cym-main-profile-left {
+  flex-shrink: 0;
+}
+
+.cym-main-profile-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #88a;
+  background: #dde;
+  display: block;
+}
+
+.cym-main-profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cym-main-profile-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+}
+
+.cym-main-profile-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #555;
+}
+
+.cym-main-hompy-btn {
+  margin-top: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  background: linear-gradient(180deg, #ff9933 0%, #ff6600 100%);
+  color: #fff;
+  border: 1px solid #cc5200;
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+}
+
+.cym-main-hompy-btn:active {
+  background: linear-gradient(180deg, #ff7711 0%, #ee4400 100%);
+}
+
+/* Main shop banner */
+.cym-main-shop-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border: 1px solid #ffcc80;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.cym-main-shop-banner:active {
+  background: linear-gradient(135deg, #ffe0b2 0%, #ffcc80 100%);
+}
+
+.cym-main-shop-banner-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.cym-main-shop-banner-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.cym-main-shop-banner-sub {
+  font-size: 11px;
+  color: #888;
+}
+
+.cym-main-shop-banner-arrow {
+  font-size: 22px;
+  color: #bbb;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   Shop — 미니룸 카드 & 미리보기 바텀시트 (mobile)
+   ═══════════════════════════════════════════ */
+
+.cys-room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.cys-room-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.cys-room-thumb-wrap {
+  position: relative;
+  width: 130px;
+  flex-shrink: 0;
+  background: #f0f4f8;
+}
+
+.cys-room-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cys-room-info {
+  flex: 1;
+  padding: 12px 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.cys-room-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+}
+
+.cys-room-btns {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cys-preview-btn {
+  flex: 1;
+  padding: 7px 0;
+  font-size: 12px;
+  background: #fff;
+  color: #ff6600;
+  border: 1.5px solid #ff6600;
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+}
+
+.cys-preview-btn:active {
+  background: #fff5f0;
+}
+
+/* 미리보기 바텀시트 */
+.cys-preview-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cys-preview-sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.cys-preview-handle {
+  width: 40px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+
+.cys-preview-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+  align-self: flex-start;
+}
+
+.cys-preview-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e8f0f8;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cys-preview-room-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cys-preview-minimi-wrap {
+  position: absolute;
+  z-index: 2;
+  bottom: 34%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cys-preview-minimi-wrap::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.28) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -5px;
+}
+
+.cys-preview-minimi {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+.cys-preview-desc {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin: 0;
+}
+
+.cys-preview-close-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cys-preview-close-btn:active {
+  background: #e55500;
+}

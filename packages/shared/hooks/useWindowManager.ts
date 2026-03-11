@@ -98,11 +98,13 @@ const WINDOW_TILT_BY_TYPE: Record<WindowType, number> = {
   games: 0,
   minesweeper: 0,
   snake: 0,
+  fortress: 0,
   terminal: 0,
   yahoo: 0,
   instagram: 0,
   calendar: 0,
   cyworld: 0,
+  'cyworld-shop': 0,
 };
 
 const INITIAL_STATE: WindowState = {

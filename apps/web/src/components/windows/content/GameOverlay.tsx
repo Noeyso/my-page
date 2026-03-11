@@ -16,6 +16,8 @@ export default function GameOverlay({ children }: GameOverlayProps) {
         justifyContent: 'center',
         background: 'rgba(0,0,0,0.75)',
         gap: 8,
+        padding: 16,
+        overflowY: 'auto',
       }}
     >
       {children}

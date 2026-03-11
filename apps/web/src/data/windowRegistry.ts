@@ -11,6 +11,7 @@ const MusicContent = lazy(() => import('../components/windows/content/MusicConte
 const MyComputerContent = lazy(() => import('../components/windows/content/MyComputerContent'));
 const ProfileContent = lazy(() => import('../components/windows/content/ProfileContent'));
 const SnakeContent = lazy(() => import('../components/windows/content/SnakeContent'));
+const FortressContent = lazy(() => import('../components/windows/content/FortressContent'));
 const SystemContent = lazy(() => import('../components/windows/content/SystemContent'));
 const TerminalContent = lazy(() => import('../components/windows/content/TerminalContent'));
 const TetrisContent = lazy(() => import('../components/windows/content/TetrisContent'));
@@ -19,6 +20,7 @@ const InstagramContent = lazy(() => import('../components/windows/content/Instag
 const YahooContent = lazy(() => import('../components/windows/content/YahooContent'));
 const CalendarContent = lazy(() => import('../components/windows/content/CalendarContent'));
 const CyworldContent = lazy(() => import('../components/windows/content/CyworldContent'));
+const CyworldShopContent = lazy(() => import('../components/windows/content/CyworldShopContent'));
 
 export const windowRegistry: WindowRegistry = {
   profile: { title: 'about_me.txt', icon: '🛰️', component: ProfileContent },
@@ -34,6 +36,7 @@ export const windowRegistry: WindowRegistry = {
   games: { title: 'Games', icon: '🎮', component: GamesContent, className: 'window-games' },
   minesweeper: { title: 'minesweeper.exe', icon: '💣', component: MinesweeperContent },
   snake: { title: 'snake.exe', icon: '🐍', component: SnakeContent },
+  fortress: { title: 'fortress.exe', icon: '💥', component: FortressContent, className: 'window-fortress' },
   terminal: {
     title: 'C:\\WINDOWS\\system32\\cmd.exe',
     icon: '💻',
@@ -49,4 +52,5 @@ export const windowRegistry: WindowRegistry = {
   instagram: { title: 'Instagram.exe', icon: '📸', component: InstagramContent, className: 'window-instagram' },
   calendar: { title: 'Calendar.exe', icon: '📅', component: CalendarContent, className: 'window-calendar' },
   cyworld: { title: 'Cyworld - Internet Explorer', icon: '🌐', component: CyworldContent, className: 'window-cyworld' },
+  'cyworld-shop': { title: '싸이월드 선물가게', icon: '🎁', component: CyworldShopContent, className: 'window-cyworld-shop' },
 };

@@ -16,7 +16,8 @@ export const VIRTUAL_FS: FSNode = {
         'tetris.exe': { type: 'file', content: '[Tetris Binary]', size: 48200, date: '03/06/2026' },
         'minesweeper.exe': { type: 'file', content: '[Minesweeper Binary]', size: 32100, date: '03/06/2026' },
         'snake.exe': { type: 'file', content: '[Snake Binary]', size: 28400, date: '03/06/2026' },
-        'README.txt': { type: 'file', content: 'Welcome to the Games folder!\nPlay tetris, minesweeper, or snake.\nHave fun!', size: 72, date: '03/06/2026' },
+        'fortress.exe': { type: 'file', content: '[Fortress Binary]', size: 51400, date: '03/11/2026' },
+        'README.txt': { type: 'file', content: 'Welcome to the Games folder!\nPlay tetris, minesweeper, snake, or fortress.\nHave fun!', size: 85, date: '03/11/2026' },
       },
     },
     Paintings: {

@@ -3095,6 +3095,12 @@
     width: 320px;
   }
 
+  /* === Fortress Window === */
+  .window-fortress {
+    width: 760px;
+    min-width: 620px;
+  }
+
   /* === Games Folder Window === */
   .window-games .window-toolbar {
     display: none;
@@ -3286,7 +3292,9 @@
   }
 
   @keyframes vi-blink {
-    50% { border-color: transparent; }
+    50% {
+      border-color: transparent;
+    }
   }
 
   .vi-status-bar {
@@ -5898,6 +5906,7 @@
   .window-wide,
   .window-internet,
   .window-video,
+  .window-fortress,
   .window-terminal,
   .window-games {
     min-width: unset !important;
@@ -8149,6 +8158,14 @@ img.insta-post-image {
   font-size: 9px;
   color: #666;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.cy-sidebar-icon-item:hover,
+.cy-sidebar-icon-item--active {
+  color: #cc3300;
 }
 
 .cy-sidebar-icon-item span:first-child {
@@ -9374,4 +9391,1246 @@ img.insta-post-image {
   color: #999;
   text-align: center;
   padding: 8px 0;
+}
+
+/* ════════════════════════════════════════════════════
+   Cyworld Shop (선물가게) - Web
+   ════════════════════════════════════════════════════ */
+
+.window-cyworld-shop {
+  width: 900px;
+  min-height: 600px;
+}
+
+.cy-shop-browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f5f5f5;
+  font-family: 'Dotum', '돋움', sans-serif;
+  font-size: 12px;
+}
+
+/* Top bar */
+.cy-shop-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #cc3300;
+  padding: 6px 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cy-shop-topbar-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.cy-shop-cy-logo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  font-style: italic;
+}
+
+.cy-shop-cy-world {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffccaa;
+  font-style: italic;
+  margin-right: 6px;
+}
+
+.cy-shop-title-text {
+  font-size: 13px;
+  color: #ffe0cc;
+  font-weight: bold;
+}
+
+.cy-shop-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cy-shop-acorn-info {
+  font-size: 11px;
+  color: #ffe0cc;
+}
+
+.cy-shop-charge-btn {
+  background: #ff9966;
+  border: 1px solid #ff6633;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.cy-shop-charge-btn:hover {
+  background: #ff6633;
+}
+
+/* Category bar */
+.cy-shop-catbar {
+  display: flex;
+  align-items: center;
+  background: #f0e8d8;
+  border-bottom: 1px solid #d0b090;
+  padding: 0 14px;
+  flex-shrink: 0;
+}
+
+.cy-shop-catbar-item {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.cy-shop-catbar-item:hover {
+  color: #cc3300;
+}
+
+.cy-shop-catbar-item--active {
+  color: #cc3300;
+  font-weight: bold;
+  border-bottom-color: #cc3300;
+}
+
+/* Body layout */
+.cy-shop-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left sidebar */
+.cy-shop-left {
+  width: 120px;
+  background: #fff;
+  border-right: 1px solid #e0d0c0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.cy-shop-left-section {
+  border-bottom: 1px solid #ebe0d0;
+}
+
+.cy-shop-left-title {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #f5ede0;
+  border: none;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #7a3d00;
+  cursor: pointer;
+}
+
+.cy-shop-left-title--open {
+  background: #eeddcc;
+  color: #cc3300;
+}
+
+.cy-shop-left-title:hover {
+  background: #eeddcc;
+}
+
+.cy-shop-left-items {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  background: #fff;
+}
+
+.cy-shop-left-item {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: #555;
+  cursor: pointer;
+}
+
+.cy-shop-left-item:hover {
+  color: #cc3300;
+  background: #fdf5ee;
+}
+
+/* Main content */
+.cy-shop-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  background: #fafaf8;
+}
+
+/* Banner */
+.cy-shop-banner {
+  background: linear-gradient(135deg, #fff5ee 0%, #ffe8d0 100%);
+  border: 1px solid #f0c8a0;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.cy-shop-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.cy-shop-banner-text {
+  font-size: 16px;
+  color: #7a3d00;
+  line-height: 1.5;
+}
+
+.cy-shop-banner-highlight {
+  font-size: 20px;
+  font-weight: bold;
+  color: #cc3300;
+}
+
+.cy-shop-banner-sub {
+  font-size: 13px;
+  color: #9a5a20;
+}
+
+.cy-shop-banner-imgs {
+  display: flex;
+  gap: 8px;
+}
+
+.cy-shop-banner-img {
+  height: 60px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+/* Tab bar */
+.cy-shop-tabs {
+  display: flex;
+  border-bottom: 2px solid #e0d0c0;
+  margin-bottom: 12px;
+}
+
+.cy-shop-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 6px 18px;
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+}
+
+.cy-shop-tab:hover {
+  color: #cc3300;
+}
+
+.cy-shop-tab--active {
+  color: #cc3300;
+  font-weight: bold;
+  border-bottom-color: #cc3300;
+}
+
+/* Section title */
+.cy-shop-section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e0d0c0;
+}
+
+.cy-shop-section-count {
+  font-weight: normal;
+  color: #888;
+  margin-left: 4px;
+  font-size: 12px;
+}
+
+/* Items grid */
+.cy-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.cy-shop-item {
+  background: #fff;
+  border: 1px solid #e8d8c8;
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cy-shop-item-img-wrap {
+  position: relative;
+  background: #fdf5ee;
+  padding: 12px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cy-shop-badge-new {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #ff6600;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cy-shop-item-img {
+  height: 64px;
+  width: auto;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.cy-shop-item-info {
+  padding: 6px 8px 8px;
+}
+
+.cy-shop-item-name {
+  font-size: 11px;
+  color: #333;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cy-shop-item-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 12px;
+  color: #663300;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.cy-shop-acorn {
+  font-size: 11px;
+}
+
+.cy-shop-buy-btn {
+  width: 100%;
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.cy-shop-buy-btn:hover {
+  background: #e55500;
+}
+
+.cy-shop-buy-btn--done {
+  background: #aaa;
+  cursor: default;
+}
+
+.cy-shop-empty {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* Right sidebar */
+.cy-shop-right {
+  width: 150px;
+  background: #fff;
+  border-left: 1px solid #e0d0c0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.cy-shop-right-section {
+  padding: 10px;
+  border-bottom: 1px solid #ebe0d0;
+}
+
+.cy-shop-right-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #7a3d00;
+  margin-bottom: 4px;
+}
+
+.cy-shop-right-desc {
+  font-size: 10px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.cy-shop-right-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cy-shop-right-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cy-shop-right-img {
+  height: 40px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.cy-shop-right-item-name {
+  font-size: 10px;
+  color: #555;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.cy-shop-right-item-price {
+  font-size: 10px;
+  color: #cc3300;
+  font-weight: bold;
+}
+
+/* ── Cyworld 내장 선물가게 뷰 (ShopView) ── */
+
+.cy-shop-view {
+  padding: 10px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.cy-shop-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #fff0e0 0%, #ffe0c0 100%);
+  border: 1px solid #f0c090;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.cy-shop-view-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #7a3d00;
+}
+
+.cy-shop-view-acorn {
+  font-size: 11px;
+  color: #7a3d00;
+}
+
+.cy-shop-view-tabs {
+  display: flex;
+  border-bottom: 2px solid #e0d0c0;
+  margin-bottom: 10px;
+}
+
+.cy-shop-view-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 5px 16px;
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+}
+
+.cy-shop-view-tab:hover {
+  color: #cc3300;
+}
+
+.cy-shop-view-tab--active {
+  color: #cc3300;
+  font-weight: bold;
+  border-bottom-color: #cc3300;
+}
+
+.cy-shop-view-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.cy-shop-view-item {
+  background: #fff;
+  border: 1px solid #e8d8c8;
+  border-radius: 4px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cy-shop-view-img-wrap {
+  position: relative;
+  background: #fdf5ee;
+  padding: 10px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cy-shop-view-img {
+  height: 60px;
+  width: auto;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.cy-shop-view-item-name {
+  font-size: 11px;
+  color: #333;
+  padding: 4px 6px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cy-shop-view-item-price {
+  font-size: 11px;
+  color: #663300;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.cy-shop-view-buy-btn {
+  display: block;
+  width: calc(100% - 10px);
+  margin: 0 5px 6px;
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.cy-shop-view-buy-btn:hover {
+  background: #e55500;
+}
+
+.cy-shop-view-buy-btn--done {
+  background: #bbb;
+  cursor: default;
+}
+
+.cy-shop-view-empty {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+}
+
+/* cy-shop-browser 임베드 모드 (싸이월드 창 내부 렌더링) */
+.cy-shop-embedded {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f5f5f5;
+  font-family: 'Dotum', '돋움', sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   Cyworld Main Page (cym-main-*)
+   ═══════════════════════════════════════════ */
+
+.cym-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f0f0f0;
+  font-family: 'Dotum', '돋움', sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+.cym-main-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, #6699cc 0%, #336699 100%);
+  border-bottom: 2px solid #003366;
+  flex-shrink: 0;
+}
+
+.cym-main-logo {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+
+.cym-main-logo-cy {
+  color: #fff;
+  font-style: italic;
+}
+
+.cym-main-logo-world {
+  color: #ffdd00;
+  font-style: italic;
+}
+
+.cym-main-search {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.cym-main-search-input {
+  flex: 1;
+  padding: 3px 6px;
+  font-size: 11px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  font-family: inherit;
+}
+
+.cym-main-search-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cym-main-nav {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.cym-main-nav-item {
+  padding: 3px 6px;
+  font-size: 11px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.cym-main-nav-item:hover {
+  text-decoration: underline;
+}
+
+.cym-main-nav-item--highlight {
+  background: #ff6600;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.cym-main-body {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  overflow: hidden;
+}
+
+.cym-main-left {
+  width: 140px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cym-main-profile-card {
+  background: linear-gradient(180deg, #e8f0fa 0%, #d0e0f0 100%);
+  border: 1px solid #aac;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+}
+
+.cym-main-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #99b;
+  background: #dde;
+}
+
+.cym-main-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cym-main-profile-name {
+  font-size: 11px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.cym-main-profile-sub {
+  font-size: 10px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.cym-main-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.cym-main-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cym-main-stat-label {
+  color: #777;
+  font-size: 9px;
+}
+
+.cym-main-stat-val {
+  font-weight: bold;
+  color: #336699;
+}
+
+.cym-main-stat-sep {
+  width: 1px;
+  height: 18px;
+  background: #bbb;
+}
+
+.cym-main-hompy-btn {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  font-size: 11px;
+  background: linear-gradient(180deg, #ff9933 0%, #ff6600 100%);
+  color: #fff;
+  border: 1px solid #cc5200;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+}
+
+.cym-main-hompy-btn:hover {
+  background: linear-gradient(180deg, #ffaa44 0%, #ff7711 100%);
+}
+
+.cym-main-left-nav {
+  font-size: 11px;
+}
+
+.cym-main-left-nav-title {
+  font-weight: bold;
+  color: #336699;
+  padding: 3px 0;
+  border-bottom: 1px solid #dde;
+  margin-bottom: 3px;
+}
+
+.cym-main-left-nav-item {
+  display: block;
+  width: 100%;
+  padding: 2px 4px;
+  text-align: left;
+  font-size: 11px;
+  background: transparent;
+  color: #555;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cym-main-left-nav-item:hover {
+  color: #ff6600;
+  text-decoration: underline;
+}
+
+.cym-main-center {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cym-main-section {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cym-main-section-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  background: linear-gradient(180deg, #eef4ff 0%, #dde8ff 100%);
+  border-bottom: 1px solid #ccd;
+}
+
+.cym-main-section-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #336699;
+}
+
+.cym-main-section-more {
+  font-size: 10px;
+  color: #999;
+  cursor: pointer;
+}
+
+.cym-main-section-more:hover {
+  color: #336699;
+}
+
+.cym-main-today-list {
+  padding: 4px 8px;
+}
+
+.cym-main-today-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 11px;
+}
+
+.cym-main-today-emoji {
+  font-size: 12px;
+}
+.cym-main-today-text {
+  flex: 1;
+  color: #444;
+}
+.cym-main-today-sub {
+  font-size: 10px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.cym-main-ilchon-list {
+  padding: 4px 8px;
+}
+
+.cym-main-ilchon-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 11px;
+}
+
+.cym-main-ilchon-avatar {
+  font-size: 14px;
+}
+.cym-main-ilchon-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.cym-main-ilchon-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 11px;
+}
+.cym-main-ilchon-text {
+  color: #777;
+  font-size: 10px;
+}
+.cym-main-ilchon-date {
+  font-size: 10px;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.cym-main-news-list {
+  padding: 4px 8px;
+}
+.cym-main-news-item {
+  display: flex;
+  gap: 4px;
+  padding: 3px 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 11px;
+}
+.cym-main-news-cat {
+  color: #336699;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.cym-main-news-text {
+  color: #555;
+}
+
+.cym-main-right {
+  width: 140px;
+  flex-shrink: 0;
+  background: #fff;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cym-main-right-section {
+  background: #f8f8ff;
+  border: 1px solid #dde;
+  border-radius: 3px;
+  padding: 6px;
+}
+
+.cym-main-right-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #336699;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #dde;
+  padding-bottom: 3px;
+}
+
+.cym-main-right-subtitle {
+  font-size: 10px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.cym-main-gift-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cym-main-gift-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+.cym-main-gift-emoji {
+  font-size: 16px;
+}
+.cym-main-gift-info {
+  flex: 1;
+}
+.cym-main-gift-name {
+  color: #444;
+  font-size: 10px;
+}
+.cym-main-gift-price {
+  color: #cc6600;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.cym-main-shop-btn {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 4px;
+  font-size: 10px;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cym-main-shop-btn:hover {
+  background: #e55500;
+}
+
+.cym-main-popular-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cym-main-popular-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 2px 0;
+}
+.cym-main-popular-rank {
+  width: 16px;
+  height: 16px;
+  background: #336699;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.cym-main-popular-name {
+  color: #444;
+  font-size: 11px;
+}
+
+/* cy-shop-fullview / cy-hompy-breadcrumb */
+.cy-shop-fullview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cy-shop-breadcrumb,
+.cy-hompy-breadcrumb {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #e8e8e8;
+  border-bottom: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.cy-shop-back-btn,
+.cy-hompy-back-btn {
+  padding: 2px 8px;
+  font-size: 11px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #555;
+  font-family: inherit;
+}
+
+.cy-shop-back-btn:hover,
+.cy-hompy-back-btn:hover {
+  background: #f0f0f0;
+  color: #336699;
+}
+
+/* ═══════════════════════════════════════════
+   Shop — 미니룸 카드 & 미리보기 모달 (web)
+   ═══════════════════════════════════════════ */
+
+.cy-shop-room-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.cy-shop-room-card {
+  display: flex;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #dde;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cy-shop-room-thumb-wrap {
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+  background: #f0f4f8;
+}
+
+.cy-shop-room-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cy-shop-room-info {
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+.cy-shop-room-btns {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.cy-shop-preview-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  background: #fff;
+  color: #336699;
+  border: 1px solid #336699;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cy-shop-preview-btn:hover {
+  background: #eef4ff;
+}
+
+/* 미리보기 모달 */
+.cy-room-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cy-room-preview-modal {
+  background: #fff;
+  border: 2px solid #336699;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cy-room-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, #336699 0%, #224477 100%);
+}
+
+.cy-room-preview-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Dotum', '돋움', sans-serif;
+}
+
+.cy-room-preview-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.cy-room-preview-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e8f0f8;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cy-room-preview-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cy-room-preview-minimi-wrap {
+  position: absolute;
+  z-index: 2;
+  bottom: 34%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cy-room-preview-minimi-wrap::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 6px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.28) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -4px;
+}
+
+.cy-room-preview-minimi {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.cy-room-preview-footer {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  border-top: 1px solid #eee;
+  font-family: 'Dotum', '돋움', sans-serif;
+  background: #f8f8ff;
 }

@@ -440,3 +440,4 @@ export function GuestbookView({ nickname, entries, input, onInputChange, onSubmi
     </div>
   );
 }
+

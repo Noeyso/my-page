@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-export type WindowType = 'profile' | 'chat' | 'music' | 'memo' | 'files' | 'gallery' | 'mycomputer' | 'tetris' | 'internet' | 'video' | 'games' | 'minesweeper' | 'snake' | 'terminal' | 'yahoo' | 'instagram' | 'calendar' | 'cyworld';
+export type WindowType = 'profile' | 'chat' | 'music' | 'memo' | 'files' | 'gallery' | 'mycomputer' | 'tetris' | 'internet' | 'video' | 'games' | 'minesweeper' | 'snake' | 'fortress' | 'terminal' | 'yahoo' | 'instagram' | 'calendar' | 'cyworld' | 'cyworld-shop';
 
 export interface WindowPosition {
   x: number;

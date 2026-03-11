@@ -33,15 +33,17 @@ export default function CySidebar({ activeTab, onTabChange, ilchonList }: CySide
       </div>
 
       <div className="cy-sidebar-section">
-        <div className="cy-sidebar-icons">
-          <div className="cy-sidebar-icon-item">
-            <span>🎁</span>
-            <span>선물가게</span>
-          </div>
-          <div className="cy-sidebar-icon-item">
-            <span>👋</span>
-            <span>Welcome</span>
-          </div>
+        <div className="cy-sidebar-nav">
+          {(['home', 'profile', 'diary', 'guestbook'] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              className={`cy-sidebar-nav-item${activeTab === tab ? ' cy-sidebar-nav-item--active' : ''}`}
+              onClick={() => onTabChange(tab)}
+            >
+              {{ home: '🏠 홈', profile: '👤 프로필', diary: '📔 다이어리', guestbook: '✉️ 방명록' }[tab]}
+            </button>
+          ))}
         </div>
       </div>
     </div>

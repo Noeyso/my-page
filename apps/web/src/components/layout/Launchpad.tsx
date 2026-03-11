@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import type { WindowType } from '../../types/window';
 import { windowRegistry } from '../../data/windowRegistry';
-import { getAppIcon } from '../../data/apps';
+import { getAppIcon, getLaunchpadApps } from '../../data/apps';
 
 interface LaunchpadProps {
   isOpen: boolean;
@@ -41,10 +41,7 @@ export default function Launchpad({ isOpen, onClose, onOpen }: LaunchpadProps) {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isVisible, handleClose]);
 
-  const allApps = useMemo(
-    () => Object.entries(windowRegistry) as [WindowType, (typeof windowRegistry)[WindowType]][],
-    [],
-  );
+  const launchpadApps = getLaunchpadApps();
 
   if (!isVisible) return null;
 
@@ -57,14 +54,15 @@ export default function Launchpad({ isOpen, onClose, onOpen }: LaunchpadProps) {
       }}
     >
       <div className="launchpad-grid">
-        {allApps.map(([type, app]) => {
-          const icon = getAppIcon(type);
+        {launchpadApps.map((app) => {
+          const icon = getAppIcon(app.id);
+          const registryItem = windowRegistry[app.id];
           return (
             <button
-              key={type}
+              key={app.id}
               className="launchpad-item"
               onClick={() => {
-                onOpen(type);
+                onOpen(app.id);
                 onClose();
               }}
             >
@@ -72,15 +70,15 @@ export default function Launchpad({ isOpen, onClose, onOpen }: LaunchpadProps) {
                 {icon ? (
                   <img
                     src={icon}
-                    alt={app.title}
+                    alt={app.label}
                     className="launchpad-icon-img"
                     style={{ imageRendering: 'pixelated' }}
                   />
                 ) : (
-                  <span className="launchpad-icon-emoji">{app.icon}</span>
+                  <span className="launchpad-icon-emoji">{registryItem?.icon}</span>
                 )}
               </div>
-              <span className="launchpad-label">{app.title.replace('.exe', '').replace('.txt', '')}</span>
+              <span className="launchpad-label">{app.label}</span>
             </button>
           );
         })}

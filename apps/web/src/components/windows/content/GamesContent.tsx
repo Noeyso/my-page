@@ -1,19 +1,8 @@
-import iconTetris from '../../../../assets/images/icons/icon-tetris.png';
-import iconMinesweeper from '../../../../assets/images/icons/icon-minsweeper.png';
-import iconSnake from '../../../../assets/images/icons/icon-snake.png';
+import { getLaunchpadApps } from '../../../data/apps';
 
-interface GameItem {
-  id: string;
-  img: string;
-  label: string;
-  windowType: string;
-}
+const GAME_IDS = ['tetris', 'minesweeper', 'snake', 'fortress'];
 
-const games: GameItem[] = [
-  { id: 'tetris', img: iconTetris, label: 'Tetris', windowType: 'tetris' },
-  { id: 'minesweeper', img: iconMinesweeper, label: 'Minesweeper', windowType: 'minesweeper' },
-  { id: 'snake', img: iconSnake, label: 'Snake', windowType: 'snake' },
-];
+const games = getLaunchpadApps().filter((app) => GAME_IDS.includes(app.id));
 
 export default function GamesContent() {
   const openGame = (windowType: string) => {
@@ -29,7 +18,7 @@ export default function GamesContent() {
           <div
             key={game.id}
             className="games-folder-item"
-            onDoubleClick={() => openGame(game.windowType)}
+            onDoubleClick={() => openGame(game.id)}
           >
             <img
               src={game.img}

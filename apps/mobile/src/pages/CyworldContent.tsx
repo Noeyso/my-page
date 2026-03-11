@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from '@my-page/shared';
 import defaultProfileImg from '../../assets/images/cyworld/default-img.png';
 import cyCharacterImg from '../../assets/images/cyworld/cy-character.png';
+import CyworldShopContent from './CyworldShopContent';
 import {
   addGuestbook,
   addIlchonPyeong,
@@ -24,9 +25,10 @@ import {
   type VisitorCount,
 } from '@my-page/shared';
 
+type CyView = 'main' | 'minihompy' | 'shop';
 type CyTab = 'home' | 'profile' | 'diary' | 'jukebox' | 'photo' | 'board' | 'guestbook';
 
-const TAB_LIST: { id: CyTab; label: string; icon: string }[] = [
+const HOMPY_TAB_LIST: { id: CyTab; label: string; icon: string }[] = [
   { id: 'home', label: '홈', icon: '🏠' },
   { id: 'profile', label: '프로필', icon: '👤' },
   { id: 'diary', label: '다이어리', icon: '📔' },
@@ -84,7 +86,19 @@ const JUKEBOX_SONGS = [
   { title: '사랑했나봐', artist: '윤도현' },
 ];
 
+/* ── Main view nav icons ── */
+const MAIN_NAV = [
+  { id: 'cylife' as const, label: '싸이생활', icon: '😊' },
+  { id: 'minihompy' as const, label: '미니홈피', icon: '🏠' },
+  { id: 'surfing' as const, label: '파도타기', icon: '🏄' },
+  { id: 'shop' as const, label: '선물가게', icon: '🎁' },
+  { id: 'more' as const, label: '더보기', icon: '···' },
+] as const;
+type MainNavId = typeof MAIN_NAV[number]['id'];
+
 export default function CyworldContent() {
+  const [view, setView] = useState<CyView>('main');
+  const [mainNav, setMainNav] = useState<MainNavId>('cylife');
   const [activeTab, setActiveTab] = useState<CyTab>('home');
   const [mood, setMood] = useState('파이팅');
   const [ilchonInput, setIlchonInput] = useState('');
@@ -102,15 +116,9 @@ export default function CyworldContent() {
   const isOwner = nickname === 'YANG SO YEON';
 
   const loadIlchonData = useCallback(async () => {
-    try {
-      const accepted = await fetchAcceptedIlchon();
-      setIlchonList(accepted);
-    } catch { /* ignore */ }
+    try { const accepted = await fetchAcceptedIlchon(); setIlchonList(accepted); } catch { /* ignore */ }
     if (isOwner) {
-      try {
-        const pending = await fetchPendingIlchon();
-        setPendingRequests(pending);
-      } catch { /* ignore */ }
+      try { const pending = await fetchPendingIlchon(); setPendingRequests(pending); } catch { /* ignore */ }
     }
   }, [isOwner]);
 
@@ -131,16 +139,12 @@ export default function CyworldContent() {
       const newEntry = await addIlchonPyeong(ilchonInput.trim());
       setIlchonPyeongList((prev) => [newEntry, ...prev]);
       setIlchonInput('');
-    } catch { /* ignore */ } finally {
-      submittingRef.current = false;
-    }
+    } catch { /* ignore */ } finally { submittingRef.current = false; }
   }, [ilchonInput]);
 
   const handleIlchonDelete = useCallback(async (id: string) => {
-    try {
-      await deleteIlchonPyeong(id);
-      setIlchonPyeongList((prev) => prev.filter((e) => e.id !== id));
-    } catch { /* ignore */ }
+    try { await deleteIlchonPyeong(id); setIlchonPyeongList((prev) => prev.filter((e) => e.id !== id)); }
+    catch { /* ignore */ }
   }, []);
 
   const handleGuestbookSubmit = useCallback(async () => {
@@ -150,45 +154,30 @@ export default function CyworldContent() {
       const newEntry = await addGuestbook(guestbookInput.trim());
       setGuestbookList((prev) => [newEntry, ...prev]);
       setGuestbookInput('');
-    } catch { /* ignore */ } finally {
-      submittingRef.current = false;
-    }
+    } catch { /* ignore */ } finally { submittingRef.current = false; }
   }, [guestbookInput]);
 
   const handleGuestbookDelete = useCallback(async (id: string) => {
-    try {
-      await deleteGuestbook(id);
-      setGuestbookList((prev) => prev.filter((e) => e.id !== id));
-    } catch { /* ignore */ }
+    try { await deleteGuestbook(id); setGuestbookList((prev) => prev.filter((e) => e.id !== id)); }
+    catch { /* ignore */ }
   }, []);
 
   const handleIlchonClick = useCallback(async () => {
     if (!nickname || isOwner) return;
     if (isIlchon) {
-      try {
-        await removeIlchon();
-        setIsIlchon(false);
-        setIsPending(false);
-        loadIlchonData();
-      } catch { /* ignore */ }
+      try { await removeIlchon(); setIsIlchon(false); setIsPending(false); loadIlchonData(); }
+      catch { /* ignore */ }
     } else if (!isPending) {
-      // For mobile, simplified - just show pending state
       setIsPending(true);
     }
   }, [nickname, isOwner, isIlchon, isPending, loadIlchonData]);
 
   const handleAcceptIlchon = useCallback(async (id: string) => {
-    try {
-      await acceptIlchon(id);
-      loadIlchonData();
-    } catch { /* ignore */ }
+    try { await acceptIlchon(id); loadIlchonData(); } catch { /* ignore */ }
   }, [loadIlchonData]);
 
   const handleRejectIlchon = useCallback(async (id: string) => {
-    try {
-      await rejectIlchon(id);
-      loadIlchonData();
-    } catch { /* ignore */ }
+    try { await rejectIlchon(id); loadIlchonData(); } catch { /* ignore */ }
   }, [loadIlchonData]);
 
   const currentMood = MOODS.find((m) => m.label === mood) ?? MOODS[0];
@@ -197,203 +186,305 @@ export default function CyworldContent() {
     setMood(MOODS[(idx + 1) % MOODS.length].label);
   };
 
-  const getIlchonBtnLabel = () => {
-    if (isOwner) return '내 미니홈피';
-    if (isIlchon) return '일촌끊기';
-    if (isPending) return '신청중';
-    return '일촌맺기';
+  const handleMainNav = (id: MainNavId) => {
+    if (id === 'minihompy') { setView('minihompy'); return; }
+    if (id === 'shop') { setView('shop'); return; }
+    setMainNav(id);
   };
 
-  return (
-    <div className="cym-app">
-      {/* Header */}
-      <div className="cym-header">
-        <div className="cym-header-title">
-          <strong>사이좋은 사람들, 싸이월드</strong>
+  /* ── 미니홈피 뷰 ── */
+  if (view === 'minihompy') {
+    const getIlchonBtnLabel = () => {
+      if (isOwner) return '내 미니홈피';
+      if (isIlchon) return '일촌끊기';
+      if (isPending) return '신청중';
+      return '일촌맺기';
+    };
+
+    return (
+      <div className="cym-app">
+        <div className="cym-header">
+          <button type="button" className="cym-back-header-btn" onClick={() => setView('main')}>← 메인</button>
+          <div className="cym-header-title"><strong>미니홈피</strong></div>
+          <div className="cym-header-stats">
+            <span className="cym-today-label">TODAY</span>
+            <span className="cym-today-num">{visitors.today}</span>
+            <span className="cym-stat-sep">|</span>
+            <span className="cym-total-label">TOTAL</span>
+            <span className="cym-total-num">{visitors.total}</span>
+          </div>
         </div>
-        <div className="cym-header-stats">
-          <span className="cym-today-label">TODAY</span>
-          <span className="cym-today-num">{visitors.today}</span>
-          <span className="cym-stat-sep">|</span>
-          <span className="cym-total-label">TOTAL</span>
-          <span className="cym-total-num">{visitors.total}</span>
-        </div>
-      </div>
 
-      {/* Scrollable content */}
-      <div className="cym-content">
-        {/* Profile card (always visible at top on home) */}
-        {activeTab === 'home' && (
-          <>
-            <div className="cym-profile-card">
-              <div className="cym-profile-left">
-                <div className="cym-profile-img-wrap">
-                  <img src={defaultProfileImg} alt="미니미" className="cym-profile-img" loading="lazy" decoding="async" />
+        <div className="cym-content">
+          {activeTab === 'home' && (
+            <>
+              <div className="cym-profile-card">
+                <div className="cym-profile-left">
+                  <div className="cym-profile-img-wrap">
+                    <img src={defaultProfileImg} alt="미니미" className="cym-profile-img" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+                <div className="cym-profile-right">
+                  <div className="cym-profile-name">YANG SO YEON</div>
+                  <div className="cym-profile-status">반갑습니다.</div>
+                  <div className="cym-mood-box" onClick={handleMoodCycle}>
+                    <span className="cym-mood-label">TODAY IS...</span>
+                    <span className="cym-mood-value">{currentMood.label} {currentMood.emoji}</span>
+                  </div>
+                  <div className="cym-profile-actions">
+                    <button
+                      type="button"
+                      className={`cym-small-btn ${isOwner || isPending ? 'cym-btn-gray' : 'cym-btn-orange'}`}
+                      onClick={handleIlchonClick}
+                      disabled={isOwner || isPending}
+                    >
+                      {getIlchonBtnLabel()}
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="cym-profile-right">
-                <div className="cym-profile-name">YANG SO YEON</div>
-                <div className="cym-profile-status">반갑습니다.</div>
-                <div className="cym-mood-box" onClick={handleMoodCycle}>
-                  <span className="cym-mood-label">TODAY IS...</span>
-                  <span className="cym-mood-value">{currentMood.label} {currentMood.emoji}</span>
-                </div>
-                <div className="cym-profile-actions">
-                  <button
-                    type="button"
-                    className={`cym-small-btn ${isOwner || isPending ? 'cym-btn-gray' : 'cym-btn-orange'}`}
-                    onClick={handleIlchonClick}
-                    disabled={isOwner || isPending}
-                  >
-                    {getIlchonBtnLabel()}
-                  </button>
-                </div>
-              </div>
-            </div>
 
-            {/* Pending ilchon requests (owner only) */}
-            {isOwner && pendingRequests.length > 0 && (
-              <div className="cym-requests">
-                <div className="cym-section-title">일촌 신청 ({pendingRequests.length})</div>
-                {pendingRequests.map((req) => (
-                  <div key={req.id} className="cym-request-item">
-                    <div className="cym-request-info">
-                      <span className="cym-request-name">😊 {req.from_nickname}</span>
-                      <span className="cym-request-msg">{req.message}</span>
+              {isOwner && pendingRequests.length > 0 && (
+                <div className="cym-requests">
+                  <div className="cym-section-title">일촌 신청 ({pendingRequests.length})</div>
+                  {pendingRequests.map((req) => (
+                    <div key={req.id} className="cym-request-item">
+                      <div className="cym-request-info">
+                        <span className="cym-request-name">😊 {req.from_nickname}</span>
+                        <span className="cym-request-msg">{req.message}</span>
+                      </div>
+                      <div className="cym-request-btns">
+                        <button type="button" className="cym-small-btn cym-btn-orange" onClick={() => handleAcceptIlchon(req.id)}>수락</button>
+                        <button type="button" className="cym-small-btn cym-btn-gray" onClick={() => handleRejectIlchon(req.id)}>거절</button>
+                      </div>
                     </div>
-                    <div className="cym-request-btns">
-                      <button type="button" className="cym-small-btn cym-btn-orange" onClick={() => handleAcceptIlchon(req.id)}>수락</button>
-                      <button type="button" className="cym-small-btn cym-btn-gray" onClick={() => handleRejectIlchon(req.id)}>거절</button>
+                  ))}
+                </div>
+              )}
+
+              <div className="cym-section">
+                <div className="cym-section-title">최근게시물</div>
+                <div className="cym-news-list">
+                  {RECENT_NEWS.map((item, i) => (
+                    <div key={i} className="cym-news-item">
+                      <span>{item.icon}</span>
+                      <span className="cym-news-text">{item.text}</span>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Recent news */}
-            <div className="cym-section">
-              <div className="cym-section-title">최근게시물</div>
-              <div className="cym-news-list">
-                {RECENT_NEWS.map((item, i) => (
-                  <div key={i} className="cym-news-item">
-                    <span>{item.icon}</span>
-                    <span className="cym-news-text">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Miniroom */}
-            <div className="cym-section">
-              <div className="cym-section-title">미니룸 {nickname}중</div>
-              <div className="cym-miniroom">
-                <div className="cym-room-wall-left" />
-                <div className="cym-room-wall-right" />
-                <div className="cym-room-floor" />
-                <div className="cym-minimi">
-                  <div className="cym-speech-bubble">안녕하세요~ 😄</div>
-                  <img src={cyCharacterImg} alt="미니미" className="cym-minimi-img" loading="lazy" decoding="async" />
+                  ))}
                 </div>
               </div>
-            </div>
 
-            {/* Ilchon pyeong */}
-            <div className="cym-section">
-              <div className="cym-section-title">
-                일촌평 <span className="cym-count-badge">{ilchonPyeongList.length}</span>
-              </div>
-              <div className="cym-write-row">
-                <input
-                  type="text"
-                  className="cym-input"
-                  value={ilchonInput}
-                  onChange={(e) => setIlchonInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleIlchonSubmit()}
-                  placeholder="일촌평을 남겨주세요~"
-                />
-                <button type="button" className="cym-submit-btn" onClick={handleIlchonSubmit}>등록</button>
-              </div>
-              <div className="cym-entry-list">
-                {ilchonPyeongList.map((entry) => (
-                  <div key={entry.id} className="cym-entry-item">
-                    <span className="cym-entry-author">{entry.nickname}</span>
-                    <span className="cym-entry-text">{entry.content}</span>
-                    <span className="cym-entry-date">
-                      {new Date(entry.created_at).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' }).replace('. ', '.').replace(/\.$/, '')}
-                    </span>
-                    {entry.nickname === nickname && (
-                      <button type="button" className="cym-delete-btn" onClick={() => handleIlchonDelete(entry.id)}>✕</button>
-                    )}
+              <div className="cym-section">
+                <div className="cym-section-title">미니룸 {nickname}중</div>
+                <div className="cym-miniroom">
+                  <div className="cym-room-wall-left" />
+                  <div className="cym-room-wall-right" />
+                  <div className="cym-room-floor" />
+                  <div className="cym-minimi">
+                    <div className="cym-speech-bubble">안녕하세요~ 😄</div>
+                    <img src={cyCharacterImg} alt="미니미" className="cym-minimi-img" loading="lazy" decoding="async" />
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
 
-            {/* Ilchon list */}
-            {ilchonList.length > 0 && (
               <div className="cym-section">
                 <div className="cym-section-title">
-                  일촌 목록 <span className="cym-count-badge">{ilchonList.length}</span>
+                  일촌평 <span className="cym-count-badge">{ilchonPyeongList.length}</span>
                 </div>
-                {ilchonList.map((f) => (
-                  <div key={f.id} className="cym-friend-item">
-                    <span>😊</span>
-                    <span className="cym-friend-name">{f.from_nickname}</span>
-                    <span className="cym-friend-rel">{f.from_ilchon_name}</span>
-                  </div>
-                ))}
+                <div className="cym-write-row">
+                  <input type="text" className="cym-input" value={ilchonInput}
+                    onChange={(e) => setIlchonInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleIlchonSubmit()}
+                    placeholder="일촌평을 남겨주세요~" />
+                  <button type="button" className="cym-submit-btn" onClick={handleIlchonSubmit}>등록</button>
+                </div>
+                <div className="cym-entry-list">
+                  {ilchonPyeongList.map((entry) => (
+                    <div key={entry.id} className="cym-entry-item">
+                      <span className="cym-entry-author">{entry.nickname}</span>
+                      <span className="cym-entry-text">{entry.content}</span>
+                      <span className="cym-entry-date">
+                        {new Date(entry.created_at).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' }).replace('. ', '.').replace(/\.$/, '')}
+                      </span>
+                      {entry.nickname === nickname && (
+                        <button type="button" className="cym-delete-btn" onClick={() => handleIlchonDelete(entry.id)}>✕</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            )}
-          </>
-        )}
 
-        {activeTab === 'profile' && (
-          <div className="cym-section">
-            <div className="cym-section-title">프로필</div>
-            <div className="cym-profile-detail">
-              <img src={defaultProfileImg} alt="프로필" className="cym-profile-lg" loading="lazy" decoding="async" />
-              <div className="cym-detail-rows">
-                <div className="cym-detail-row"><span className="cym-detail-label">이름</span><span>YANG SO YEON</span></div>
-                <div className="cym-detail-row"><span className="cym-detail-label">생일</span><span>10월 19일</span></div>
-                <div className="cym-detail-row"><span className="cym-detail-label">혈액형</span><span>A형</span></div>
-                <div className="cym-detail-row"><span className="cym-detail-label">회사</span><span>ENKI</span></div>
-                <div className="cym-detail-row"><span className="cym-detail-label">취미</span><span>코딩, 음악감상</span></div>
-                <div className="cym-detail-row"><span className="cym-detail-label">소개</span><span>안녕하세요~ 일촌 환영 ^^</span></div>
+              {ilchonList.length > 0 && (
+                <div className="cym-section">
+                  <div className="cym-section-title">일촌 목록 <span className="cym-count-badge">{ilchonList.length}</span></div>
+                  {ilchonList.map((f) => (
+                    <div key={f.id} className="cym-friend-item">
+                      <span>😊</span>
+                      <span className="cym-friend-name">{f.from_nickname}</span>
+                      <span className="cym-friend-rel">{f.from_ilchon_name}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {activeTab === 'profile' && (
+            <div className="cym-section">
+              <div className="cym-section-title">프로필</div>
+              <div className="cym-profile-detail">
+                <img src={defaultProfileImg} alt="프로필" className="cym-profile-lg" loading="lazy" decoding="async" />
+                <div className="cym-detail-rows">
+                  <div className="cym-detail-row"><span className="cym-detail-label">이름</span><span>YANG SO YEON</span></div>
+                  <div className="cym-detail-row"><span className="cym-detail-label">생일</span><span>10월 19일</span></div>
+                  <div className="cym-detail-row"><span className="cym-detail-label">혈액형</span><span>A형</span></div>
+                  <div className="cym-detail-row"><span className="cym-detail-label">회사</span><span>ENKI</span></div>
+                  <div className="cym-detail-row"><span className="cym-detail-label">취미</span><span>코딩, 음악감상</span></div>
+                  <div className="cym-detail-row"><span className="cym-detail-label">소개</span><span>안녕하세요~ 일촌 환영 ^^</span></div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+          {activeTab === 'diary' && <DiaryTab />}
+          {activeTab === 'jukebox' && <JukeboxTab />}
+          {activeTab === 'photo' && <PhotoTab />}
+          {activeTab === 'board' && <BoardTab />}
+          {activeTab === 'guestbook' && (
+            <GuestbookTab
+              nickname={nickname}
+              entries={guestbookList}
+              input={guestbookInput}
+              onInputChange={setGuestbookInput}
+              onSubmit={handleGuestbookSubmit}
+              onDelete={handleGuestbookDelete}
+            />
+          )}
+        </div>
 
-        {activeTab === 'diary' && <DiaryTab />}
-        {activeTab === 'jukebox' && <JukeboxTab />}
-        {activeTab === 'photo' && <PhotoTab />}
-        {activeTab === 'board' && <BoardTab />}
-        {activeTab === 'guestbook' && (
-          <GuestbookTab
-            nickname={nickname}
-            entries={guestbookList}
-            input={guestbookInput}
-            onInputChange={setGuestbookInput}
-            onSubmit={handleGuestbookSubmit}
-            onDelete={handleGuestbookDelete}
-          />
-        )}
+        <div className="cym-bottom-nav">
+          {HOMPY_TAB_LIST.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`cym-nav-item${activeTab === tab.id ? ' cym-nav-active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <span className="cym-nav-icon">{tab.icon}</span>
+              <span className="cym-nav-label">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  /* ── 선물가게 뷰 ── */
+  if (view === 'shop') {
+    return (
+      <div className="cym-app">
+        <div className="cym-header">
+          <button type="button" className="cym-back-header-btn" onClick={() => setView('main')}>← 메인</button>
+          <div className="cym-header-title"><strong>선물가게</strong></div>
+          <div />
+        </div>
+        <CyworldShopContent embedded />
+      </div>
+    );
+  }
+
+  /* ── 메인 뷰 ── */
+  return (
+    <div className="cym-app">
+      {/* 메인 헤더 */}
+      <div className="cym-main-hd">
+        <div className="cym-main-hd-logo">
+          <span className="cym-main-hd-cy">Cy</span>
+          <span className="cym-main-hd-world">world</span>
+        </div>
+        <div className="cym-main-hd-search">
+          <input type="text" className="cym-main-hd-input" placeholder="검색" />
+          <button type="button" className="cym-main-hd-btn">🔍</button>
+        </div>
       </div>
 
-      {/* Bottom navigation */}
-      <div className="cym-bottom-nav">
-        {TAB_LIST.map((tab) => (
+      {/* 메인 컨텐츠 */}
+      <div className="cym-content">
+        {/* 프로필 카드 */}
+        <div className="cym-main-profile-card">
+          <div className="cym-main-profile-left">
+            <img src={defaultProfileImg} alt="미니미" className="cym-main-profile-img" loading="lazy" decoding="async" />
+          </div>
+          <div className="cym-main-profile-info">
+            <div className="cym-main-profile-name">YANG SO YEON</div>
+            <div className="cym-main-profile-stats">
+              <span>일촌 <strong>{ilchonList.length}</strong>명</span>
+              <span className="cym-stat-sep">|</span>
+              <span>TODAY <strong>{visitors.today}</strong></span>
+              <span className="cym-stat-sep">|</span>
+              <span>TOTAL <strong>{visitors.total}</strong></span>
+            </div>
+            <div className="cym-mood-box" onClick={handleMoodCycle}>
+              <span className="cym-mood-label">TODAY IS...</span>
+              <span className="cym-mood-value">{currentMood.label} {currentMood.emoji}</span>
+            </div>
+            <button type="button" className="cym-main-hompy-btn" onClick={() => setView('minihompy')}>
+              ▶ 내 미니홈피 가기
+            </button>
+          </div>
+        </div>
+
+        {/* TODAY 컨텐츠 */}
+        <div className="cym-section">
+          <div className="cym-section-title">TODAY 섹터</div>
+          <div className="cym-news-list">
+            {RECENT_NEWS.map((item, i) => (
+              <div key={i} className="cym-news-item">
+                <span>{item.icon}</span>
+                <span className="cym-news-text">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 선물가게 배너 */}
+        <button type="button" className="cym-main-shop-banner" onClick={() => setView('shop')}>
+          <span className="cym-main-shop-banner-icon">🎁</span>
+          <div>
+            <div className="cym-main-shop-banner-title">선물가게</div>
+            <div className="cym-main-shop-banner-sub">미니미 신규 아이템 12종 출시!</div>
+          </div>
+          <span className="cym-main-shop-banner-arrow">›</span>
+        </button>
+
+        {/* 미니룸 */}
+        <div className="cym-section">
+          <div className="cym-section-title">미니룸</div>
+          <div className="cym-miniroom">
+            <div className="cym-room-wall-left" />
+            <div className="cym-room-wall-right" />
+            <div className="cym-room-floor" />
+            <div className="cym-minimi">
+              <div className="cym-speech-bubble">안녕하세요~ 😄</div>
+              <img src={cyCharacterImg} alt="미니미" className="cym-minimi-img" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 메인 하단 네비게이션 */}
+      <nav className="cym-bottom-nav">
+        {MAIN_NAV.map((nav) => (
           <button
-            key={tab.id}
+            key={nav.id}
             type="button"
-            className={`cym-nav-item${activeTab === tab.id ? ' cym-nav-active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            className={`cym-nav-item${mainNav === nav.id ? ' cym-nav-active' : ''}`}
+            onClick={() => handleMainNav(nav.id)}
           >
-            <span className="cym-nav-icon">{tab.icon}</span>
-            <span className="cym-nav-label">{tab.label}</span>
+            <span className="cym-nav-icon">{nav.icon}</span>
+            <span className="cym-nav-label">{nav.label}</span>
           </button>
         ))}
-      </div>
+      </nav>
     </div>
   );
 }
@@ -507,14 +598,10 @@ function GuestbookTab({ nickname, entries, input, onInputChange, onSubmit, onDel
     <div className="cym-section">
       <div className="cym-section-title">방명록</div>
       <div className="cym-write-row">
-        <input
-          type="text"
-          className="cym-input"
-          value={input}
+        <input type="text" className="cym-input" value={input}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
-          placeholder="방명록을 남겨주세요~ ^^"
-        />
+          placeholder="방명록을 남겨주세요~ ^^" />
         <button type="button" className="cym-submit-btn" onClick={onSubmit}>등록</button>
       </div>
       <div className="cym-entry-list">

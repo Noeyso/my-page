@@ -9,6 +9,7 @@ import iconFolderOpen from '../../assets/images/icons/icon-folder-open.png';
 import iconTetris from '../../assets/images/icons/icon-tetris.png';
 import iconInternet from '../../assets/images/icons/icon-internet.png';
 import iconGame from '../../assets/images/icons/icon-game.png';
+import iconFortress from '../../assets/images/icons/icon-fortress.svg';
 import iconMinesweeper from '../../assets/images/icons/icon-minsweeper.png';
 import iconSnake from '../../assets/images/icons/icon-snake.png';
 import iconTerminal from '../../assets/images/icons/icon-terminal.png';
@@ -66,6 +67,7 @@ export const apps: AppDefinition[] = [
   { id: 'tetris', label: 'Tetris', img: iconTetris, showIn: ['launchpad'] },
   { id: 'minesweeper', label: 'Minesweeper', img: iconMinesweeper, showIn: ['launchpad'] },
   { id: 'snake', label: 'Snake', img: iconSnake, showIn: ['launchpad'] },
+  { id: 'fortress', label: 'Fortress', img: iconFortress, showIn: ['launchpad'] },
   { id: 'yahoo', label: 'Yahoo!', img: iconYahoo, showIn: ['launchpad'] },
   { id: 'video', label: 'Video', img: iconVideo, showIn: ['launchpad'] },
   { id: 'instagram', label: 'Instagram', img: iconInstagram, showIn: ['launchpad'] },

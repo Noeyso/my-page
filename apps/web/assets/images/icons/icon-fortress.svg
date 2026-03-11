@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0b1635"/>
+      <stop offset="55%"  stop-color="#1a3a55"/>
+      <stop offset="100%" stop-color="#0d1e38"/>
+    </linearGradient>
+    <radialGradient id="muzzleGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#9ff5ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6ce6ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky background (rounded corners for macOS icon) -->
+  <rect width="400" height="400" rx="22" fill="url(#sky)"/>
+
+  <!-- Stars -->
+  <circle cx="44"  cy="36"  r="1.5" fill="white" opacity="0.65"/>
+  <circle cx="110" cy="18"  r="2"   fill="white" opacity="0.55"/>
+  <circle cx="195" cy="28"  r="1.5" fill="white" opacity="0.70"/>
+  <circle cx="268" cy="14"  r="2"   fill="white" opacity="0.50"/>
+  <circle cx="352" cy="42"  r="1.5" fill="white" opacity="0.60"/>
+  <circle cx="78"  cy="72"  r="1"   fill="white" opacity="0.45"/>
+  <circle cx="332" cy="82"  r="1"   fill="white" opacity="0.40"/>
+  <circle cx="162" cy="58"  r="1"   fill="white" opacity="0.35"/>
+  <circle cx="310" cy="55"  r="1.5" fill="white" opacity="0.50"/>
+  <circle cx="22"  cy="110" r="1"   fill="white" opacity="0.30"/>
+  <circle cx="375" cy="120" r="1.5" fill="white" opacity="0.45"/>
+
+  <!-- Ground -->
+  <rect x="0" y="346" width="400" height="54" rx="0" fill="#091829"/>
+  <path d="M0,340 Q55,330 108,338 Q158,346 200,334 Q242,322 292,330 Q344,338 400,326 L400,346 L0,346 Z" fill="#122538"/>
+
+  <!-- Tread assembly -->
+  <!-- Left wheel -->
+  <circle cx="84"  cy="320" r="22" fill="#122538" stroke="#1c3a58" stroke-width="3"/>
+  <circle cx="84"  cy="320" r="10" fill="#091829"/>
+  <!-- Right wheel -->
+  <circle cx="286" cy="320" r="22" fill="#122538" stroke="#1c3a58" stroke-width="3"/>
+  <circle cx="286" cy="320" r="10" fill="#091829"/>
+  <!-- Tread band -->
+  <rect x="66" y="300" width="238" height="42" rx="21" fill="#122538" stroke="#1c3a58" stroke-width="3"/>
+  <!-- Tread segments -->
+  <rect x="106" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="127" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="148" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="169" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="190" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="211" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="232" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+  <rect x="253" y="303" width="13" height="17" rx="2" fill="#1e3d5e"/>
+
+  <!-- Tank body -->
+  <rect x="62" y="248" width="246" height="58" rx="6" fill="#3aaac8"/>
+  <rect x="62" y="248" width="246" height="30" rx="6" fill="#6ce6ff"/>
+  <rect x="62" y="270" width="246" height="36" fill="#6ce6ff"/>
+  <!-- Body highlight strip -->
+  <rect x="68" y="252" width="234" height="8" rx="2" fill="rgba(255,255,255,0.22)"/>
+  <!-- Body bottom shadow -->
+  <rect x="62" y="284" width="246" height="22" rx="6" fill="#3aaac8"/>
+  <rect x="62" y="290" width="246" height="16" fill="#3aaac8"/>
+  <!-- Vertical panel line -->
+  <rect x="196" y="250" width="2" height="54" fill="rgba(0,50,90,0.22)"/>
+
+  <!-- Turret -->
+  <rect x="116" y="190" width="138" height="62" rx="6" fill="#2e9ab8"/>
+  <rect x="116" y="190" width="138" height="30" rx="6" fill="#6ce6ff"/>
+  <rect x="116" y="212" width="138" height="40" fill="#54c8e0"/>
+  <!-- Turret highlight -->
+  <rect x="122" y="194" width="126" height="8" rx="2" fill="rgba(255,255,255,0.22)"/>
+  <!-- Turret shadow bottom -->
+  <rect x="116" y="234" width="138" height="18" rx="6" fill="#2e9ab8"/>
+  <rect x="116" y="240" width="138" height="12" fill="#2e9ab8"/>
+
+  <!-- Viewport / eyes -->
+  <rect x="198" y="197" width="40" height="26" rx="4" fill="#00eeff" opacity="0.92"/>
+  <rect x="202" y="200" width="32" height="20" rx="3" fill="white" opacity="0.88"/>
+  <circle cx="218" cy="210" r="7"  fill="#0099bb" opacity="0.90"/>
+  <circle cx="218" cy="210" r="3"  fill="#001a28"/>
+  <circle cx="221" cy="208" r="1.5" fill="white" opacity="0.80"/>
+  <!-- Secondary eye -->
+  <rect x="140" y="201" width="22" height="16" rx="3" fill="#00eeff" opacity="0.60"/>
+  <rect x="143" y="203" width="16" height="12" rx="2" fill="white" opacity="0.50"/>
+
+  <!-- BARREL -->
+  <!-- Barrel from turret pivot (190, 206) at 45°, length ≈ 105px -->
+  <!-- End point: (190 + 74, 206 - 74) = (264, 132) -->
+  <!-- Outer sleeve -->
+  <line x1="190" y1="206" x2="264" y2="132" stroke="#1e7a96" stroke-width="26" stroke-linecap="square"/>
+  <!-- Barrel body -->
+  <line x1="190" y1="206" x2="264" y2="132" stroke="#6ce6ff" stroke-width="18" stroke-linecap="square"/>
+  <!-- Barrel highlight (upper edge) -->
+  <line x1="187" y1="203" x2="261" y2="129" stroke="rgba(255,255,255,0.28)" stroke-width="5" stroke-linecap="square"/>
+  <!-- Barrel dark underside -->
+  <line x1="193" y1="209" x2="267" y2="135" stroke="rgba(0,60,100,0.30)" stroke-width="5" stroke-linecap="square"/>
+
+  <!-- Muzzle cap -->
+  <rect x="256" y="124" width="16" height="16" rx="2" fill="#2e9ab8" stroke="#6ce6ff" stroke-width="3"/>
+  <!-- Muzzle glow halo -->
+  <circle cx="264" cy="132" r="28" fill="url(#muzzleGlow)"/>
+  <circle cx="264" cy="132" r="14" fill="#9ff5ff" opacity="0.12"/>
+</svg>
