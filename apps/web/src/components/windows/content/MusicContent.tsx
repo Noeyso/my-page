@@ -33,9 +33,7 @@ export default function MusicContent() {
           />
         </div>
         <div className="pixel-font mb-1 text-center text-[22px]">Now Playing</div>
-        <div className="mb-1 text-center text-[16px] font-bold">
-          {currentTrack.artist} - {currentTrack.title}
-        </div>
+        <div className="mb-1 text-center text-[16px] font-bold">{currentTrack.title}</div>
         <div className="mb-3 text-center text-[13px]">{currentTrack.album}</div>
 
         <div className="progress-bar" onClick={handleSeek} style={{ cursor: 'pointer' }}>
