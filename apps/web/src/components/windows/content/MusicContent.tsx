@@ -63,22 +63,45 @@ export default function MusicContent() {
           </button>
         </div>
 
-        <ul className="flex flex-col gap-1 text-[13px]">
-          {musicPlaylist.map((track, i) => (
-            <li key={track.id}>
-              <button
-                onClick={() => player.select(i)}
-                className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left ${
-                  i === currentIndex ? 'bg-[#b7d4e9] font-bold' : 'hover:bg-[#cfe2f0]'
-                }`}
-              >
-                <span className="w-4 text-center">{i === currentIndex && isPlaying ? '♪' : i + 1}</span>
-                <span className="truncate">
-                  {track.artist} - {track.title}
-                </span>
-              </button>
-            </li>
-          ))}
+        <ul className="flex flex-col gap-1.5">
+          {musicPlaylist.map((track, i) => {
+            const active = i === currentIndex;
+            return (
+              <li key={track.id}>
+                <button
+                  onClick={() => player.select(i)}
+                  className={`music-track ${active ? 'is-active' : ''}`}
+                  aria-current={active ? 'true' : undefined}
+                >
+                  <img
+                    src={track.artworkUrl}
+                    alt=""
+                    className="music-track-thumb"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="music-track-title block">{track.title}</span>
+                    <span className="music-track-artist block">{track.artist}</span>
+                  </span>
+                  {active && isPlaying ? (
+                    <span className="eq-bars" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                  ) : active ? (
+                    <span className="music-track-cue" aria-hidden="true">
+                      ▸
+                    </span>
+                  ) : (
+                    <span className="music-track-index">{String(i + 1).padStart(2, '0')}</span>
+                  )}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
